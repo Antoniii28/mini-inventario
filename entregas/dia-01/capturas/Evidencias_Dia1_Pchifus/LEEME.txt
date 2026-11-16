@@ -1,0 +1,11 @@
+# Evidencias originales recuperadas — Día 1, Pchifus
+
+Estas imágenes son capturas compartidas previamente por el equipo. No se han generado ni alterado.
+
+- 03-repo-github.png: repositorio público con README.md, .gitignore y CLAUDE.md; también se ve el commit 6ea9164.
+- 06-clonacion-verificacion.png: resultado de clonación en carpeta separada y siete comprobaciones; es la evidencia principal solicitada.
+- extra-inicio-claude-code.png: contexto original de trabajo en Claude Code (complementaria, no reemplaza capturas 01, 02, 05 ni 07).
+
+No se han encontrado aquí capturas originales que demuestren por sí mismas todas las siete evidencias enumeradas en el README local. No marcar las restantes como completadas sin revisarlas.
+
+Copiar estos archivos a C:\Users\josea\Documents\mini-inventario\entregas\dia-01\capturas\ y pedir a Claude Code que revise los nombres y la bitácora.
