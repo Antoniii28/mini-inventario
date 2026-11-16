@@ -11,7 +11,7 @@
 | Alcance del día | Configuración del repositorio y documentación. **La aplicación no se ha desarrollado.** |
 
 > Esta bitácora solo registra hechos verificados con la salida de comandos ejecutados durante la sesión.
-> Las capturas de pantalla originales se agregan manualmente en [`capturas/`](capturas/README.md).
+> Las capturas originales están en [`capturas/`](capturas/README.md): 2 principales y 1 complementaria.
 
 ---
 
@@ -27,12 +27,12 @@
 | `.gitignore` para Node.js, Python y secretos | ✅ | Raíz del repositorio |
 | `CLAUDE.md` de 20 líneas o menos, con reglas de ramas y PR, secretos y autorización antes de borrar o desplegar | ✅ 19 líneas | §5 |
 | Stack Node.js 22 y Python 3.12 verificado, sin instalar nada | ✅ | §4 · P1 |
-| Trabajo mediante ramas y Pull Requests después del commit inicial | 🔄 Rama `docs/dia-01-evidencias` creada; el Pull Request está pendiente | §8 |
+| Trabajo mediante ramas y Pull Requests después del commit inicial | ✅ Rama `docs/dia-01-evidencias` → [PR #1](https://github.com/Antoniii28/mini-inventario/pull/1), fusionado en `main` | §9 |
 | Colaborador del equipo con acceso al repositorio | ✅ | §7 |
 | Clonación del repositorio y verificación | ✅ 7/7 · ✅ captura 06 | §6 |
 | Bitácora en Markdown con prompts, comandos, errores, pruebas y resultados | ✅ | Este documento |
-| Capturas originales | 🔄 2 de 7 (03 y 06) + 1 complementaria | [`capturas/`](capturas/README.md) |
-| Entrega en GitHub y en Google Drive (sin documentos Word) | 🔄 Preparada; pendiente de publicar | §9 |
+| Capturas originales | ✅ 2 principales (03 y 06) + 1 complementaria | [`capturas/`](capturas/README.md) |
+| Entrega en GitHub y en Google Drive (sin documentos Word) | ✅ GitHub (PR #1 fusionado) · ✅ Drive (según el equipo) | §9 |
 | Sin secretos ni tokens en el repositorio | ✅ | §5 |
 
 ---
@@ -47,9 +47,13 @@
 | 4 | Creación de archivos, commit inicial y publicación del repositorio | ✅ Commit `6ea9164` publicado (con un intento fallido previo, ver P3) |
 | 5 | Invitación de colaborador a Luis Angel | ✅ Enviada y **aceptada** (permiso de escritura) |
 | 6 | Clonación y verificación en una carpeta independiente | ✅ 7 de 7 comprobaciones correctas |
-| 7 | Preparación de esta bitácora en la rama `docs/dia-01-evidencias` | ✅ Preparada · 🔄 pendiente de commit y Pull Request |
+| 7 | Preparación de esta bitácora en la rama `docs/dia-01-evidencias` | ✅ Preparada |
 | 8 | Revisión final del estado y de la entrega (solo lectura, 2026-11-16) | ✅ Sin cambios en `main`; colaborador confirmado |
-| 9 | Revisión de las capturas originales agregadas por el equipo (2026-11-16) | ✅ 03 y 06, más 1 complementaria · ⬜ faltan 01, 02, 04, 05 y 07 |
+| 9 | Revisión de las capturas originales agregadas por el equipo (2026-11-16) | ✅ 2 principales (03 y 06) y 1 complementaria |
+| 10 | Publicación de la bitácora (2026-11-16) | ✅ Commit `e0a9841`, push de `docs/dia-01-evidencias` y [PR #1](https://github.com/Antoniii28/mini-inventario/pull/1) con `dosientos77-web` como revisor |
+| 11 | Fusión del PR #1 en `main` | ✅ Fusionado por `Antoniii28` el 2026-11-16 19:11:59 UTC (merge `0ff46cf`) |
+| 12 | Entrega en Google Drive | ✅ Subida por el equipo (README.md y las 3 capturas) |
+| 13 | Corrección final de la documentación en la rama `docs/dia-01-correccion-final` | ✅ Esta versión de la bitácora |
 
 ---
 
@@ -71,6 +75,8 @@ El equipo trabajó por etapas: cada instrucción pedía primero un plan y solo d
 | 10 | Cambiar la evidencia 05 a "colaborador aceptado" | "No inventar evidencias ni afirmar que existen capturas que todavía no tenemos." |
 | 11 | Cerrar el Día 1 para GitHub y Drive | "Verifica los requisitos oficiales del Día 1 que estén disponibles. No inventes requisitos." · "sin crear documentos Word" |
 | 12 | Revisar las capturas incorporadas y actualizar la bitácora | "No inventes evidencias ni marques como completadas las que falten." |
+| 13 | Publicar: `git add` de `entregas/dia-01/`, commit, push, PR y revisor | "No hagas merge ni modifiques directamente `main`." |
+| 14 | Corrección final después de la fusión y la entrega en Drive | "No inventes nuevas pruebas ni modifiques las capturas originales." · "Trabaja en una rama nueva creada desde main actualizada" |
 
 ---
 
@@ -100,6 +106,13 @@ El equipo trabajó por etapas: cada instrucción pedía primero un plan y solo d
 | `git ls-remote …`, `git fetch --dry-run` | Comprobar el acceso al remoto y la sincronización | Lectura |
 | `git clone https://github.com/Antoniii28/mini-inventario.git ../mini-inventario-verificacion` | Clonar en una carpeta independiente | Autorizado |
 | `git switch -c docs/dia-01-evidencias` | Crear la rama de esta bitácora | Autorizado |
+| `git add -- entregas/dia-01/` | Preparar solo los archivos de la entrega (6 archivos) | Autorizado |
+| `git commit -m "docs: bitácora y evidencias del Día 1" -m "Co-Authored-By: …"` | Commit `e0a9841` | Autorizado |
+| `git push -u origin docs/dia-01-evidencias` | Publicar la rama en GitHub | Autorizado |
+| `gh pr create --base main --head docs/dia-01-evidencias --reviewer dosientos77-web` | Crear el PR #1 y pedir la revisión de Luis Angel | Autorizado |
+| `gh pr view 1` | Confirmar que el PR #1 está fusionado (`MERGED`, merge `0ff46cf`) | Lectura |
+| `git switch main`, `git pull --ff-only` | Actualizar `main` local con avance rápido hasta `0ff46cf` | Autorizado |
+| `git switch -c docs/dia-01-correccion-final` | Crear la rama de la corrección final | Autorizado |
 
 ### 3.2 Comandos fallidos
 
@@ -116,6 +129,7 @@ El equipo trabajó por etapas: cada instrucción pedía primero un plan y solo d
 | Invitar a Luis Angel como colaborador | Faltaba confirmar su usuario de GitHub | Invitación enviada y aceptada |
 | Clonar el repositorio para verificarlo | El equipo pidió revisar el plan primero | Hecho, 7/7 correctas |
 | Crear archivos y publicar el repositorio | El equipo pidió revisar el contenido primero | Hecho |
+| Commit, push y Pull Request de la bitácora | El equipo pidió revisar el diff y las capturas primero | Hecho (PR #1) |
 
 ### 3.4 Operaciones no autorizadas (no se hicieron)
 
@@ -123,7 +137,7 @@ El equipo trabajó por etapas: cada instrucción pedía primero un plan y solo d
 |---|---|
 | Instalar Python o cambiar el requisito a 3.13 | El equipo lo prohibió expresamente |
 | Cambiar el correo **global** de Git | Se eligió la configuración local para no afectar a otros proyectos |
-| `git add`, commit, push, Pull Request o fusión de esta bitácora | Aún no autorizado al preparar este documento |
+| Fusionar el PR #1 por parte del asistente | No autorizado; la fusión la hizo el equipo desde GitHub |
 | Borrar la carpeta de verificación | El equipo pidió conservarla |
 | Acceder o modificar otros proyectos (p. ej. ÑamFod) | Fuera del alcance de este proyecto |
 
@@ -225,28 +239,27 @@ Historial de la invitación:
 ## 8. Pendientes
 
 - [x] Que Luis Angel acepte la invitación al repositorio (comprobado con `gh api`; confirmado de nuevo el 2026-11-16).
-- [x] Captura obligatoria de clonación (`06-clonacion-verificacion.png`).
-- [ ] Capturas restantes: 01, 02, 04, 05 y 07 (hay 2 de 7 al 2026-11-16; ver [`capturas/`](capturas/README.md)).
+- [x] Captura de clonación (`06-clonacion-verificacion.png`).
+- [x] Commit, push y Pull Request de la bitácora ([PR #1](https://github.com/Antoniii28/mini-inventario/pull/1)).
+- [x] Fusión del PR #1 en `main` (merge `0ff46cf`).
+- [x] Entrega en Google Drive (según el equipo).
 - [ ] Contrastar la sección 0 con el documento oficial de requisitos del profesor.
-- [ ] Hacer commit de la bitácora y abrir el Pull Request `docs/dia-01-evidencias` → `main` (pendiente de autorización).
-- [ ] Que Luis Angel revise y apruebe el Pull Request antes de fusionarlo (regla de `CLAUDE.md`).
-- [ ] Subir la entrega a Google Drive (ver sección 9).
 - [ ] Opcional: corregir el correo global de Git (P2).
+
+> **Nota sobre la revisión:** el PR #1 pidió la revisión de `dosientos77-web`, pero `gh pr view 1` no muestra ninguna revisión registrada en GitHub antes de la fusión. Para los próximos PR conviene que Luis Angel apruebe desde GitHub, como pide `CLAUDE.md`.
 
 ---
 
 ## 9. Entrega
 
-### GitHub
+### GitHub ✅
 - Repositorio: https://github.com/Antoniii28/mini-inventario
-- Bitácora: `entregas/dia-01/README.md`, que llega a `main` mediante el Pull Request de la rama `docs/dia-01-evidencias`.
-
-### Google Drive (sin documentos Word)
-Se sube la carpeta `entregas/dia-01/` tal como está en el repositorio:
+- Pull Request: [#1 `docs/dia-01-evidencias` → `main`](https://github.com/Antoniii28/mini-inventario/pull/1), **fusionado** el 2026-11-16 (merge `0ff46cf`).
+- Estructura publicada en `main`:
 
 ```
-dia-01/
-├── README.md                          ← esta bitácora (Markdown)
+entregas/dia-01/
+├── README.md                          ← esta bitácora
 └── capturas/
     ├── README.md                      ← lista de evidencias
     └── Evidencias_Dia1_Pchifus/
@@ -257,4 +270,21 @@ dia-01/
             └── extra-inicio-claude-code.png
 ```
 
-Junto con el enlace al repositorio y, cuando exista, el enlace al Pull Request.
+### Evidencias
+| Tipo | Captura |
+|---|---|
+| Principal | [`03-repo-github.png`](capturas/Evidencias_Dia1_Pchifus/capturas/03-repo-github.png) |
+| Principal | [`06-clonacion-verificacion.png`](capturas/Evidencias_Dia1_Pchifus/capturas/06-clonacion-verificacion.png) |
+| Complementaria | [`extra-inicio-claude-code.png`](capturas/Evidencias_Dia1_Pchifus/capturas/extra-inicio-claude-code.png) |
+
+### Google Drive ✅ (sin documentos Word)
+Según el equipo, la entrega en Drive tiene 4 archivos:
+
+```
+README.md
+03-repo-github.png
+06-clonacion-verificacion.png
+extra-inicio-claude-code.png
+```
+
+> En Drive las imágenes están junto al `README.md`, así que los enlaces relativos de esta bitácora (que siguen la estructura del repositorio) no se abren desde Drive. La versión de referencia es la del repositorio.
