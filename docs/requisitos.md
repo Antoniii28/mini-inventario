@@ -27,7 +27,8 @@ Criterios de aceptación:
 - [ ] Cantidad y cantidad mínima solo aceptan números enteros mayores o iguales a 0.
 - [ ] Si intento guardar con un campo vacío o inválido, se muestra qué campo está mal y no se guarda nada.
 - [ ] Al guardar un producto válido, aparece en mi lista sin recargar la página.
-- [ ] No puedo registrar dos productos con el mismo SKU; se muestra el mensaje "Ya existe un producto con ese SKU".
+- [ ] No puedo registrar dos productos con el mismo SKU en mi inventario; se muestra el mensaje "Ya tienes un producto con ese SKU".
+- [ ] Otra cuenta sí puede usar un SKU que yo ya usé (el SKU es único por usuario).
 
 ### HU-03 · Ver mis productos
 **Como** encargado, **quiero** ver la lista de mis productos, **para** saber qué hay en el inventario.
@@ -51,7 +52,17 @@ Criterios de aceptación:
 **Como** encargado, **quiero** ver qué productos están por debajo de su cantidad mínima, **para** saber qué debo pedir.
 
 Criterios de aceptación:
-- [ ] Un producto está "por debajo del mínimo" cuando su cantidad es menor o igual a su cantidad mínima.
+- [ ] Un producto está "por debajo del mínimo" cuando su cantidad es **menor** que su cantidad mínima (por ejemplo, cantidad 4 y mínimo 5 sí; cantidad 5 y mínimo 5 no).
 - [ ] Hay un filtro "Solo bajo mínimo" que muestra únicamente esos productos.
 - [ ] En la lista completa, esos productos se distinguen visualmente (por ejemplo, con la etiqueta "Bajo mínimo").
-- [ ] Al actualizar la cantidad de un producto por encima del mínimo, deja de aparecer como bajo mínimo sin recargar la página.
+- [ ] Al actualizar la cantidad de un producto a un valor igual o mayor que su mínimo, deja de aparecer como bajo mínimo sin recargar la página.
+
+## Decisiones pendientes de revisión
+
+El agente propuso estas decisiones. **Jose Antonio debe confirmarlas o cambiarlas**; todavía no las ha revisado.
+
+| # | Pregunta | Propuesta del agente |
+|---|---|---|
+| D-1 | ¿Cómo se crean las cuentas? El enunciado solo habla de "iniciar sesión". | No incluir registro público: las cuentas se crean desde el panel de Supabase. Así se mantienen las 5 historias. |
+| D-2 | ¿Un producto con cantidad **igual** al mínimo está "bajo mínimo"? | No: se usa `cantidad < minimo`, como dice el enunciado ("por debajo del mínimo"). |
+| D-3 | ¿El SKU distingue mayúsculas y minúsculas (`har-001` y `HAR-001`)? | Sí, por ahora se tratan como distintos; no se agrega normalización. |
