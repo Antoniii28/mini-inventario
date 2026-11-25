@@ -1,0 +1,108 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { validateProduct, parseNonnegativeInteger, isLowStock, filterProducts, friendlyError } from './logic.mjs';
+
+const $ = (id) => document.getElementById(id);
+const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+let products = [];
+let activeUser = null;
+let requestVersion = 0;
+const display = (id, message = '') => { $(id).textContent = message; $(id).hidden = !message; };
+function showLoggedIn(user) {
+  activeUser = user;
+  $('auth-view').hidden = !!user;
+  $('inventory-view').hidden = !user;
+  $('user-email').textContent = user?.email || '';
+  if (!user) { products = []; requestVersion++; renderProducts(); }
+}
+function renderProducts() {
+  const rows = filterProducts(products, $('low-filter').checked);
+  $('total-products').textContent = products.length;
+  $('low-products').textContent = products.filter(isLowStock).length;
+  const list = $('product-list');
+  list.replaceChildren();
+  $('empty-state').hidden = products.length !== 0;
+  $('filter-empty').hidden = !($('low-filter').checked && products.length > 0 && rows.length === 0);
+  for (const product of rows) {
+    const tr = document.createElement('tr');
+    const cell = (value) => { const td = document.createElement('td'); td.textContent = String(value); tr.append(td); return td; };
+    const title = cell(product.nombre); title.className = 'product-name';
+    cell(product.sku).className = 'sku-cell'; cell(product.cantidad); cell(product.minimo);
+    const status = cell(isLowStock(product) ? 'Bajo mínimo' : 'En orden');
+    status.className = isLowStock(product) ? 'status low' : 'status good';
+    const actions = document.createElement('td');
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'button small'; button.textContent = 'Editar';
+    button.addEventListener('click', () => startEdit(product));
+    actions.append(button); tr.append(actions); list.append(tr);
+  }
+}
+async function loadProducts() {
+  if (!activeUser) return;
+  const version = ++requestVersion;
+  display('list-error');
+  const { data, error } = await supabase.from('productos').select('*').order('nombre', { ascending: true });
+  if (version !== requestVersion || !activeUser) return;
+  if (error) { display('list-error', friendlyError(error)); return; }
+  products = data || []; renderProducts();
+}
+$('login-form').addEventListener('submit', async (event) => {
+  event.preventDefault(); display('login-error');
+  const email = $('email').value.trim(); const password = $('password').value;
+  if (!email || !password || !$('email').validity.valid) { display('login-error', 'Ingresa un correo válido y una contraseña'); return; }
+  $('login-button').disabled = true;
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.user) { display('login-error', 'Correo o contraseña incorrectos'); return; }
+    showLoggedIn(data.user); await loadProducts();
+  } catch { display('login-error', 'No fue posible conectar con el servicio de autenticación'); }
+  finally { $('login-button').disabled = false; }
+});
+$('logout-button').addEventListener('click', async () => {
+  $('logout-button').disabled = true;
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) { display('list-error', 'No se pudo cerrar sesión. Intenta nuevamente.'); return; }
+    showLoggedIn(null); $('password').value = '';
+  } catch { display('list-error', 'No se pudo cerrar sesión. Intenta nuevamente.'); }
+  finally { $('logout-button').disabled = false; }
+});
+$('product-form').addEventListener('submit', async (event) => {
+  event.preventDefault(); if (!activeUser) return;
+  display('product-error'); display('product-success');
+  for (const field of ['nombre', 'sku', 'cantidad', 'minimo']) $(field + '-error').textContent = '';
+  const input = Object.fromEntries(new FormData(event.currentTarget).entries());
+  const validation = validateProduct(input);
+  if (!validation.valid) {
+    for (const [field, message] of Object.entries(validation.errors)) $(field + '-error').textContent = message;
+    return;
+  }
+  $('save-product').disabled = true;
+  try {
+    const { error } = await supabase.from('productos').insert(validation.value);
+    if (error) { display('product-error', friendlyError(error)); return; }
+    $('product-form').reset(); display('product-success', 'Producto registrado correctamente');
+    await loadProducts();
+  } catch { display('product-error', 'No se pudo conectar con la base de datos'); }
+  finally { $('save-product').disabled = false; }
+});
+$('low-filter').addEventListener('change', renderProducts);
+async function startEdit(product) {
+  const cantidad = window.prompt(`Nueva cantidad para ${product.nombre}`, String(product.cantidad));
+  if (cantidad === null) return;
+  const minimo = window.prompt(`Nueva cantidad mínima para ${product.nombre}`, String(product.minimo));
+  if (minimo === null) return;
+  let values;
+  try { values = { cantidad: parseNonnegativeInteger(cantidad, 'La cantidad'), minimo: parseNonnegativeInteger(minimo, 'La cantidad mínima') }; }
+  catch (error) { display('list-error', error.message); return; }
+  display('list-error');
+  const { data, error } = await supabase.from('productos').update(values).eq('id', product.id).select('id');
+  if (error || !data?.length) { display('list-error', error ? friendlyError(error) : 'No se pudo actualizar ese producto'); return; }
+  await loadProducts();
+}
+async function initialize() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) { display('login-error', 'No se pudo comprobar la sesión'); return; }
+  showLoggedIn(data.session?.user ?? null);
+  if (data.session?.user) await loadProducts();
+}
+initialize().catch(() => display('login-error', 'No se pudo conectar con Supabase'));
