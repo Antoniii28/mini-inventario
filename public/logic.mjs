@@ -22,6 +22,24 @@ export function validateProduct(input) {
 export const isLowStock = (product) => product.cantidad < product.minimo;
 export const sortProducts = (products) => [...products].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' }));
 export const filterProducts = (products, onlyLow) => sortProducts(onlyLow ? products.filter(isLowStock) : products);
+export const MIN_PASSWORD_LENGTH = 6;
+export function validateCredentials(email, password, { forSignUp = false } = {}) {
+  const value = String(email ?? '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || !password) return 'Ingresa un correo válido y una contraseña';
+  if (forSignUp && String(password).length < MIN_PASSWORD_LENGTH) return `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
+  return null;
+}
+export function friendlyAuthError(error) {
+  switch (error?.code) {
+    case 'invalid_credentials': return 'Correo o contraseña incorrectos';
+    case 'email_not_confirmed': return 'Confirma tu correo antes de iniciar sesión';
+    case 'user_already_exists': case 'email_exists': return 'Ya existe una cuenta con ese correo';
+    case 'weak_password': return `La contraseña es demasiado débil; usa al menos ${MIN_PASSWORD_LENGTH} caracteres`;
+    case 'signup_disabled': return 'El registro de cuentas está desactivado';
+    case 'over_email_send_rate_limit': case 'over_request_rate_limit': return 'Demasiados intentos; espera unos minutos';
+    default: return 'No fue posible completar la operación. Inténtalo de nuevo.';
+  }
+}
 export function friendlyError(error) {
   if (error?.code === '23505') return 'Ya tienes un producto con ese SKU';
   if (error?.code === '23514' || error?.code === '23502') return 'Revisa los datos del producto';

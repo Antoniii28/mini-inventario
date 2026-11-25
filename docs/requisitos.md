@@ -18,6 +18,7 @@ Criterios de aceptación:
 - [ ] Con correo y contraseña correctos, se muestra la pantalla del inventario.
 - [ ] Con datos incorrectos, aparece el mensaje "Correo o contraseña incorrectos" y no se entra.
 - [ ] Al pulsar "Cerrar sesión" se vuelve al formulario de inicio de sesión y, al recargar la página, sigue sin sesión.
+- [ ] *(Día 4)* Desde el mismo formulario puedo **crear una cuenta** con correo y contraseña (mínimo 6 caracteres). Si el proyecto exige confirmar el correo, se avisa que llegará un enlace y no se entra hasta confirmarlo.
 
 ### HU-02 · Registrar un producto
 **Como** encargado, **quiero** registrar un producto con nombre, SKU, cantidad y cantidad mínima, **para** llevar el control de lo que tengo en almacén.
@@ -27,7 +28,7 @@ Criterios de aceptación:
 - [ ] Cantidad y cantidad mínima solo aceptan números enteros mayores o iguales a 0.
 - [ ] Si intento guardar con un campo vacío o inválido, se muestra qué campo está mal y no se guarda nada.
 - [ ] Al guardar un producto válido, aparece en mi lista sin recargar la página.
-- [ ] No puedo registrar dos productos con el mismo SKU en mi inventario; se muestra el mensaje "Ya tienes un producto con ese SKU".
+- [ ] No puedo registrar dos productos con el mismo SKU en mi inventario, **sin distinguir mayúsculas y minúsculas** (`ARR-001` y `arr-001` son el mismo); se muestra el mensaje "Ya tienes un producto con ese SKU".
 - [ ] Otra cuenta sí puede usar un SKU que yo ya usé (el SKU es único por usuario).
 
 ### HU-03 · Ver mis productos
@@ -57,12 +58,13 @@ Criterios de aceptación:
 - [ ] En la lista completa, esos productos se distinguen visualmente (por ejemplo, con la etiqueta "Bajo mínimo").
 - [ ] Al actualizar la cantidad de un producto a un valor igual o mayor que su mínimo, deja de aparecer como bajo mínimo sin recargar la página.
 
-## Decisiones pendientes de revisión
+## Decisiones
 
-El agente propuso estas decisiones. **Jose Antonio debe confirmarlas o cambiarlas**; todavía no las ha revisado.
+Propuestas por el agente en el Día 2. En el Día 4 se resolvieron así:
 
-| # | Pregunta | Propuesta del agente |
-|---|---|---|
-| D-1 | ¿Cómo se crean las cuentas? El enunciado solo habla de "iniciar sesión". | No incluir registro público: las cuentas se crean desde el panel de Supabase. Así se mantienen las 5 historias. |
-| D-2 | ¿Un producto con cantidad **igual** al mínimo está "bajo mínimo"? | No: se usa `cantidad < minimo`, como dice el enunciado ("por debajo del mínimo"). |
-| D-3 | ¿El SKU distingue mayúsculas y minúsculas (`har-001` y `HAR-001`)? | Sí, por ahora se tratan como distintos; no se agrega normalización. |
+| # | Pregunta | Propuesta del Día 2 | Estado (Día 4) |
+|---|---|---|---|
+| D-1 | ¿Cómo se crean las cuentas? El enunciado solo habla de "iniciar sesión". | No incluir registro público: las cuentas se crean desde el panel de Supabase. | **Reemplazada.** La actividad oficial del Día 4 pide "registro e inicio de sesión con correo y contraseña". Se agrega el registro al criterio de HU-01. |
+| D-2 | ¿Un producto con cantidad **igual** al mínimo está "bajo mínimo"? | No: se usa `cantidad < minimo`. | **Confirmada** por Jose Antonio: bajo mínimo = `cantidad < minimo`. |
+| D-3 | ¿El SKU distingue mayúsculas y minúsculas (`har-001` y `HAR-001`)? | Sí, se tratan como distintos. | **Reemplazada** por decisión de Jose Antonio: el SKU es único por usuario **sin distinguir mayúsculas y minúsculas** (índice único en `(user_id, lower(sku))`). |
+| D-4 | ¿Se puede borrar un producto? | (No existía.) | La actividad oficial pide una política de `delete` en la base de datos. La interfaz todavía no tiene botón de borrar: queda fuera de las 5 historias. |
