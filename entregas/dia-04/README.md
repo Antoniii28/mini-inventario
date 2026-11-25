@@ -57,6 +57,7 @@
 | Decisión | Motivo |
 |---|---|
 | Proyecto propio de Jose y no el de Luis | La actividad es individual: "crea tu proyecto" y "conecta el MCP solo a tu proyecto". |
+| Ese proyecto es la **base de datos oficial y compartida** del equipo para los Días 4 a 8 (decisión de Jose, 25/11) | Un solo esquema verificado para todos. Implicaciones por día en `docs/diseno.md` § "Proyecto Supabase oficial". `pchifus.prueba1` queda reservado (evidencia del Día 4 y datos del Día 8) y `pchifus.prueba2` es para las pruebas automáticas. |
 | Adaptar `public/app.js` | El Día 3 ya funciona con Supabase; la actividad supone un `localStorage` que no existe aquí. |
 | SKU único sin distinguir mayúsculas | Decisión de Jose; reemplaza la D-3 del Día 2. |
 | Política de `delete` sin botón de borrar | La actividad pide políticas para las 4 operaciones; ninguna historia pide borrar desde la web. |
@@ -163,6 +164,6 @@ $ git check-ignore -v .env
 | [`capturas/02-usuario-2.png`](capturas/02-usuario-2.png) | Sesión `pchifus.prueba2@example.com`: solo Arroz y Tortillas. No aparece ninguno de los productos del usuario 1, aunque ambos usan el SKU `ARR-001`. |
 
 ## Para el Día 5 (Luis)
-- Proyecto: `snefrzzosulngvootger`. Jose le comparte **por canal privado** `SUPABASE_URL`, la llave publishable y `TEST_EMAIL` / `TEST_PASSWORD` de `pchifus.prueba1@example.com`.
-- `.env` de Luis: `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`, sin subirlo nunca.
-- El usuario 1 ya tiene 3 productos, 2 bajo el mínimo, que sirven también para el Día 8. Las pruebas del Día 5 deben crear SKU únicos y borrar solo lo que crean; la política de `delete` ya existe.
+- Proyecto oficial `snefrzzosulngvootger`. Jose le comparte **por canal privado** la llave publishable y la contraseña de `pchifus.prueba2@example.com` (`TEST_EMAIL` / `TEST_PASSWORD`).
+- `.env` de Luis: `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD` (ver `.env.example`), sin subirlo nunca.
+- Los 3 productos de `pchifus.prueba1` son la evidencia del Día 4 y los datos del Día 8: no se tocan. Las pruebas del Día 5 crean SKU únicos y borran solo lo que crean; la política de `delete` ya existe.

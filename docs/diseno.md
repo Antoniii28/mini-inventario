@@ -87,6 +87,28 @@ Cambios respecto al Día 2 (pedidos por la actividad oficial del Día 4 o por de
 - `(select auth.uid())` en las políticas, como recomienda la skill `supabase-postgres-best-practices` (se evalúa una vez por consulta).
 - El índice único empieza por `user_id`, así que también cubre la llave foránea y los filtros de RLS.
 
+## Proyecto Supabase oficial
+
+**Decisión del 2026-11-25 (Jose Antonio):** el proyecto `mini-inventario` (ref `snefrzzosulngvootger`, organización `Pchifus-Jose`) es la **base de datos compartida oficial del equipo** para los Días 4 a 8. No se crean otros proyectos.
+
+| Elemento | Valor |
+|---|---|
+| URL | `https://snefrzzosulngvootger.supabase.co` (pública) |
+| Llave para la app | Publishable (`sb_publishable_...`). Se comparte solo por un canal privado; nunca en el repositorio |
+| Esquema | Las migraciones de `supabase/migrations/`, ya aplicadas. Cualquier cambio nuevo es otra migración aprobada por Jose |
+| Usuarios de prueba (confirmados) | `pchifus.prueba1@example.com`: datos de la evidencia del Día 4 y del Día 8. No se modifican.<br>`pchifus.prueba2@example.com`: usuario de las pruebas automáticas (Días 5 a 7) |
+| Administración | Jose: panel, MCP, usuarios y SQL. Luis no necesita acceso al panel |
+
+Implicaciones:
+
+| Día | Qué usa | Implicación |
+|---|---|---|
+| 5 | `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD` (usuario 2) en el `.env` de Luis | Las pruebas usan SKU únicos y borran solo lo que crean. RLS impide tocar los datos del usuario 1 |
+| 6 | Los mismos 4 valores como secretos de Actions | Los crea Jose (B4). El CI escribe y borra datos reales del usuario 2 en cada ejecución |
+| 7 | El mismo entorno del Día 5 | Sin cambios en la base de datos |
+| 8 | MCP `supabase-lectura` con `project_ref=snefrzzosulngvootger&read_only=true` y rol `inventario_lector` | La política oficial `using (true)` deja al lector ver **todos** los productos del proyecto, incluidos los de las pruebas de Luis (B6). Solo datos de prueba |
+| Todos | Plan Free | El proyecto se pausa tras 7 días sin actividad; Jose lo reactiva desde el panel. Correo de confirmación: 2 por hora y solo a miembros de la organización |
+
 ## Validaciones por capa
 
 | Capa | Qué valida | Para qué |
