@@ -1,4 +1,4 @@
--- HISTÓRICO (Día 3). Desde el Día 4 el esquema vigente es supabase/migrations/20261124120000_crear_productos.sql
+-- HISTÓRICO (Día 3). Desde el Día 4 el esquema vigente es supabase/migrations/20261125060419_crear_productos.sql
 -- (4 políticas, SKU sin distinguir mayúsculas y GRANT a authenticated). No ejecutar este archivo en un proyecto nuevo.
 -- Ejecutar una vez en SQL Editor de Supabase. Diseño aprobado del Día 2.
 create table if not exists public.productos (

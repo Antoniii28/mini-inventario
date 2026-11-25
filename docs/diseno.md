@@ -56,7 +56,7 @@ supabase/migrations/ ← migraciones SQL (Día 4)
 
 ## Tabla `productos`
 
-Desde el Día 4, el esquema vigente es la migración [`supabase/migrations/20261124120000_crear_productos.sql`](../supabase/migrations/20261124120000_crear_productos.sql). Resumen:
+Desde el Día 4, el esquema vigente es la migración [`supabase/migrations/20261125060419_crear_productos.sql`](../supabase/migrations/20261125060419_crear_productos.sql). Resumen:
 
 ```sql
 create table public.productos (

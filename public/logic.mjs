@@ -36,6 +36,8 @@ export function friendlyAuthError(error) {
     case 'user_already_exists': case 'email_exists': return 'Ya existe una cuenta con ese correo';
     case 'weak_password': return `La contraseña es demasiado débil; usa al menos ${MIN_PASSWORD_LENGTH} caracteres`;
     case 'signup_disabled': return 'El registro de cuentas está desactivado';
+    case 'email_address_invalid': return 'Supabase no acepta ese correo; usa una dirección real';
+    case 'email_address_not_authorized': return 'Este proyecto todavía no puede enviar correos a esa dirección';
     case 'over_email_send_rate_limit': case 'over_request_rate_limit': return 'Demasiados intentos; espera unos minutos';
     default: return 'No fue posible completar la operación. Inténtalo de nuevo.';
   }

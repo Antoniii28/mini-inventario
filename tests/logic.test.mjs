@@ -37,5 +37,7 @@ test('traduce errores de Supabase Auth sin exponer detalles', () => {
   assert.equal(friendlyAuthError({ code: 'invalid_credentials' }), 'Correo o contraseña incorrectos');
   assert.equal(friendlyAuthError({ code: 'user_already_exists' }), 'Ya existe una cuenta con ese correo');
   assert.match(friendlyAuthError({ code: 'weak_password' }), /débil/);
+  // Encontrado en la prueba real del Día 4: Supabase rechaza correos @example.com en el registro.
+  assert.match(friendlyAuthError({ code: 'email_address_invalid' }), /no acepta ese correo/);
   assert.match(friendlyAuthError({ code: 'otro', message: 'detalle interno' }), /^No fue posible/);
 });
