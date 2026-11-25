@@ -25,11 +25,30 @@ Detalles e implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficia
 2. Comprobar que `node --version` sea **22.20 o superior** (T-03).
 3. Recibir de Jose, por un canal privado, la llave publishable y la contraseña de `pchifus.prueba2@example.com`.
 
+## Empezar el Día 5 sin esperar la fusión del PR #16
+El código del Día 4 ya funciona contra el proyecto oficial, así que puedes partir de su rama:
+```bash
+git fetch origin
+git switch -c dia-05-pruebas origin/dia-04-supabase   # tu rama, con el Día 4 incluido
+npm ci
+cp .env.example .env        # en PowerShell: Copy-Item .env.example .env
+npm test                    # deben pasar 13 pruebas
+npm start                   # http://localhost:3000; entra con pchifus.prueba2@example.com
+```
+- **Guías y prompts** (están en el PR #15, que aún no está en `main`). Léelos sin cambiar de rama:
+  - `git show origin/docs/actividades-oficiales-04-08:docs/actividades-oficiales/dia-05/GUIA.md`
+  - `git show origin/docs/actividades-oficiales-04-08:docs/prompts/PROMPT_LUIS.md`
+  
+  También puedes verlos en GitHub, en la pestaña *Files changed* del PR #15. No los copies a tu rama: llegan solos con `main`.
+- **No modifiques** archivos del Día 4: `supabase/**`, `server.js`, `public/app.js`, `docs/diseno.md`, `entregas/dia-04/**`. Si encuentras un problema ahí, avísale a Jose.
+- **Sincronizar después, sin perder avances:** cuando Jose fusione los PR #15 y #16, ejecuta `git fetch origin && git merge origin/main` en tu rama. Nunca uses `rebase` ni `push --force`. Vuelve a correr `npm test` y `npx playwright test`.
+- **Abre tu PR hacia `main` después de esa sincronización.** Si lo abres antes, mostrará también los commits del Día 4.
+
 ## Día 5
 | Tema | Detalle |
 |---|---|
-| Empieza cuando | El PR #16 esté en `main` y tengas la llave y la contraseña de prueba |
-| Preparación | `git switch main && git pull --ff-only && git switch -c dia-05-pruebas` · `npm ci` · copiar `.env.example` a `.env` · `npm test` (13 pruebas) · `npm start` |
+| Empieza cuando | Ya (ver la sección anterior). Necesitas la llave publishable y la contraseña de prueba |
+| Preparación | La de la sección anterior. Cuando el #16 esté en `main`: `git merge origin/main` |
 | `.env` | `SUPABASE_URL=` · `SUPABASE_KEY=` · `PORT=` · `TEST_EMAIL=pchifus.prueba2@example.com` · `TEST_PASSWORD=`. Nunca se sube; `git check-ignore .env` lo confirma |
 | Leer | `docs/gestion/CONTEXTO_COMPARTIDO.md`, `docs/actividades-oficiales/dia-05/GUIA.md` |
 | Puede modificar | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `package-lock.json`, `entregas/dia-05/**`, `.claude/skills/playwright-cli/**` y el archivo de `public/` que tenga el problema real que elijas |

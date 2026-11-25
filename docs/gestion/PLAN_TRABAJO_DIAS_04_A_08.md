@@ -42,7 +42,7 @@ Resueltos y retirados de esta tabla:
 | T-10 | 4 | Proyecto, MCP, skills, migración, RLS, registro, inicio de sesión y aislamiento | Jose | `dia-04-supabase` | — | [Guía §10](../actividades-oficiales/dia-04/GUIA.md) | En revisión | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |
 | T-11 | 4 | Compartir con Luis, **por un canal privado**, `SUPABASE_URL`, `SUPABASE_KEY` y las credenciales del usuario de pruebas del Día 5 | Jose | — | T-10 | Luis inicia sesión en la app | Pendiente | #10 | — |
 | T-12 | 4 | Revisar el PR #16 | Luis | — | T-10 | Revisión aprobada | En revisión (observaciones atendidas) | #10 | #16 |
-| T-20 | 5 | Exploración con playwright-cli, problema real, 4 pruebas, falla provocada y recuperación | Luis | `dia-05-pruebas` | #16 en `main`, T-11, T-03 | [Guía §10](../actividades-oficiales/dia-05/GUIA.md) | Pendiente | [#11](https://github.com/Antoniii28/mini-inventario/issues/11) | — |
+| T-20 | 5 | Exploración con playwright-cli, problema real, 4 pruebas, falla provocada y recuperación | Luis | `dia-05-pruebas` (desde `origin/dia-04-supabase`; merge de `main` tras #16) | T-11, T-03 | [Guía §10](../actividades-oficiales/dia-05/GUIA.md) | Pendiente | [#11](https://github.com/Antoniii28/mini-inventario/issues/11) | — |
 | T-21 | 5 | Revisar el PR del Día 5 | Jose | — | T-20 | Revisión aprobada | Pendiente | #11 | — |
 | T-30 | 6 | Secretos de Actions (`gh secret set` × 4) | Jose (B4) | — | T-20 | `gh secret list` muestra los 4 nombres | Pendiente | #12 | — |
 | T-31 | 6 | `ci.yml` verde → rojo → verde, diagnóstico con `gh`, merge | Luis | `dia-06-ci` | T-21, T-30 | [Guía §10](../actividades-oficiales/dia-06/GUIA.md) | Pendiente | [#12](https://github.com/Antoniii28/mini-inventario/issues/12) | — |
@@ -57,7 +57,7 @@ Resueltos y retirados de esta tabla:
 
 | Fecha | Jose (`Antoniii28`) | Luis (`dosientos77-web`) | Condición para avanzar |
 |---|---|---|---|
-| Mié 25 | Atender las observaciones de los PR #15 y #16; prueba de registro con correo real; fusionar #15 y #16 tras la aprobación; T-11; empezar el Día 8 | Aprobar #15 y #16; T-03; empezar el **Día 5** en cuanto #16 esté en `main` | **Día 4 en `main`** |
+| Mié 25 | Atender las observaciones de los PR #15 y #16; prueba de registro con correo real; fusionar #15 y #16 tras la aprobación; T-11; empezar el Día 8 | Aprobar #15 y #16; T-03; empezar **ya** el Día 5 desde `dia-04-supabase` (ver `HANDOFF_LUIS.md`) | **Día 4 en `main`** |
 | Jue 26 | T-30 (secretos); revisar el Día 5 (T-21); avanzar el Día 8 | Terminar el **Día 5**; empezar el **Día 6** | Día 5 en `main` |
 | Vie 27 | Revisar el Día 7 (T-41); sincronizar e integrar el **Día 8** (T-51); Drive de los Días 4 y 8 | Terminar el **Día 6**; **Día 7**; revisar el Día 8 (T-52); Drive de los Días 5 a 7 | Todo en `main` |
 

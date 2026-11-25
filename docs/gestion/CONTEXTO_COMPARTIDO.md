@@ -54,7 +54,7 @@ Node.js 22 · Express · HTML, CSS y JavaScript sin framework · Supabase (Auth 
 El estado detallado está en [`PLAN_TRABAJO_DIAS_04_A_08.md`](PLAN_TRABAJO_DIAS_04_A_08.md). Actualízalo en el PR de cada día.
 
 ## 6. Dependencias
-Día 4 → Día 5 → Día 6 → Día 7. El Día 8 depende solo del Día 4 (el usuario `pchifus.prueba1@example.com` ya tiene 3 productos, 2 bajo el mínimo) y puede ir en paralelo a los Días 5 a 7.
+Día 4 → Día 5 → Día 6 → Día 7 (el Día 5 puede empezar desde la rama del Día 4). El Día 8 depende solo del Día 4 (el usuario `pchifus.prueba1@example.com` ya tiene 3 productos, 2 bajo el mínimo) y puede ir en paralelo a los Días 5 a 7.
 
 ## 7. Reglas de seguridad (obligatorias)
 - Nunca publicar ni escribir en el chat: contraseñas, `.env`, tokens, cadenas de conexión ni claves `service_role`.
@@ -73,7 +73,7 @@ B3 Node ≥ 22.20 en la computadora de Luis · B4 secretos de Actions solo del p
 
 ## 9. Próximo paso de cada integrante
 - **Jose:** completar la prueba de registro con correo real (PR #16); fusionar el #15 y luego el #16 cuando Luis los apruebe; T-11 (credenciales por canal privado); subir el Día 4 a Drive; empezar el Día 8 ([`HANDOFF_JOSE.md`](HANDOFF_JOSE.md)).
-- **Luis:** aprobar los PR #15 y #16; comprobar Node (T-03); con el #16 en `main`, empezar el Día 5 en `dia-05-pruebas` ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
+- **Luis:** aprobar los PR #15 y #16; comprobar Node (T-03); empezar ya el Día 5 en `dia-05-pruebas` desde `origin/dia-04-supabase` y hacer merge de `main` cuando el #16 se fusione ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
 
 ## 10. Cómo trabaja un agente aquí
 1. `git fetch` y `git switch main` y `git pull --ff-only`. Crear o usar la rama del día.
