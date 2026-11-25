@@ -5,26 +5,27 @@ Actualizado: 2026-11-24 · Equipo Pchifus · Fuente de las instrucciones: [`docs
 > Estados permitidos: Pendiente · En progreso · Bloqueado · En revisión · Completado.
 > Una tarea solo pasa a **Completado** cuando sus entregables se verificaron (archivos en `main`, PR fusionado y evidencia real).
 
-## 1. Estado real al 2026-11-24
+## 1. Estado real al 2026-11-25
 
 | Día | Estado | Evidencia |
 |---|---|---|
 | 1 | Completado | PR #1 y #2 fusionados |
 | 2 | Completado | PR #8 fusionado (`420446a`) |
 | 3 | **En revisión** | PR #9 **abierto**, sin revisor asignado ni aprobación. El 2026-11-24 se verificó en una copia temporal: `npm ci` correcto, `npm test` → 7/7, Express sirve `/`, `/config.js`, `/app.js` y `/logic.mjs`, y sin `.env` no arranca. **No verificado:** la integración con Supabase (el proyecto aún no existe). La descripción del PR dice "inicio de sesión probado" y "registro verificado en Supabase", pero la bitácora del Día 3 dice que no se conectó con Supabase. |
-| 4 a 8 | Pendiente | Issues #10 a #14 |
+| 4 | **En revisión** | PR #16. Proyecto propio de Jose (`snefrzzosulngvootger`). Migraciones aplicadas con el MCP y aprobadas por Jose. 13/13 pruebas unitarias, 27 comprobaciones en navegador real y aislamiento verificado (u1 y u2 ven 0 productos ajenos; `anon` → 42501). 2 capturas. Falta la revisión de Luis y la fusión. |
+| 5 a 8 | Pendiente | Issues #11 a #14 |
 
 ## 2. Bloqueos y decisiones pendientes
 
 | ID | Bloqueo o decisión | Afecta | Quién resuelve | Propuesta |
 |---|---|---|---|---|
-| B1 | PR #9 (Día 3) sin revisión ni integración; su descripción no coincide con su bitácora | Día 4 en adelante | Luis corrige la descripción; Jose revisa | Corregir el texto del PR, revisar y fusionar |
+| B1 | ✅ Resuelto: PR #9 fusionado (`c0abc7d`) | — | — | — |
 | B2 | No hay actividad oficial del Día 3. El Día 4 espera `public/productos.js` con `localStorage`, pero el código usa `public/app.js` con Supabase | Día 4 | Jose | Adaptar el Día 4 sobre `app.js` y documentarlo |
-| B3 | Node v22.18.0 en la computadora de Jose; las skills (Días 4 y 5) requieren **22.20 o superior** | Días 4 y 5 | Cada integrante en su equipo | 🔎 Actualizar Node 22 (requiere autorización; es una instalación) |
+| B3 | Las skills requieren Node **22.20 o superior**. ✅ Jose: v22.23.5. Luis: por comprobar | Día 5 | Luis en su equipo | `node --version` |
 | B4 | Según la documentación de GitHub, solo el **propietario** de un repositorio personal crea secretos de Actions. Luis tiene permiso `write` | Día 6, paso 2 | 🔎 Jose y Luis | Jose ejecuta `gh secret set` y se documenta, o se consulta al profesor |
 | B5 | Las 5 actividades dicen **"Modalidad: individual"**. No hay texto oficial que permita repartir los días entre integrantes | Todos | 🔎 Equipo → profesor | Confirmar con el profesor antes de entregar. Cada bitácora nombra solo a su responsable real |
 | B6 | La política oficial del lector del Día 8 (`using (true)`) da a `inventario_lector` acceso a productos de **todos** los usuarios | Día 8 | 🔎 Jose | Usar el SQL oficial solo con datos de prueba y documentar el riesgo y las mitigaciones |
-| B7 | Variable `SUPABASE_ANON_KEY` (Día 3) frente a `SUPABASE_KEY` (Días 4 y 6) | Días 4 y 6 | Jose en el Día 4 | Renombrar a `SUPABASE_KEY` |
+| B7 | ✅ Resuelto en el PR #16: `SUPABASE_KEY` | — | — | — |
 | D-1 | El Día 4 pide **registro** (cambia D-1 del Día 2) y política **delete** | Día 4 | Jose | Actualizar `docs/requisitos.md` y `docs/diseno.md` en `dia-04-supabase` |
 | D-3 | SKU único por usuario **sin distinguir mayúsculas y minúsculas** (cambia D-3 del Día 2) | Día 4 | Decidido por Jose en el plan maestro | `create unique index ... on productos (user_id, lower(sku))` |
 
@@ -34,12 +35,12 @@ Actualizado: 2026-11-24 · Equipo Pchifus · Fuente de las instrucciones: [`docs
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | T-00 | — | Documentación y plan (este PR) | Agente para Jose | `docs/actividades-oficiales-04-08` | `docs/actividades-oficiales/**`, `docs/gestion/**`, `docs/prompts/**`, `README.md`, `CLAUDE.md`, `.gitignore`, `entregas/dia-0{4..8}/Pchifus_Evidencia_*.md` | — | 15 min de revisión | Alta | Luis revisa y aprueba | PR aprobado | En revisión | — | PR de documentación |
 | T-01 | 3 | Corregir la descripción del PR #9 para que coincida con lo realmente probado | Luis | `feature/dia-03-desarrollo` | Solo el texto del PR | — | 10 min | Alta | La descripción no afirma pruebas con Supabase que no ocurrieron | Texto del PR | Pendiente | — | #9 |
-| T-02 | 3 | Revisar y fusionar el Día 3 | Jose | — | — | T-01 | 20 min | **Crítica** | Revisión aprobada en GitHub y PR #9 fusionado | Revisión registrada | En revisión | #3 a #7 | #9 |
-| T-03 | — | Node 22 ≥ 22.20 en ambas computadoras | Jose y Luis (cada uno) | — | — | — | 15 min | Alta | `node --version` ≥ v22.20 | Salida del comando | Bloqueado (B3) | — | — |
+| T-02 | 3 | Revisar y fusionar el Día 3 | Jose | — | — | T-01 | 20 min | **Crítica** | Revisión aprobada en GitHub y PR #9 fusionado | Merge `c0abc7d` | Completado | #3 a #7 | #9 |
+| T-03 | — | Node 22 ≥ 22.20 en ambas computadoras | Jose y Luis (cada uno) | — | — | — | 15 min | Alta | `node --version` ≥ v22.20 | Salida del comando | Jose ✅ v22.23.5 · Luis pendiente | — | — |
 | T-04 | — | Consultar al profesor sobre la modalidad individual y los secretos (B4, B5) | Jose y Luis | — | — | — | 10 min | Alta | Respuesta del profesor registrada | Mensaje o captura | Pendiente | — | — |
-| T-10 | 4 | Proyecto Supabase, MCP, skills, migración, RLS (4 operaciones), registro e inicio de sesión, aislamiento | Jose | `dia-04-supabase` | `supabase/migrations/*`, `public/app.js`, `server.js`, `.env.example`, `docs/requisitos.md`, `docs/diseno.md`, `entregas/dia-04/**` | T-02, T-03 | 60 a 75 min | **Crítica** | Criterios de la [guía §10](../actividades-oficiales/dia-04/GUIA.md) | 2 capturas de aislamiento, SQL explicado, `git check-ignore .env`, bitácora | Pendiente | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) | — |
-| T-11 | 4 | Crear 2 usuarios confirmados y compartir con Luis las credenciales del usuario de prueba **por un canal privado** | Jose | — | — | T-10 | 5 min | Alta | Luis puede iniciar sesión | Confirmación de Luis | Pendiente | #10 | — |
-| T-12 | 4 | Revisión del PR del Día 4 | Luis | — | — | T-10 | 15 min | Alta | Revisión aprobada | Revisión en GitHub | Pendiente | #10 | — |
+| T-10 | 4 | Proyecto Supabase, MCP, skills, migración, RLS (4 operaciones), registro e inicio de sesión, aislamiento | Jose | `dia-04-supabase` | `supabase/migrations/*`, `public/app.js`, `server.js`, `.env.example`, `docs/requisitos.md`, `docs/diseno.md`, `entregas/dia-04/**` | T-02, T-03 | 60 a 75 min | **Crítica** | Criterios de la [guía §10](../actividades-oficiales/dia-04/GUIA.md) | 2 capturas de aislamiento, SQL explicado, `git check-ignore .env`, bitácora | En revisión | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |
+| T-11 | 4 | Crear 2 usuarios confirmados y compartir con Luis las credenciales del usuario de prueba **por un canal privado** | Jose | — | — | T-10 | 5 min | Alta | Luis puede iniciar sesión | Confirmación de Luis | Usuarios creados y confirmados ✅ · falta compartir las credenciales | #10 | — |
+| T-12 | 4 | Revisión del PR del Día 4 | Luis | — | — | T-10 | 15 min | Alta | Revisión aprobada | Revisión en GitHub | Pendiente | #10 | #16 |
 | T-20 | 5 | Exploración con playwright-cli, problema real, 4 pruebas, falla provocada y recuperación | Luis | `dia-05-pruebas` | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `entregas/dia-05/**` | T-10, T-11, T-03 | 60 a 75 min | Alta | [Guía §10](../actividades-oficiales/dia-05/GUIA.md) | Capturas 1280x800 y 390x844, consola, salida roja y verde | Pendiente | [#11](https://github.com/Antoniii28/mini-inventario/issues/11) | — |
 | T-21 | 5 | Revisión del PR del Día 5 | Jose | — | — | T-20 | 15 min | Alta | Revisión aprobada | Revisión en GitHub | Pendiente | #11 | — |
 | T-30 | 6 | Secretos de Actions (`gh secret set` × 4) | 🔎 Jose (propietario; B4) o Luis si el profesor lo indica | — | — | T-20 | 10 min | Alta | `gh secret list` muestra los 4 nombres | Captura de `gh secret list` (solo nombres) | Bloqueado (B4) | #12 | — |

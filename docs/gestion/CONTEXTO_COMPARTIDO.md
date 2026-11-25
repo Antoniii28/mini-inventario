@@ -19,7 +19,8 @@ Navegador (HTML + CSS + JS sin framework + supabase-js desde CDN)
   └─ Auth y consultas a productos             → Supabase directo (RLS por usuario)
 ```
 - Express **no** tiene API de productos. La seguridad de los datos la aplica **RLS** en PostgreSQL.
-- Archivos (Día 3, PR #9): `server.js`, `public/index.html`, `public/app.js`, `public/logic.mjs`, `public/styles.css`, `supabase/schema.sql`, `tests/logic.test.mjs` (con `node --test`).
+- Archivos (Día 3, PR #9): `server.js`, `public/index.html`, `public/app.js`, `public/logic.mjs`, `public/styles.css`, `supabase/schema.sql` (histórico desde el Día 4), `tests/logic.test.mjs` (con `node --test`).
+- Día 4 (PR #16): `supabase/migrations/20261125060419_crear_productos.sql` y `20261125061725_revocar_privilegios_innecesarios.sql` (ya aplicadas en el proyecto `snefrzzosulngvootger`), `tests/server.test.mjs`, `.mcp.json` (MCP limitado al proyecto) y `.claude/skills/supabase*`.
 - Día 8 agrega `mcp-inventario/server.py` (Python 3.12 + FastMCP + psycopg) con el rol `inventario_lector`.
 
 ## 3. Tecnologías (no sustituir)
@@ -32,7 +33,7 @@ Node.js 22 · Express · HTML, CSS y JavaScript sin framework · Supabase (Auth 
 | DT-1 | Stock bajo = `cantidad < minimo` (estrictamente menor) | Día 2 (D-2), confirmado en el plan maestro |
 | DT-2 | SKU único **por usuario y sin distinguir mayúsculas y minúsculas**: índice único `(user_id, lower(sku))` | Plan maestro (reemplaza D-3 del Día 2) |
 | DT-3 | Registro público con correo y contraseña | Actividad oficial del Día 4 (reemplaza D-1 del Día 2) |
-| DT-4 | RLS con políticas `select`, `insert`, `update` y `delete` (`auth.uid() = user_id`) | Actividad oficial del Día 4 |
+| DT-4 | RLS con políticas `select`, `insert`, `update` y `delete` (`(select auth.uid()) = user_id`, `to authenticated`); `GRANT` CRUD solo a `authenticated`, `anon` sin permisos | Actividad oficial del Día 4 (aplicado el 2026-11-25) |
 | DT-5 | Variables de entorno: `SUPABASE_URL` y `SUPABASE_KEY` (publishable o anon), más `TEST_EMAIL` y `TEST_PASSWORD` para pruebas | Actividades oficiales de los Días 4 a 6 (el Día 3 usaba `SUPABASE_ANON_KEY`) |
 | DT-6 | Express solo sirve estáticos y `/config.js` | Día 2 (corrección C-1) |
 | DT-7 | `python3`, nunca `python` ni `py` | Día 1 |
@@ -42,8 +43,8 @@ Node.js 22 · Express · HTML, CSS y JavaScript sin framework · Supabase (Auth 
 |---|---|---|---|---|---|
 | 1 | Jose | `docs/dia-01-*` | — | #1, #2 | Completado |
 | 2 | Jose | `dia-02-planeacion` | HU #3 a #7 | #8 | Completado |
-| 3 | Luis | `feature/dia-03-desarrollo` | HU #3 a #7 | #9 | **En revisión** (no integrado) |
-| 4 | Jose | `dia-04-supabase` | #10 | — | Pendiente |
+| 3 | Luis | `feature/dia-03-desarrollo` | HU #3 a #7 | #9 | Completado (merge `c0abc7d`) |
+| 4 | Jose | `dia-04-supabase` | #10 | #16 | **En revisión.** Verificado contra Supabase real; falta la revisión de Luis y la fusión |
 | 5 | Luis | `dia-05-pruebas` | #11 | — | Pendiente |
 | 6 | Luis | `dia-06-ci` | #12 | — | Pendiente |
 | 7 | Luis | `dia-07-skill` | #13 | — | Pendiente |
@@ -66,11 +67,11 @@ Día 3 → Día 4 → Día 5 → Día 6 → Día 7. El Día 8 depende solo del D
 - No fusionar un PR sin la revisión del otro integrante.
 
 ## 8. Bloqueos actuales
-B1 PR #9 sin integrar · B2 no hay actividad oficial del Día 3 · B3 Node < 22.20 · B4 secretos solo del propietario · B5 modalidad individual · B6 política del lector `using (true)` · B7 nombre de la variable de la llave. Ver el detalle en la sección 2 del plan.
+B1 ✅ resuelto (PR #9 fusionado) · B2 ✅ resuelto (se adaptó `public/app.js`) · B3 ✅ resuelto en la computadora de Jose (v22.23.5); Luis debe comprobar la suya · B4 secretos solo del propietario · B5 modalidad individual · B6 política del lector `using (true)` · B7 ✅ resuelto (`SUPABASE_KEY`). Ver el detalle en la sección 2 del plan.
 
 ## 9. Próximo paso de cada integrante
-- **Jose:** revisar y fusionar el PR de documentación; actualizar Node; revisar y fusionar el PR #9; empezar el Día 4 ([`HANDOFF_JOSE.md`](HANDOFF_JOSE.md)).
-- **Luis:** revisar el PR de documentación; corregir la descripción del PR #9; actualizar Node; preparar el entorno del Día 5 sin tocar archivos del Día 4 ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
+- **Jose:** cuando Luis apruebe, fusionar el PR de documentación (#15) y luego el PR #16 (Día 4); pasar a Luis las credenciales por un canal privado; subir la carpeta del Día 4 a Drive; empezar el Día 8 ([`HANDOFF_JOSE.md`](HANDOFF_JOSE.md)).
+- **Luis:** revisar los PR #15 y #16; cuando el #16 esté en `main`, empezar el Día 5 en `dia-05-pruebas` ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
 
 ## 10. Cómo trabaja un agente aquí
 1. `git fetch` y `git switch main` y `git pull --ff-only`. Crear o usar la rama del día.

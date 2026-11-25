@@ -6,20 +6,34 @@
 - **Día 7 · Skill y subagente** (issue [#13](https://github.com/Antoniii28/mini-inventario/issues/13)).
 - Apoyo: revisar los PR de Jose (documentación, Día 4 y Día 8).
 
-## Ahora mismo (mientras Jose hace el Día 4)
-1. Revisar el PR de documentación (`docs/actividades-oficiales-04-08`) y aprobarlo en GitHub.
-2. **PR #9 (Día 3):** corregir la descripción. Dice "Inicio de sesión probado" y "Registro de productos verificado en Supabase", pero `entregas/dia-03/README.md` dice "Aún no se ejecutó el servidor Express ni se conectó la app con Supabase". Debe decir solo lo que realmente se probó.
-3. `node --version` debe ser **22.20 o superior** (lo requiere la skill de playwright-cli).
-4. Preparar el entorno, **sin crear archivos del proyecto**:
-   - `npm install -g @playwright/cli@latest`
-   - `playwright-cli --help`
-   - Leer `docs/actividades-oficiales/dia-05/GUIA.md`.
-   - **No** simular pruebas que requieren Supabase.
+## Estado del Día 4 (2026-11-25)
+- **En revisión: [PR #16](https://github.com/Antoniii28/mini-inventario/pull/16)** (rama `dia-04-supabase`). Verificado contra Supabase real; los detalles están en `entregas/dia-04/README.md`.
+- Proyecto Supabase: `mini-inventario` de Jose (ref `snefrzzosulngvootger`). La tabla `productos` ya existe, con RLS y 4 políticas. **No hay que ejecutar ningún SQL.**
+- Usuario de prueba para ti: `pchifus.prueba1@example.com`, confirmado. Ya tiene 3 productos: Aceite 2/5 y Refresco 1/6 bajo el mínimo, y Arroz blanco 10/5. Está también `pchifus.prueba2@example.com`.
+- Cambios que te afectan:
+  - La variable se llama `SUPABASE_KEY` (antes `SUPABASE_ANON_KEY`).
+  - `server.js` no arranca con una llave `sb_secret_` o `service_role`.
+  - `npm test` ejecuta 13 pruebas (`tests/*.test.mjs`).
+  - El SKU no distingue mayúsculas.
+  - Hay política de `delete`, así que tus pruebas pueden borrar lo que crean.
+- Observación para tu revisión visual: a 1280 px, la columna "Acciones" de la tabla queda cortada por el scroll horizontal (viene del Día 3).
+
+## Ahora mismo
+1. Revisar y aprobar en GitHub el PR #15 (documentación) y el **PR #16 (Día 4)**.
+2. Comprobar que `node --version` sea **22.20 o superior**.
+3. Recibir de Jose, **por un canal privado**, `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`.
+4. Cuando Jose fusione el PR #16:
+   - `git switch main && git pull && git switch -c dia-05-pruebas`
+   - `npm ci`
+   - Crear `.env` desde `.env.example` y agregar `TEST_EMAIL` y `TEST_PASSWORD`.
+   - `npm start`
+   - Seguir `docs/actividades-oficiales/dia-05/GUIA.md`.
 
 ## Día 5
 | Tema | Detalle |
 |---|---|
-| Empieza cuando | El Día 4 esté en `main` y Jose te haya pasado, por un canal privado, `SUPABASE_URL`, `SUPABASE_KEY` y el usuario de prueba |
+| Empieza cuando | El PR #16 (Día 4) esté en `main` y Jose te haya pasado, por un canal privado, `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD` |
+| `.env` | `SUPABASE_URL=` · `SUPABASE_KEY=` (publishable) · `PORT=` · `TEST_EMAIL=` · `TEST_PASSWORD=`. Nunca se sube; `git check-ignore .env` lo confirma |
 | Rama | `dia-05-pruebas`, desde `main` actualizado |
 | Leer | `docs/gestion/CONTEXTO_COMPARTIDO.md`, `docs/actividades-oficiales/dia-05/GUIA.md` |
 | Puede modificar | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `package-lock.json`, `entregas/dia-05/**`, `.claude/skills/playwright-cli/**`, y el archivo de `public/` que tenga el problema real que elijas |
