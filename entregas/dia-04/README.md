@@ -19,7 +19,7 @@
 | Revisa y aprueba el PR y sube la entrega a Drive | Verificó la base de datos en solo lectura y redactó esta bitácora |
 
 ## Punto de partida
-- El Día 3 (PR #9, merge `c0abc7d`) ya usaba Supabase desde `public/app.js`.
+- El Día 3 (PR #9, merge `c0abc7d`) ya tenía en `public/app.js` el código de Supabase (sesión, alta, consulta y edición). Su conexión real **no se había probado**, según la bitácora del Día 3; se probó por primera vez en este día.
 - La actividad oficial menciona `public/productos.js` y `localStorage`. Este proyecto no tiene ese archivo: **se adaptó `public/app.js`**, sin rehacer el Día 3.
 
 ## Prompts clave
@@ -28,6 +28,7 @@
 3. Prompt de ejecución de Jose: auditoría, migración "mostrar el SQL y esperar mi aprobación", web, pruebas y PR.
 4. Después del rechazo: "Muéstrame el SQL completo de la prueba RLS y verifica que únicamente afecte datos de prueba, que utilice una transacción con ROLLBACK y que no elimine datos existentes. Continúa con una alternativa no destructiva si es posible."
 5. "Realiza tú las pruebas funcionales del Día 4 utilizando un navegador real […] Si necesitas las contraseñas, permite que las introduzca de forma segura."
+6. Observaciones de la revisión de Luis: "Establece el proyecto mini-inventario […] como la base de datos compartida oficial" y "Comprueba el registro de una nueva cuenta desde la interfaz web utilizando un correo válido […] No desactives la confirmación por correo ni debilites las políticas de seguridad".
 
 ## MCP limitado al proyecto
 `.mcp.json`, creado con el comando oficial `claude mcp add --scope project --transport http supabase "https://mcp.supabase.com/mcp?project_ref=snefrzzosulngvootger"`:
@@ -49,8 +50,8 @@
 | `public/index.html` | Botón "Crear cuenta", mensaje informativo y favicon vacío (quita un 404). |
 | `public/logic.mjs` | `validateCredentials` y `friendlyAuthError`. |
 | `tests/logic.test.mjs`, `tests/server.test.mjs` | De 7 a 13 pruebas unitarias. |
-| `.env.example` | Sin valores: `SUPABASE_URL=`, `SUPABASE_KEY=`, `PORT=`. |
-| `docs/requisitos.md`, `docs/diseno.md`, `README.md` | Decisiones D-1 a D-4, registro, SKU sin distinguir mayúsculas, 4 políticas y configuración local. |
+| `.env.example` | Sin valores: `SUPABASE_URL=`, `SUPABASE_KEY=`, `PORT=`, `TEST_EMAIL=` y `TEST_PASSWORD=`. |
+| `docs/requisitos.md`, `docs/diseno.md`, `README.md` | Decisiones D-1 a D-4, registro, SKU sin distinguir mayúsculas, 4 políticas, proyecto Supabase oficial y configuración local. |
 | `.mcp.json`, `.claude/skills/`, `skills-lock.json` | MCP del proyecto y skills oficiales. |
 
 ## Decisiones
@@ -89,6 +90,7 @@ Verificación posterior (consulta de catálogo con `execute_sql`): RLS `true`; p
 3. **El mensaje de error del registro era inútil.** En la prueba real, `Crear cuenta` con `pchifus.prueba3@example.com` mostró "No fue posible completar la operación".
    - **Cómo se detectó:** los logs de Auth (`query_logs`) mostraron `400 email_address_invalid`: Supabase no acepta correos `@example.com`.
    - **Corrección:** se agregó ese código, y `email_address_not_authorized`, a `friendlyAuthError`, con su prueba unitaria. La reverificación muestra "Supabase no acepta ese correo; usa una dirección real".
+   - **Mala decisión asociada:** el agente intentó dos registros con un correo ficticio sin revisar antes la documentación del correo por defecto. Ese servicio solo entrega a miembros de la organización y permite 2 correos por hora. Los dos intentos (06:24 y 06:25 UTC) agotaron el cupo, y el registro con un correo real recibió `429 Demasiados intentos` a las 07:02 UTC. Se esperó a que se liberara el límite **sin cambiar la configuración de Auth**.
 
 ## Comandos y herramientas aprobados o rechazados
 - **Rechazado por Jose:** `execute_sql` con la prueba RLS que hacía `INSERT`, `UPDATE` y `DELETE` dentro de una transacción. Motivo: Supabase advirtió operaciones destructivas y no se veía un `ROLLBACK` explícito. Se sustituyó por una consulta de solo lectura.
