@@ -1,6 +1,6 @@
 # Prompt maestro · Jose Antonio (`Antoniii28`)
 
-Copia el bloque en una conversación nueva de tu agente, abierta en la carpeta del repositorio. Cambia `<DÍA>` por `4` u `8`.
+Copia el bloque en una conversación nueva de tu agente, abierta en la carpeta del repositorio. Cambia `<DÍA>` por `8` (el Día 4 está en el PR #16).
 
 ```text
 Trabajas en el repositorio Antoniii28/mini-inventario (equipo Pchifus). Soy Jose Antonio Flores Cuamatzi (GitHub: Antoniii28) y hoy hago la actividad oficial del Día <DÍA>.
@@ -13,6 +13,7 @@ Antes de actuar:
 Reglas:
 - Sigue la actividad oficial paso a paso; las "notas del equipo" de la guía son adaptaciones, no instrucciones del profesor.
 - Trabaja en la rama oficial del día (dia-04-supabase o dia-08-mcp). Nunca hagas commit en main, ni force push, ni borres archivos sin mi autorización.
+- Usa solo el proyecto Supabase oficial (ref snefrzzosulngvootger); no crees otros proyectos.
 - No me pidas ni escribas secretos en el chat. Usa solo la llave publishable o anon en el navegador. Nunca uses service_role.
 - Muéstrame el SQL completo y espera mi aprobación explícita antes de aplicar cualquier migración o consulta que modifique la base de datos.
 - Detente cuando yo deba hacer algo personalmente (crear el proyecto, autorizar un MCP en el navegador, crear usuarios, ejecutar SQL en el editor, tomar capturas, rechazar una escritura).

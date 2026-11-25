@@ -106,11 +106,11 @@ git check-ignore .env
 ## 12. Notas del equipo (no oficiales)
 | # | Nota |
 |---|---|
-| N-1 | **Dependencia:** el Día 3 (PR #9) debe estar revisado e integrado en `main` antes de empezar. |
+| N-1 | **Dependencia:** el Día 3 (PR #9) debe estar integrado en `main`. ✅ Fusionado el 2026-11-24. |
 | N-2 | La actividad menciona `public/productos.js` y `localStorage`, pero el Día 3 del equipo ya usa Supabase desde `public/app.js`. Se adapta ese archivo y se documenta la diferencia en la bitácora. |
 | N-3 | **Cambios de requisitos del Día 4:** <br>• Registro público con correo y contraseña. Reemplaza la decisión D-1 del Día 2, "sin registro público". <br>• Política de `delete`. El Día 2 no la tenía. <br>Hay que actualizar `docs/requisitos.md` y `docs/diseno.md` en esta rama. |
 | N-4 | Nombre de variable: el Día 3 usa `SUPABASE_ANON_KEY`; los Días 4 y 6 usan `SUPABASE_KEY`. Se adopta `SUPABASE_KEY`. |
 | N-5 | Decisión vigente: SKU único por usuario **sin distinguir mayúsculas y minúsculas**, con un índice único en `(user_id, lower(sku))`. Reemplaza la D-3 del Día 2. |
 | N-6 | Regla vigente: stock bajo = `cantidad < minimo`. |
-| N-7 | **Bloqueo B3:** la computadora de Jose tiene Node v22.18.0, y las skills requieren 22.20 o superior. |
+| N-7 | Las skills requieren Node 22.20 o superior. ✅ Jose actualizó de v22.18.0 a v22.23.5. |
 | N-8 | El SQL **solo se aplica con aprobación explícita** de Jose, después de leerlo completo (regla de `CLAUDE.md` y de la actividad). |

@@ -15,10 +15,11 @@ Antes de actuar:
 Reglas:
 - Sigue la actividad oficial paso a paso; las "notas del equipo" de la guía son adaptaciones, no instrucciones del profesor.
 - Trabaja en la rama oficial del día (dia-05-pruebas, dia-06-ci o dia-07-skill). Nunca hagas commit en main, ni force push, ni borres archivos sin mi autorización.
+- Usa solo el proyecto Supabase oficial (ref snefrzzosulngvootger): no ejecutes SQL ni crees otro proyecto. Prueba con pchifus.prueba2@example.com y no modifiques los productos de pchifus.prueba1@example.com (datos del Día 8).
 - Lee TEST_EMAIL, TEST_PASSWORD, SUPABASE_URL y SUPABASE_KEY del archivo .env sin mostrarlos. No me pidas ni escribas secretos en el chat. Los secretos de GitHub Actions los crea el propietario del repositorio (ver el bloqueo B4 del plan).
 - Detente cuando yo deba hacer algo personalmente: elegir el problema real tras revisar las capturas, cambiar a mano la comparación de bajo mínimo, tomar capturas, aprobar el diagnóstico de CI, explicar con mis palabras, abrir conversaciones limpias.
 - No modifiques archivos del Día 8 de Jose (mcp-inventario/**, entregas/dia-08/**).
-- Las pruebas de Playwright usan un SKU único por prueba y borran lo que crean. Mantén funcionando npm test (pruebas del Día 3 con node --test).
+- Las pruebas de Playwright usan un SKU único por prueba y borran lo que crean. Mantén funcionando npm test (pruebas unitarias tests/*.test.mjs con node --test).
 - Usa git add con rutas explícitas. No subas .env ni capturas que muestren credenciales.
 - Bitácora entregas/dia-0<DÍA>/README.md: prompts clave, un error o mala decisión real de la IA y cómo se detectó, un comando aprobado o rechazado y por qué, y cómo se comprobó. No inventes capturas, resultados ni aprobaciones; atribuye cada acción a quien la hizo.
 - Al terminar: actualiza el estado en docs/gestion/PLAN_TRABAJO_DIAS_04_A_08.md y CONTEXTO_COMPARTIDO.md, completa entregas/dia-0<DÍA>/Pchifus_Evidencia_Dia_0<DÍA>.md con datos reales, haz push y abre el PR hacia main con revisor Antoniii28 y "Refs #11", "Refs #12" o "Refs #13". En el Día 6, el merge final lo hago yo después de la revisión de Jose; en los demás días no hagas merge.

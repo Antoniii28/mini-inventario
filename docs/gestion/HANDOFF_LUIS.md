@@ -4,43 +4,40 @@
 - **Día 5 · Playwright** (issue [#11](https://github.com/Antoniii28/mini-inventario/issues/11)).
 - **Día 6 · GitHub Actions** (issue [#12](https://github.com/Antoniii28/mini-inventario/issues/12)).
 - **Día 7 · Skill y subagente** (issue [#13](https://github.com/Antoniii28/mini-inventario/issues/13)).
-- Apoyo: revisar los PR de Jose (documentación, Día 4 y Día 8).
+- Apoyo: revisar los PR de Jose (#15, #16 y Día 8).
 
-## Estado del Día 4 (2026-11-25)
-- **En revisión: [PR #16](https://github.com/Antoniii28/mini-inventario/pull/16)** (rama `dia-04-supabase`). Verificado contra Supabase real; los detalles están en `entregas/dia-04/README.md`.
-- Proyecto Supabase: `mini-inventario` de Jose (ref `snefrzzosulngvootger`). La tabla `productos` ya existe, con RLS y 4 políticas. **No hay que ejecutar ningún SQL.**
-- Usuario de prueba para ti: `pchifus.prueba1@example.com`, confirmado. Ya tiene 3 productos: Aceite 2/5 y Refresco 1/6 bajo el mínimo, y Arroz blanco 10/5. Está también `pchifus.prueba2@example.com`.
-- Cambios que te afectan:
-  - La variable se llama `SUPABASE_KEY` (antes `SUPABASE_ANON_KEY`).
-  - `server.js` no arranca con una llave `sb_secret_` o `service_role`.
-  - `npm test` ejecuta 13 pruebas (`tests/*.test.mjs`).
-  - El SKU no distingue mayúsculas.
-  - Hay política de `delete`, así que tus pruebas pueden borrar lo que crean.
-- Observación para tu revisión visual: a 1280 px, la columna "Acciones" de la tabla queda cortada por el scroll horizontal (viene del Día 3).
+## Proyecto Supabase oficial (DT-8)
+| Dato | Valor |
+|---|---|
+| Proyecto | `mini-inventario` · ref `snefrzzosulngvootger` · organización `Pchifus-Jose` (propietario: Jose) |
+| `SUPABASE_URL` | `https://snefrzzosulngvootger.supabase.co` (no es secreta) |
+| `SUPABASE_KEY` | Llave **publishable** (`sb_publishable_...`). Te la pasa Jose por un canal privado |
+| Tabla | `productos` con RLS y 4 políticas, ya creada. **No ejecutes SQL ni crees otro proyecto** |
+| Usuario para tus pruebas | `pchifus.prueba2@example.com`, confirmado. Jose te pasa la contraseña por un canal privado |
+| Usuario reservado | `pchifus.prueba1@example.com`: sus 3 productos son la evidencia del Día 4 y los datos del Día 8. No los borres ni los modifiques |
+
+No necesitas acceso al panel de Supabase para los Días 5 a 7: solo la URL, la llave publishable y el usuario de prueba.
+
+Detalles e implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficial" (PR #16).
 
 ## Ahora mismo
-1. Revisar y aprobar en GitHub el PR #15 (documentación) y el **PR #16 (Día 4)**.
-2. Comprobar que `node --version` sea **22.20 o superior**.
-3. Recibir de Jose, **por un canal privado**, `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`.
-4. Cuando Jose fusione el PR #16:
-   - `git switch main && git pull && git switch -c dia-05-pruebas`
-   - `npm ci`
-   - Crear `.env` desde `.env.example` y agregar `TEST_EMAIL` y `TEST_PASSWORD`.
-   - `npm start`
-   - Seguir `docs/actividades-oficiales/dia-05/GUIA.md`.
+1. Revisar y aprobar en GitHub el PR #15 (documentación) y el PR #16 (Día 4).
+2. Comprobar que `node --version` sea **22.20 o superior** (T-03).
+3. Recibir de Jose, por un canal privado, la llave publishable y la contraseña de `pchifus.prueba2@example.com`.
 
 ## Día 5
 | Tema | Detalle |
 |---|---|
-| Empieza cuando | El PR #16 (Día 4) esté en `main` y Jose te haya pasado, por un canal privado, `SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD` |
-| `.env` | `SUPABASE_URL=` · `SUPABASE_KEY=` (publishable) · `PORT=` · `TEST_EMAIL=` · `TEST_PASSWORD=`. Nunca se sube; `git check-ignore .env` lo confirma |
-| Rama | `dia-05-pruebas`, desde `main` actualizado |
+| Empieza cuando | El PR #16 esté en `main` y tengas la llave y la contraseña de prueba |
+| Preparación | `git switch main && git pull --ff-only && git switch -c dia-05-pruebas` · `npm ci` · copiar `.env.example` a `.env` · `npm test` (13 pruebas) · `npm start` |
+| `.env` | `SUPABASE_URL=` · `SUPABASE_KEY=` · `PORT=` · `TEST_EMAIL=pchifus.prueba2@example.com` · `TEST_PASSWORD=`. Nunca se sube; `git check-ignore .env` lo confirma |
 | Leer | `docs/gestion/CONTEXTO_COMPARTIDO.md`, `docs/actividades-oficiales/dia-05/GUIA.md` |
-| Puede modificar | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `package-lock.json`, `entregas/dia-05/**`, `.claude/skills/playwright-cli/**`, y el archivo de `public/` que tenga el problema real que elijas |
+| Puede modificar | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `package-lock.json`, `entregas/dia-05/**`, `.claude/skills/playwright-cli/**` y el archivo de `public/` que tenga el problema real que elijas |
 | No tocar en simultáneo | `mcp-inventario/**`, `entregas/dia-08/**` y `supabase/**` (de Jose) |
-| Acciones personales | Escribir `TEST_EMAIL` y `TEST_PASSWORD` en tu `.env`; revisar tú mismo las capturas y elegir el problema; cambiar **a mano** `cantidad < minimo` para provocar la falla |
+| Acciones personales | Revisar tú mismo las capturas y elegir el problema; cambiar **a mano** `cantidad < minimo` para provocar la falla |
 | Comandos | `npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli -a claude-code -y` · `npm init playwright@latest` · `npx playwright test` · si faltan navegadores, `npx playwright install --with-deps chromium` |
-| Ojo | Las pruebas del Día 3 (`tests/logic.test.mjs`, `node --test`) conviven con Playwright. Separa los patrones (`*.spec.*` para Playwright) y comprueba que `npm test` siga pasando |
+| Ojo | `npm test` ejecuta `node --test` sobre `tests/*.test.mjs`. Usa `*.spec.*` para Playwright y comprueba que `npm test` siga pasando. Cada prueba usa un SKU único y borra solo lo que creó (la política `delete` ya existe). El SKU no distingue mayúsculas |
+| Observación previa | A 1280 px, la columna "Acciones" de la tabla queda cortada por el scroll horizontal. Viene del Día 3 y es un candidato a "problema real" si tú lo confirmas en tus capturas |
 | Evidencias | Capturas 1280x800 y 390x844 en `entregas/dia-05/`; reporte de consola; el problema y su corrección; 4 pruebas en verde; la salida roja provocada y la verde al revertir |
 | PR | Revisor `Antoniii28`; `Refs #11` |
 
@@ -49,8 +46,8 @@
 |---|---|
 | Empieza cuando | El Día 5 esté en `main` |
 | Rama | `dia-06-ci` |
-| Secretos | **Bloqueo B4:** en un repositorio personal, solo el propietario (Jose) puede crear secretos. Coordina con Jose: él ejecuta `gh secret set` × 4, o el profesor indica otra cosa. **Nunca** pegues valores en el chat |
-| Puede modificar | `.github/workflows/ci.yml`, `entregas/dia-06/**` y el cambio temporal que rompa una prueba (después se revierte) |
+| Secretos | **B4:** los crea Jose con `gh secret set` (`SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`, con los valores del proyecto oficial y de `pchifus.prueba2`). **Nunca** pegues valores en el chat |
+| Puede modificar | `.github/workflows/ci.yml`, `entregas/dia-06/**` y el cambio temporal que rompe una prueba (después se revierte) |
 | Acciones personales | Capturas en verde, rojo y verde del **mismo** PR; pedir el diagnóstico sin dar pistas; explicar la causa **con tus palabras**; merge después de la revisión de Jose |
 | Comandos | `gh secret list` · `gh pr checks` · `gh run list` · `gh run view --log-failed` |
 | PR | Revisor `Antoniii28`; `Refs #12` |
@@ -66,7 +63,7 @@
 | PR | Revisor `Antoniii28`; `Refs #13` |
 
 ## Necesitas de Jose
-Credenciales de prueba por un canal privado · secretos de Actions (B4) · revisión de tus PR.
+Llave publishable y contraseña de prueba por un canal privado · secretos de Actions (B4) · revisión de tus PR.
 
 ## Al terminar cada día
 Completar `entregas/dia-0X/Pchifus_Evidencia_Dia_0X.md` y subir la carpeta a Drive cuando el PR esté fusionado.
