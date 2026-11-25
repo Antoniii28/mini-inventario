@@ -2,7 +2,7 @@
 
 **Equipo:** Pchifus  
 **Responsable:** Jose Antonio Flores Cuamatzi (`Antoniii28`)  
-**Rama:** `dia-04-supabase` · **Issue:** #10 · **Pull Request:** _pendiente_  
+**Rama:** `dia-04-supabase` · **Issue:** #10 · **Pull Request:** [#16](https://github.com/Antoniii28/mini-inventario/pull/16)  
 **Fechas:** 24 y 25 de noviembre de 2026  
 **Instrucciones oficiales:** `docs/actividades-oficiales/dia-04/` (PR #15)
 
@@ -154,7 +154,7 @@ $ git check-ignore -v .env
 - `service_role` y `sb_secret_` solo aparecen en `server.js`, como el bloqueo que rechaza esas llaves.
 - Las capturas se tomaron con la sesión iniciada; no muestran contraseñas ni llaves.
 
-`git status` antes del commit final: [ver la descripción del PR].
+`git status` después del push del PR: `On branch dia-04-supabase` · `Your branch is up to date with 'origin/dia-04-supabase'`; los únicos archivos sin seguimiento son material local del profesor, ignorado o no incluido.
 
 ## Capturas
 | Archivo | Qué demuestra |

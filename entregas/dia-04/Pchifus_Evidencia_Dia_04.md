@@ -1,0 +1,40 @@
+# Pchifus · Evidencia Día 4
+
+> **Estado: LISTA PARA SUBIR, salvo la fusión del PR.** Basada en la plantilla del PR #15. Todo lo marcado ocurrió y está verificado en `README.md`.
+
+| Campo | Valor |
+|---|---|
+| Actividad | Día 4 · Conecta datos reales e inicio de sesión con Supabase |
+| Responsable real (hace y sube la entrega) | Jose Antonio Flores Cuamatzi (`Antoniii28`) |
+| Issue | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) |
+| Pull Request | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |
+| Bitácora | [`entregas/dia-04/README.md`](README.md) |
+| Proyecto Supabase | `mini-inventario` (ref `snefrzzosulngvootger`), organización `Pchifus-Jose` |
+| Subido a Google Drive | ☐ No. Lo marca el responsable **solo después** de subirlo |
+
+## Qué pide el profesor (texto oficial)
+Enlace al pull request, con capturas y `entregas/dia-04/README.md`.
+
+La bitácora debe incluir:
+- [x] Los prompts clave que usaste. (sección "Prompts clave")
+- [x] Un error o una mala decisión de la IA, y cómo lo detectaste. (3 casos: `GRANT` faltante, prueba RLS con escrituras y mensaje de registro)
+- [x] Un comando o herramienta que aprobaste o rechazaste, y por qué. (prueba RLS **rechazada**; 2 migraciones aprobadas)
+- [x] Cómo comprobaste que funciona. (13 pruebas unitarias, 27 comprobaciones en navegador real y verificación de solo lectura en la base de datos)
+
+## Archivos para la carpeta de Drive `Pchifus_Dia_04`
+- [x] Este archivo (`Pchifus_Evidencia_Dia_04.md`) con el enlace al PR.
+- [x] `README.md` (bitácora)
+- [x] `capturas/01-usuario-1.png`: sesión del usuario 1 (solo ve sus 3 productos)
+- [x] `capturas/02-usuario-2.png`: sesión del usuario 2 (solo ve sus 2 productos)
+
+## Revisión contra la rúbrica oficial (antes de subir)
+- [x] **Tabla y políticas** (25 pts): la tabla existe, RLS = `true` y hay 4 políticas (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) verificadas en `pg_policies`.
+- [x] **Aislamiento** (25 pts): las 2 capturas, más la verificación "u1 ve 0 ajenos, u2 ve 0 ajenos".
+- [x] **Secretos** (15 pts): `git check-ignore -v .env` → `.gitignore:17`. `.env` tiene 0 commits en el historial y no se usa `service_role`; el servidor rechaza esas llaves.
+- [x] **Uso del MCP** (15 pts): `.mcp.json` con `project_ref=snefrzzosulngvootger` y explicación de la política `update` aprobada.
+- [x] **Bitácora** (20 pts): prompts, errores de la IA, comando rechazado y pruebas.
+
+## Verificación final
+- [ ] El PR está fusionado en `main` y el enlace funciona. **Pendiente: revisión de Luis y autorización de Jose.**
+- [x] Ningún archivo o captura muestra contraseñas, tokens, `.env` ni cadenas de conexión.
+- [x] Todo lo descrito ocurrió realmente. La bitácora distingue lo que hizo Jose personalmente de lo que hizo el agente.
