@@ -34,3 +34,7 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Material local del profesor (las copias oficiales están en docs/actividades-oficiales/)
+/material-profesor/
+/actividad-dia-*
