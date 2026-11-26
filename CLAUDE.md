@@ -2,6 +2,7 @@
 
 Aplicación web para administrar el inventario de un establecimiento de comida.
 Stack: Node.js 22 y Python 3.12 (usar `python3`, no `python` ni `py`). Proyecto independiente: no acceder ni modificar otros proyectos (p. ej. ÑamFod).
+Antes de actuar lee `docs/gestion/CONTEXTO_COMPARTIDO.md`; actividades oficiales en `docs/actividades-oficiales/` y plan en `docs/gestion/PLAN_TRABAJO_DIAS_04_A_08.md`.
 
 ## Ramas y Pull Requests
 - Nunca hacer commit directo a `main`; crear una rama por tarea: `feature/<tema>`, `fix/<tema>`, `docs/<tema>`.
