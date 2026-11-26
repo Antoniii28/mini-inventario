@@ -34,3 +34,9 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Día 5 - Archivos temporales de Playwright
+.playwright-cli/
+test-results/
+playwright-report/
+entregas/dia-05/evidencias/*.zip
