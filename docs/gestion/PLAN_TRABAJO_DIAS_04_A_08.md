@@ -13,7 +13,9 @@ Actualizado: 2026-11-25 · Equipo Pchifus · Fuente de las instrucciones: [`docs
 | 2 | Completado | PR #8 fusionado (`420446a`) |
 | 3 | Completado | PR #9 de Luis (commit `43e2441`), aprobado por Jose y fusionado el 2026-11-24 (`c0abc7d`). Verificado por el agente en una copia temporal: `npm test` 7/7 y el servidor sirve `/` y `/config.js`. La conexión con Supabase **no se demostró en el Día 3**: la bitácora del Día 3 dice que no se conectó y la descripción del PR afirma lo contrario (ver la nota 1). Ese mismo código se probó contra Supabase real en el Día 4. |
 | 4 | En revisión | [PR #16](https://github.com/Antoniii28/mini-inventario/pull/16). Proyecto oficial `snefrzzosulngvootger` (ver DT-8 en el contexto compartido). Migraciones aprobadas por Jose y aplicadas con el MCP. 13/13 pruebas unitarias, 27 comprobaciones en un navegador real y aislamiento verificado (cada usuario ve 0 productos ajenos; `anon` → 42501). Falta: el registro completo con correo real (en curso), la aprobación de Luis y la fusión. |
-| 5 a 8 | Pendiente | Issues #11 a #14 |
+| 5 | En revisión | [PR #17](https://github.com/Antoniii28/mini-inventario/pull/17) de Luis (base `dia-04-supabase`). Revisado por el agente el 26/11: `npm test` 13/13 y `npx playwright test` 4/4 con `prueba2`, sin dejar datos (0 SKU `D5-`; `prueba1` intacto). Cambios pedidos: falta `entregas/dia-05/README.md` con los 4 elementos de la bitácora; el `webServer` no arranca sin `.env` (CI); conflicto en `.gitignore` al sincronizar. |
+| 6 y 7 | Pendiente | Issues #12 y #13. Comandos de secretos preparados (T-30) |
+| 8 | En progreso | Rama `dia-08-mcp` (worktree `mini-inventario-dia08`): servidor FastMCP y 6 pruebas sin base de datos. Falta el SQL del lector y las pruebas reales |
 
 **Nota 1 (Día 3):** la descripción del PR #9 dice "Inicio de sesión probado" y "Registro de productos verificado en Supabase", pero no se corrigió antes de la fusión. Como el PR ya está cerrado, la fuente fiable es [`entregas/dia-03/README.md`](../../entregas/dia-03/README.md). La revisión de Jose lo dejó escrito: "Durante el Día 4 se verificará la conexión con Supabase".
 
@@ -36,7 +38,7 @@ Resueltos y retirados de esta tabla:
 
 | ID | Día | Actividad | Responsable | Rama | Depende de | Criterio de aceptación | Estado | Issue | PR |
 |---|---|---|---|---|---|---|---|---|---|
-| T-00 | — | Documentación y plan | Agente para Jose | `docs/actividades-oficiales-04-08` | — | Luis revisa y aprueba | En revisión | — | #15 |
+| T-00 | — | Documentación y plan | Agente para Jose | `docs/actividades-oficiales-04-08` | — | Luis revisa y aprueba | Completado (PR #15 fusionado, `65a7690`) | — | #15 |
 | T-03 | — | Node 22 ≥ 22.20 | Luis | — | — | `node --version` ≥ v22.20 | Pendiente (Jose ✅) | — | — |
 | T-04 | — | Consultar al profesor la modalidad individual y los secretos (B4, B5) | Jose y Luis | — | — | Respuesta registrada | Pendiente | — | — |
 | T-10 | 4 | Proyecto, MCP, skills, migración, RLS, registro, inicio de sesión y aislamiento | Jose | `dia-04-supabase` | — | [Guía §10](../actividades-oficiales/dia-04/GUIA.md) | En revisión | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |

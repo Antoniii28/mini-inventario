@@ -60,9 +60,26 @@ npm start                   # http://localhost:3000; entra con pchifus.prueba2@e
 | Evidencias | Capturas 1280x800 y 390x844 en `entregas/dia-05/`; reporte de consola; el problema y su corrección; 4 pruebas en verde; la salida roja provocada y la verde al revertir |
 | PR | Revisor `Antoniii28`; `Refs #11` |
 
+## PR #17: cambios pedidos en la revisión (26/11)
+Verificado por el agente: `npm test` 13/13; `npx playwright test` 4/4 con `prueba2`; 0 residuos `D5-`; `prueba1` intacto.
+1. **Falta `entregas/dia-05/README.md`.** Es el archivo que pide la actividad. Debe incluir los 4 elementos de la bitácora, que hoy no están en `bitacora.md`:
+   - Prompts clave.
+   - Un error o mala decisión de la IA y cómo lo detectaste.
+   - Un comando o herramienta que aprobaste o rechazaste, y por qué.
+   - Cómo comprobaste el resultado.
+   
+   Aclara también que **tú** cambiaste `<` por `<=` **a mano**, como pide la actividad. La bitácora dice que la restauración fue "automática".
+2. **El `webServer` no arranca sin `.env`** (bloquea el Día 6). `npm start` usa `node --env-file=.env` y, sin ese archivo, Node falla con `.env: not found` y código 9; está reproducido con `CI=1`. Cambia `webServer.command` a `node --env-file-if-exists=.env server.js`.
+3. **Reporte para el Día 6.** Usa `reporter: [['list'], ['html', { open: 'never' }]]`. Así se genera `playwright-report/`, que ya se ignora en Git y se sube como artefacto.
+
+   El agente verificó los cambios 2 y 3 con una configuración temporal (sin `.env`, `CI=1`): 4/4 y `playwright-report/index.html` generado.
+4. **Sincronización.** `git fetch origin && git merge origin/dia-04-supabase` (o `origin/main` cuando el #16 esté fusionado). El único conflicto es `.gitignore`: **conserva ambos bloques**, el de `material-profesor/` y el tuyo del Día 5. Luego corre `npm test` y `npx playwright test`.
+5. Cuando el #16 se fusione, cambia la base del PR #17 a `main` (`gh pr edit 17 --base main`).
+
 ## Día 6
 | Tema | Detalle |
 |---|---|
+| Requisitos previos del Día 5 | Los cambios 2 y 3 de la sección anterior; sin ellos el CI falla desde el primer paso |
 | Empieza cuando | El Día 5 esté en `main` |
 | Rama | `dia-06-ci` |
 | Secretos | **B4:** los crea Jose con `gh secret set` (`SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`, con los valores del proyecto oficial y de `pchifus.prueba2`). **Nunca** pegues valores en el chat |
