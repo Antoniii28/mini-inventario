@@ -1,21 +1,26 @@
-# Plan de trabajo · Días 4 a 8
+# Plan de trabajo · Días 1 a 10 (detalle de los Días 4 a 8)
 
-Actualizado: 2026-11-25 · Equipo Pchifus · Fuente de las instrucciones: [`docs/actividades-oficiales/`](../actividades-oficiales/README.md)
+Actualizado: 2026-11-27 · Equipo Pchifus · Fuente de las instrucciones: [`docs/actividades-oficiales/`](../actividades-oficiales/README.md)
 
 > Estados permitidos: Pendiente · En progreso · Bloqueado · En revisión · Completado.
 > Una tarea solo pasa a **Completado** cuando sus entregables se verificaron (archivos en `main`, PR fusionado y evidencia real).
 
-## 1. Estado real
+## 1. Control general de las 10 actividades (2026-11-27)
 
-| Día | Estado | Evidencia verificable |
-|---|---|---|
-| 1 | Completado | PR #1 y #2 fusionados |
-| 2 | Completado | PR #8 fusionado (`420446a`) |
-| 3 | Completado | PR #9 de Luis (commit `43e2441`), aprobado por Jose y fusionado el 2026-11-24 (`c0abc7d`). Verificado por el agente en una copia temporal: `npm test` 7/7 y el servidor sirve `/` y `/config.js`. La conexión con Supabase **no se demostró en el Día 3**: la bitácora del Día 3 dice que no se conectó y la descripción del PR afirma lo contrario (ver la nota 1). Ese mismo código se probó contra Supabase real en el Día 4. |
-| 4 | En revisión | [PR #16](https://github.com/Antoniii28/mini-inventario/pull/16). Proyecto oficial `snefrzzosulngvootger` (ver DT-8 en el contexto compartido). Migraciones aprobadas por Jose y aplicadas con el MCP. 13/13 pruebas unitarias, 27 comprobaciones en un navegador real y aislamiento verificado (cada usuario ve 0 productos ajenos; `anon` → 42501). Falta: el registro completo con correo real (en curso), la aprobación de Luis y la fusión. |
-| 5 | En revisión | [PR #17](https://github.com/Antoniii28/mini-inventario/pull/17) de Luis (base `dia-04-supabase`). Revisado por el agente el 26/11: `npm test` 13/13 y `npx playwright test` 4/4 con `prueba2`, sin dejar datos (0 SKU `D5-`; `prueba1` intacto). Cambios pedidos: falta `entregas/dia-05/README.md` con los 4 elementos de la bitácora; el `webServer` no arranca sin `.env` (CI); conflicto en `.gitignore` al sincronizar. |
-| 6 y 7 | Pendiente | Issues #12 y #13. Comandos de secretos preparados (T-30) |
-| 8 | En progreso | Rama `dia-08-mcp` (worktree `mini-inventario-dia08`): servidor FastMCP y 6 pruebas sin base de datos. Falta el SQL del lector y las pruebas reales |
+"Entregado" solo se marca cuando el responsable confirma que subió la carpeta a Drive. Un día solo está **Completado** con el PR fusionado, las evidencias reales y la entrega confirmada.
+
+| Día | Actividad | Responsable | Estado real | Requisitos cumplidos | Requisitos pendientes | Pruebas | Evidencias | Rama y PR | Entrega en Drive |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Repositorio y entorno | Jose | Completado | Repositorio público, `CLAUDE.md`, colaborador, clon verificado | — | Clon de verificación | `entregas/dia-01/` (README y 3 capturas) | `docs/dia-01-*` · #1, #2 | Confirmada por Jose (16/11) |
+| 2 | Requisitos y diseño | Jose | Fusionado | 5 historias (#3 a #7), diseño y bitácora | Confirmar la entrega | — | `entregas/dia-02/README.md` | `dia-02-planeacion` · #8 | Por confirmar |
+| 3 | Primera versión de la web | Luis | Fusionado | App Express + Supabase, 7 pruebas unitarias | Confirmar la entrega (la conexión con Supabase se probó hasta el Día 4; nota 1) | `npm test` 7/7 | `entregas/dia-03/README.md` | `feature/dia-03-desarrollo` · #9 | Por confirmar |
+| 4 | Supabase, RLS e inicio de sesión | Jose | En revisión (listo para fusionar) | Tabla, RLS y 4 políticas; aislamiento en 4 cuentas; secretos; MCP limitado; registro con correo real confirmado (27/11); 3 capturas; bitácora | Aprobación de Luis en GitHub; fusión; Drive | `npm test` 13/13 · 27 comprobaciones en navegador · aislamiento en BD | `entregas/dia-04/` (README, evidencia y 3 capturas) | `dia-04-supabase` · #16 | No entregado |
+| 5 | Pruebas con Playwright | Luis | En revisión (cambios pedidos) | Capturas 1280 y 390, consola, problema móvil corregido, 4 pruebas, rojo → verde | `entregas/dia-05/README.md` con los 4 elementos; `webServer` sin `.env`; reporte HTML; conflicto en `.gitignore`; fusión; Drive | 4/4 Playwright (verificado 26/11, sin residuos) | `entregas/dia-05/` (bitácora, reporte, capturas, salidas) | `dia-05-pruebas` · #17 | No entregado |
+| 6 | CI con GitHub Actions | Luis (secretos: Jose) | Pendiente | Script de secretos listo y validado contra `.env` | 4 secretos (Jose), `ci.yml`, verde → rojo → verde, artefacto, bitácora | — | — | `dia-06-ci` · — | No entregado |
+| 7 | Skill y subagente | Luis | Pendiente | — | Todo; depende del Día 6 | — | — | `dia-07-skill` · — | No entregado |
+| 8 | MCP oficial y servidor propio | Jose | En progreso | Servidor FastMCP con 2 herramientas parametrizadas; 6 pruebas sin BD; MCP registrados; permisos efectivos del lector analizados (incluido lo heredado de `PUBLIC`) | Autorización y ejecución del SQL del lector, `DATABASE_URL`, prueba de solo lectura, comparación, inyección, bitácora, PR, Drive | 6/6 `unittest` sin BD | `entregas/dia-08/README.md` (borrador) | `dia-08-mcp` · — | No entregado |
+| 9 | Docker, Render y diagnóstico | Jose | En progreso | Materiales y guía en el repositorio; `Dockerfile` y `.dockerignore`; servidor en `0.0.0.0` y `PORT` (verificado sin Docker, puerto 10000); plugin oficial de Render revisado | `docker build`/`run` (falta memoria), PR, servicio Render Free, URL pública, MCP de Render, falla y reparación, bitácora, Drive | `npm test` 13/13 | — | `dia-09-render` · — | No entregado |
+| 10 | Incidente de principio a fin | Jose | Bloqueado | Materiales y guía en el repositorio; los dos reportes oficiales están bloqueados (web y BD); el caso de espacios en el SKU no se reproduce desde la web | Consultar al profesor qué incidente usar; necesita el Día 9 publicado | — | — | `dia-10-incidente` · — | No entregado |
 
 **Nota 1 (Día 3):** la descripción del PR #9 dice "Inicio de sesión probado" y "Registro de productos verificado en Supabase", pero no se corrigió antes de la fusión. Como el PR ya está cerrado, la fuente fiable es [`entregas/dia-03/README.md`](../../entregas/dia-03/README.md). La revisión de Jose lo dejó escrito: "Durante el Día 4 se verificará la conexión con Supabase".
 
