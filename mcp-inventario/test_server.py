@@ -83,10 +83,25 @@ class PruebasServidor(unittest.TestCase):
 
     def test_sin_database_url_no_conecta(self):
         mock.patch.stopall()
-        with mock.patch.dict("os.environ", {}, clear=True):
+        with mock.patch.dict("os.environ", {}, clear=True), \
+             mock.patch.object(server, "ENV_PATH", server.Path("no-existe.env")):
             with self.assertRaises(RuntimeError) as ctx:
                 server._conectar()
         self.assertIn("DATABASE_URL", str(ctx.exception))
+
+    def test_lee_env_creado_despues_de_arrancar(self):
+        # Error real del Día 8: el servidor arrancó antes de existir .env y no lo volvía a leer.
+        mock.patch.stopall()
+        import tempfile, os
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = server.Path(tmp) / ".env"
+            ruta.write_text("DATABASE_URL=postgresql://ficticio\n", encoding="utf-8")
+            capturado = {}
+            with mock.patch.dict("os.environ", {}, clear=True), \
+                 mock.patch.object(server, "ENV_PATH", ruta), \
+                 mock.patch.object(server.psycopg, "connect", lambda url, **k: capturado.setdefault("url", url) and mock.MagicMock()):
+                server._conectar()
+            self.assertEqual(capturado["url"], "postgresql://ficticio")
 
 
 if __name__ == "__main__":

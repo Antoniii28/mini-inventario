@@ -11,7 +11,7 @@ import psycopg
 from dotenv import load_dotenv
 from fastmcp import FastMCP
 
-load_dotenv(Path(__file__).with_name(".env"))
+ENV_PATH = Path(__file__).with_name(".env")
 
 LIMITE = 50
 MAX_NOMBRE = 100
@@ -28,6 +28,8 @@ mcp = FastMCP(
 
 
 def _conectar() -> psycopg.Connection:
+    # Se lee .env en cada conexión: si el servidor arrancó antes de crear el archivo, igual lo encuentra.
+    load_dotenv(ENV_PATH)
     url = os.environ.get("DATABASE_URL")
     if not url:
         raise RuntimeError("Falta DATABASE_URL en mcp-inventario/.env")
