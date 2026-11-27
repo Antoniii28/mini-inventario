@@ -66,7 +66,8 @@ $('signup-button').addEventListener('click', async () => {
   if (invalid) { display('login-error', invalid); return; }
   setAuthBusy(true);
   try {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    // El enlace de confirmación vuelve al mismo sitio (localhost o la URL pública de Render).
+    const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
     if (error) { display('login-error', friendlyAuthError(error)); return; }
     if (data.session?.user) { showLoggedIn(data.session.user); await loadProducts(); return; }
     // Con "Confirm email" activo no hay sesión hasta confirmar. Supabase tampoco revela si el correo ya existía.

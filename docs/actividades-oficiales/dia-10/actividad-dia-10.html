@@ -1,0 +1,97 @@
+<title>Mini Inventario Día 10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a printed warehouse work order in one column, with a ten-bay day strip at the top. */
+:root{
+  --bg:#eaf0f4;--surface:#ffffff;--ink:#12283f;--muted:#51657a;--line:#c7d3de;
+  --accent:#0a5fa8;--label:#ffc72c;--label-ink:#12283f;--code:#dfe7ee;
+  --warn-bg:#fff2cc;--warn-ink:#6b4a00;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+main{max-width:860px;margin:0 auto;display:grid;gap:34px;min-width:0}
+main>*{min-width:0}
+h1,h2{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,7vw,3.5rem);font-weight:700}
+h2{font-size:1.75rem;font-weight:600;margin-bottom:12px}
+p{margin:0;text-wrap:pretty}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.84em;background:var(--code);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+pre{margin:0;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.55;padding:12px 14px}
+pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}
+.head{display:grid;gap:14px}
+.tag{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;text-transform:uppercase}
+.tag b{background:var(--label);color:var(--label-ink);padding:2px 10px}
+.bays{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;list-style:none;padding:0;margin:0}
+.bays li{text-align:center;font-family:var(--display);font-weight:600;font-size:.95rem;padding:3px 0;border:1px solid var(--line);color:var(--muted)}
+.bays li.past{background:var(--code)}
+.bays li.now{background:var(--label);color:var(--label-ink);border-color:var(--label)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.95rem}
+.facts span{color:var(--muted)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 10px 9px 0;border-bottom:1px solid var(--line)}
+th{font-family:var(--display);font-size:1rem;font-weight:600;letter-spacing:.03em;color:var(--muted)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;padding-right:0;white-space:nowrap}
+tfoot td{font-weight:600;border-bottom:0}
+.cost{white-space:nowrap;font-size:.86rem;color:var(--muted)}
+.req{margin:0;padding-left:20px;display:grid;gap:4px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.steps>li::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:2.1rem;line-height:1;color:var(--accent)}
+.st{display:grid;gap:9px;min-width:0}
+.st h3{margin:0;font-size:1.1rem;font-weight:600;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px}
+.st h3 small{font-weight:500;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.block{background:var(--surface);border:1px solid var(--line);min-width:0}
+.block header{display:flex;justify-content:space-between;align-items:center;padding:3px 6px 3px 14px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.prompt pre{white-space:pre-wrap;overflow-wrap:anywhere}
+button{font:inherit;font-size:.86rem;background:none;color:var(--accent);border:0;padding:4px 8px;cursor:pointer}
+.report{background:var(--warn-bg);color:var(--warn-ink);padding:14px 16px;font-size:1.05rem}
+.notes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.notes h2{font-size:1.3rem;margin-bottom:4px}
+.log{margin:10px 0 0;padding-left:20px;display:grid;gap:3px}
+</style>
+<main>
+<header class="head">
+  <div class="tag"><b>Día 10 de 10</b><span>Mini Inventario</span><span>Operación y regreso a planeación</span></div>
+  <ol class="bays" aria-label="Avance del curso"><li class="past">1</li><li class="past">2</li><li class="past">3</li><li class="past">4</li><li class="past">5</li><li class="past">6</li><li class="past">7</li><li class="past">8</li><li class="past">9</li><li class="now" aria-current="step">10</li></ol>
+  <h1>Resuelve un incidente de principio a fin</h1>
+  <p class="lede">Hoy das una vuelta completa al ciclo de vida: un reporte llega desde producción, lo investigas, escribes una prueba, lo corriges y verificas la solución publicada.</p>
+  <p class="facts"><span>Duración: 60 minutos</span><span>Modalidad: individual</span></p>
+</header>
+<section><h2>Antes de empezar</h2><ul class="req"><li>La app publicada en Render.</li><li>El MCP de Supabase, el MCP de Render, las pruebas y el CI funcionando.</li></ul></section>
+<section><h2>Herramientas que necesitas</h2><div class="tw"><table><thead><tr><th>Herramienta</th><th>Para qué sirve</th><th>Costo</th></tr></thead><tbody><tr><td><strong>Claude Code o Codex</strong></td><td>El agente con el que haces toda la actividad. Usa el que ya tengas.</td><td class="cost">Codex viene en ChatGPT Free</td></tr><tr><td><strong><a href="https://docs.github.com/es/get-started" target="_blank" rel="noopener">Git y GitHub</a></strong></td><td>Guardar versiones y publicar tu repositorio.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">GitHub CLI (gh)</a></strong></td><td>Que el agente trabaje con GitHub desde la terminal.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://supabase.com/docs" target="_blank" rel="noopener">Supabase (plan Free)</a></strong></td><td>Base de datos PostgreSQL e inicio de sesión.</td><td class="cost">Gratis, 2 proyectos activos</td></tr><tr><td><strong><a href="https://supabase.com/docs/guides/getting-started/mcp" target="_blank" rel="noopener">MCP de Supabase</a></strong></td><td>Que el agente trabaje con tu proyecto de Supabase.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://render.com/docs/free" target="_blank" rel="noopener">Render (instancia Free)</a></strong></td><td>Publicar la web en internet.</td><td class="cost">Gratis, 750 h al mes</td></tr><tr><td><strong><a href="https://render.com/docs/mcp-server" target="_blank" rel="noopener">MCP de Render</a></strong></td><td>Que el agente consulte despliegues y logs.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener">playwright-cli</a></strong></td><td>Que el agente abra tu app, la use y tome capturas.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener">Playwright Test</a></strong></td><td>Pruebas automáticas que se guardan en el proyecto.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://docs.github.com/es/actions" target="_blank" rel="noopener">GitHub Actions</a></strong></td><td>Correr las pruebas en cada pull request.</td><td class="cost">Gratis en repositorio público</td></tr></tbody></table></div></section>
+<section><h2>Reporte recibido</h2><p class="report">«Pude guardar un producto con cantidad -5. La lista lo muestra como si nada y el inventario queda mal.» Si tu app ya lo bloquea, usa este reporte: «Pude registrar dos productos con el mismo SKU».</p></section>
+<section><h2>Qué tienes que hacer</h2><ol class="steps"><li><div class="st"><h3>Lee el reporte<small>5 min</small></h3><p>Abre la URL pública con un minuto de anticipación para despertar el servicio. Escribe qué crees que ocurre antes de pedir ayuda.</p></div></li><li><div class="st"><h3>Reproduce e investiga<small>10 min</small></h3><p>Confirma el problema en producción y guarda la captura.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Tenemos este reporte de producción: [pega el reporte]. Usa playwright-cli en la URL pública para reproducirlo y toma una captura. Revisa los logs recientes con el MCP de Render y consulta los datos con Supabase en solo lectura. Explica la causa. No cambies nada todavía.</code></pre></div></div></li><li><div class="st"><h3>Abre el issue<small>5 min</small></h3><p>Pide crear el issue con <code>gh</code>. Debe incluir pasos para reproducir, causa y criterios de aceptación.</p></div></li><li><div class="st"><h3>Escribe primero la prueba<small>10 min</small></h3><p>En la rama <code>dia-10-incidente</code>, pide una prueba de Playwright que reproduzca el reporte. Córrela y guarda la evidencia de que falla.</p></div></li><li><div class="st"><h3>Corrige en la web y en la base<small>15 min</small></h3><p>La protección debe estar en ambos lugares. Revisa el SQL y qué ocurre con los datos incorrectos ya guardados.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Corrige el issue validando el dato en la web y agregando una restricción en la base con una migración mediante el MCP de Supabase. Primero muéstrame cuántas filas incumplen la regla y propón qué hacer con ellas. Espera mi aprobación antes de modificar datos o aplicar el SQL. Después corre las pruebas.</code></pre></div></div></li><li><div class="st"><h3>Publica y verifica<small>10 min</small></h3><p>Abre el pull request que cierre el issue. Haz merge cuando el CI pase, espera el despliegue y repite el caso en la URL pública para confirmar que ya no ocurre.</p></div></li><li><div class="st"><h3>Cierra el ciclo<small>5 min</small></h3><p>Escribe qué aprendió el sistema con este incidente y cuál sería el siguiente requisito. Anota también qué le delegarías a un agente y qué seguirías revisando tú.</p></div></li></ol></section>
+<section><h2>Si usas Claude Code o Codex</h2><div class="tw"><table><thead><tr><th>Tema</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody><tr><td><strong>Cuidar el contexto</strong></td><td><code>/context</code> para ver el uso, <code>/compact</code> para resumir y <code>/clear</code> para empezar de nuevo.</td><td><code>/status</code> para ver el estado, <code>/compact</code> para resumir y <code>/new</code> para empezar de nuevo.</td></tr></tbody></table></div></section>
+<section><h2>Qué se va a revisar</h2><div class="tw"><table><thead><tr><th>Criterio</th><th>Qué debe verse</th><th class="n">Puntos</th></tr></thead><tbody><tr><td><strong>Reproducción</strong></td><td>Hay captura de producción y causa respaldada por logs o datos.</td><td class="n">15</td></tr><tr><td><strong>Issue</strong></td><td>Incluye pasos, causa y criterios de aceptación.</td><td class="n">10</td></tr><tr><td><strong>Prueba</strong></td><td>Muestras que falla antes de corregir y pasa después.</td><td class="n">20</td></tr><tr><td><strong>Corrección</strong></td><td>Valida en la web y en la base, y explica qué pasó con las filas incorrectas.</td><td class="n">15</td></tr><tr><td><strong>Producción</strong></td><td>El CI está en verde y la URL pública ya rechaza el caso.</td><td class="n">20</td></tr><tr><td><strong>Bitácora y cierre</strong></td><td>Incluye la bitácora completa, el siguiente requisito y qué seguirías revisando.</td><td class="n">20</td></tr></tbody><tfoot><tr><td colspan="2">Total</td><td class="n">100</td></tr></tfoot></table></div></section>
+<section><h2>Qué entregas</h2><p>Enlaces al issue, al pull request y a la URL pública, con <code>entregas/dia-10/README.md</code>.</p>
+<ul class="log"><li>Los prompts clave que usaste.</li><li>Un error o una mala decisión de la IA, y cómo lo detectaste.</li><li>Un comando o herramienta que aprobaste o rechazaste, y por qué.</li><li>Cómo comprobaste que funciona.</li></ul></section>
+<div class="notes">
+<section><h2>Si te atoras</h2><p>Si la restricción falla, probablemente aún existen filas incorrectas. Resuelve esas filas primero.</p></section>
+<section><h2>Si terminas antes</h2><p>Si usas Claude Code, crea un mod de barra de estado con la rama y los cambios pendientes.</p></section>
+</div>
+</main>
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button[data-copy]');if(!b)return;
+  var pre=b.closest('.block').querySelector('pre');var t=pre.innerText;
+  function done(x){b.textContent=x;setTimeout(function(){b.textContent='Copiar'},1600)}
+  function sel(){var r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done('Seleccionado')}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done('Copiado')},sel)}else{sel()}
+});
+</script>

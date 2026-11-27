@@ -1,4 +1,4 @@
-# Actividades oficiales · Días 4 a 8
+# Actividades oficiales · Días 4 a 10
 
 Archivos originales del profesor, copiados sin cambios (mismo hash que los recibidos), y una guía en Markdown por día.
 
@@ -9,12 +9,14 @@ Archivos originales del profesor, copiados sin cambios (mismo hash que los recib
 | 6 | GitHub Actions | Luis · `dosientos77-web` | `dia-06-ci` | [HTML](dia-06/actividad-dia-06.html) · [PDF](dia-06/actividad-dia-06.pdf) | [GUIA](dia-06/GUIA.md) | [#12](https://github.com/Antoniii28/mini-inventario/issues/12) |
 | 7 | Skill y subagente | Luis · `dosientos77-web` | `dia-07-skill` | [HTML](dia-07/actividad-dia-07.html) · [PDF](dia-07/actividad-dia-07.pdf) | [GUIA](dia-07/GUIA.md) | [#13](https://github.com/Antoniii28/mini-inventario/issues/13) |
 | 8 | MCP: Supabase en solo lectura y FastMCP | Jose · `Antoniii28` | `dia-08-mcp` | [PDF](dia-08/actividad-dia-08.pdf) | [GUIA](dia-08/GUIA.md) | [#14](https://github.com/Antoniii28/mini-inventario/issues/14) |
+| 9 | Docker, Render y diagnóstico con el MCP de Render | Jose · `Antoniii28` | `dia-09-render` | [HTML](dia-09/actividad-dia-09.html) · [PDF](dia-09/actividad-dia-09.pdf) | [GUIA](dia-09/GUIA.md) | — |
+| 10 | Incidente de producción de principio a fin | Jose · `Antoniii28` | `dia-10-incidente` | [HTML](dia-10/actividad-dia-10.html) · [PDF](dia-10/actividad-dia-10.pdf) | [GUIA](dia-10/GUIA.md) | — |
 
 ## Archivos faltantes
 - `actividad-dia-08.html`: **no se recibió**. La guía del Día 8 se transcribió del PDF.
 - `actividad-dia-03`: no se pidió ni se recibió. Por eso no se puede comprobar qué exigía el Día 3 (ver bloqueo B2 en el plan).
 
-## Reglas comunes a los 5 días (oficiales)
+## Reglas comunes a los 7 días (oficiales)
 - **Modalidad: individual**; duración: 60 minutos.
 - Cada bitácora `entregas/dia-0X/README.md` incluye: los prompts clave, un error o una mala decisión de la IA y cómo se detectó, un comando o herramienta aprobado o rechazado y por qué, y cómo se comprobó que funciona.
 - Se entrega el **enlace al pull request** del día.
