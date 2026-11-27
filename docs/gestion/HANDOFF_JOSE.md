@@ -1,45 +1,47 @@
 # Handoff · Jose Antonio (`Antoniii28`)
 
-## Actividades
-- **Día 4 · Supabase** (issue [#10](https://github.com/Antoniii28/mini-inventario/issues/10)): en revisión, [PR #16](https://github.com/Antoniii28/mini-inventario/pull/16).
-- **Día 8 · MCP** (issue [#14](https://github.com/Antoniii28/mini-inventario/issues/14)).
-- Apoyo: revisar los PR de Luis (Días 5, 6 y 7) y crear los secretos de Actions (B4).
+> Punto de reanudación: **27/11/2026**, antes de reiniciar el equipo para liberar memoria para Docker (Día 9).
 
-## Día 4: lo que falta
-1. Prueba de registro con un correo real. El correo por defecto de Supabase solo entrega a miembros de la organización `Pchifus-Jose`.
-2. Cuando Luis apruebe: fusionar el PR #15, sincronizar `dia-04-supabase` con `main` (`git merge origin/main`; el conflicto conocido está en `entregas/dia-04/Pchifus_Evidencia_Dia_04.md`, donde gana la versión del PR #16), volver a correr las pruebas y fusionar el PR #16.
-3. T-11: pasar a Luis, **por un canal privado**, la llave publishable y la contraseña de `pchifus.prueba2@example.com`.
-4. Subir a Drive la carpeta `entregas/dia-04/` y luego marcarla como subida.
+## Estado de las actividades de Jose
+| Día | Estado | Dónde |
+|---|---|---|
+| 4 · Supabase | **Completado y entregado** (PR #16 `3524021`; Drive confirmado por Jose el 27/11) | [Carpeta Drive Día 4](https://drive.google.com/drive/folders/1-2oOgVLFxT0y6G4c3lKfQkGciYth_8_V) |
+| 8 · MCP | **En revisión**: [PR #21](https://github.com/Antoniii28/mini-inventario/pull/21). Todo verificado; falta la aprobación de Luis, la fusión y Drive | Worktree `C:\Users\josea\Documents\mini-inventario-dia08`, rama `dia-08-mcp` |
+| 9 · Docker y Render | **En progreso**: [PR #20](https://github.com/Antoniii28/mini-inventario/pull/20) en borrador | Worktree `C:\Users\josea\Documents\mini-inventario-dia09`, rama `dia-09-render` |
+| 10 · Incidente | **Bloqueado**: los 2 reportes oficiales ya están bloqueados; esperando la respuesta del profesor | `docs/actividades-oficiales/dia-10/GUIA.md` (en el PR #20) |
 
-## Día 6: secretos de Actions (T-30, B4)
-Los ejecuta Jose, que es el propietario. Son 4 secretos con la cuenta de prueba 2:
-- `SUPABASE_URL`
-- `SUPABASE_KEY`, la llave publishable
-- `TEST_EMAIL=pchifus.prueba2@example.com`
-- `TEST_PASSWORD`
+Carpeta oficial del equipo en Drive: [Equipo-PChifus](https://drive.google.com/drive/folders/1J9en4MIlL_VQNVOLTgt5q7tbEHxnMAC7). Cada día va en su propia subcarpeta.
 
-Hay dos formas de crearlos:
-- Manual, como en la actividad oficial: `gh secret set NOMBRE --repo Antoniii28/mini-inventario` y escribir el valor cuando se pida.
-- Desde `.env`, sin mostrar los valores: pasar cada uno por stdin, `$valor | gh secret set NOMBRE --repo ...`.
+## Autorizaciones vigentes (dadas por Jose)
+- Fusionar los **PR #21 y #19** cuando Luis los apruebe, siempre que las pruebas pasen y no haya conflictos. Después, preparar la carpeta del Día 8 para Drive (en `C:\Users\josea\Documents\Entregas-Drive-Pchifus\`).
+- Drive: el agente prepara las carpetas y Jose sube los archivos (no hay integración oficial con Drive en Claude Code). Un día se marca "entregado" solo cuando Jose lo confirma.
+- Render: usar la cuenta de Jose para un servicio nuevo `mini-inventario` en el **plan Free**. **No tocar `jafora-web` ni `jafora-api`.** No cambiar variables de entorno desde el MCP.
 
-Comprobación: `gh secret list` muestra solo nombres. Nunca se pegan valores en el chat ni en GitHub.
+## Retomar después del reinicio (en este orden)
+1. **Memoria:** comprobar que haya unos 2 GB libres. Arrancar Docker Desktop y esperar `docker version` con servidor.
+2. **Día 9, contenedor**, en `mini-inventario-dia09`:
+   - `docker build -t mini-inventario .`
+   - `docker run --env-file C:\Users\josea\Documents\mini-inventario\.env -e PORT=3000 -p 3000:3000 mini-inventario`
+   - Captura de la app en `localhost:3000` con el contenedor en marcha.
+   - Detener el contenedor. Antes, cerrar el `npm start` de la ventana de Jose si ocupa el puerto 3000.
+3. **Día 9, PR #20:** quitar el borrador y fusionar cuando el CI esté en verde (llega con el Día 6 de Luis) y Jose lo autorice.
+4. **Día 9, Render** (Jose en el panel):
+   - *New → Web Service* con `mini-inventario`, *Language: Docker*, plan Free, rama `main` y Auto-Deploy *On Commit*.
+   - Variables `SUPABASE_URL` y `SUPABASE_KEY` (publishable).
+   - Agregar la URL pública en Supabase, en *Authentication → URL Configuration*.
+5. **Día 9, falla controlada:** PR con `RUN npm run no-existe`, diagnóstico con el MCP de Render (`list_deploys` y `list_logs`), PR de reparación y verificación de la URL.
+6. **Día 10:** con la respuesta del profesor, reproducir en la URL pública, issue, prueba roja, corrección (web y migración aprobada), PR, producción y reflexión de Jose.
+
+## Datos técnicos que no hay que repetir
+- **Supabase oficial (DT-8):** `snefrzzosulngvootger`, organización `Pchifus-Jose`.
+- **Usuarios:**
+  - `prueba1`: datos del Día 4 y del Día 8, más el producto de inyección `INY-001`.
+  - `prueba2`: pruebas automáticas y secretos de Actions.
+  - La cuenta real de Jose, confirmada en el Día 4, tiene 1 producto.
+- **`inventario_lector`:** ya creado, con 3 mitigaciones. `DATABASE_URL` está en `mini-inventario-dia08\mcp-inventario\.env`, que se ignora.
+- **MCP registrados:** `supabase` (escritura, con aprobación manual), `supabase-lectura` (`read_only=true`), `inventario` (FastMCP) y `plugin:render:render` (OAuth).
+- **Secretos de Actions:** existen los 4 desde el 27/11 (`prueba2`). No se vuelven a crear.
+- **Estado del código:** Día 4 y Día 5 en `main`. Issue #18 (bitácora del Día 5) asignado a Luis.
 
 ## Proyecto Supabase oficial (DT-8)
-`mini-inventario` · ref `snefrzzosulngvootger` · organización `Pchifus-Jose`. Jose es el propietario: autoriza los MCP, aprueba el SQL y gestiona los usuarios. Implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficial" (PR #16).
-
-## Día 8 (en paralelo a los Días 5 a 7 de Luis)
-| Tema | Detalle |
-|---|---|
-| Rama | `dia-08-mcp`, desde `main` con el Día 4 integrado |
-| Leer | `docs/actividades-oficiales/dia-08/GUIA.md` (sobre todo N-2 y N-3: alcance de `using (true)`) |
-| Datos | Ya existen: `pchifus.prueba1@example.com` tiene Aceite 2/5, Arroz blanco 10/5 y Refresco 1/6 |
-| Puede modificar | `mcp-inventario/server.py`, `mcp-inventario/requirements.txt`, `.gitignore` (`.venv/`), `entregas/dia-08/**` |
-| No tocar en simultáneo | `.github/workflows/**`, `tests/**`, `.claude/skills/pruebas-inventario/**` y `.claude/agents/**` (de Luis) |
-| Acciones personales | Ejecutar el SQL del lector con una contraseña propia; guardar `DATABASE_URL` en `mcp-inventario/.env`; registrar `supabase-lectura` e `inventario`; crear el producto de inyección desde la web; **rechazar** las escrituras |
-| Comandos | `python3 -m venv .venv` · `.venv\Scripts\Activate.ps1` · `pip install fastmcp "psycopg[binary]" python-dotenv` · `claude mcp add --transport http supabase-lectura "https://mcp.supabase.com/mcp?project_ref=snefrzzosulngvootger&read_only=true"` · `claude mcp add inventario -- .venv\Scripts\python.exe mcp-inventario\server.py` |
-| Pruebas | Insertar `prueba-escritura` falla; las 2 herramientas responden; la misma pregunta con ambos servidores; inyección documentada; `git check-ignore mcp-inventario/.env` |
-| Antes del PR | `git merge origin/main` (sin rebase forzado); `npm test` y `npx playwright test` en verde |
-| PR | Revisor `dosientos77-web`; `Refs #14` |
-
-## Siguiente actividad
-Después del Día 8: revisar el Día 7 de Luis y completar `entregas/dia-08/Pchifus_Evidencia_Dia_08.md`.
+`mini-inventario` · ref `snefrzzosulngvootger` · organización `Pchifus-Jose`. Jose es el propietario: autoriza los MCP, aprueba el SQL y gestiona los usuarios. Implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficial".

@@ -14,7 +14,7 @@ Actualizado: 2026-11-27 · Equipo Pchifus · Fuente de las instrucciones: [`docs
 | 1 | Repositorio y entorno | Jose | Completado | Repositorio público, `CLAUDE.md`, colaborador, clon verificado | — | Clon de verificación | `entregas/dia-01/` (README y 3 capturas) | `docs/dia-01-*` · #1, #2 | Confirmada por Jose (16/11) |
 | 2 | Requisitos y diseño | Jose | Fusionado | 5 historias (#3 a #7), diseño y bitácora | Confirmar la entrega | — | `entregas/dia-02/README.md` | `dia-02-planeacion` · #8 | Por confirmar |
 | 3 | Primera versión de la web | Luis | Fusionado | App Express + Supabase, 7 pruebas unitarias | Confirmar la entrega (la conexión con Supabase se probó hasta el Día 4; nota 1) | `npm test` 7/7 | `entregas/dia-03/README.md` | `feature/dia-03-desarrollo` · #9 | Por confirmar |
-| 4 | Supabase, RLS e inicio de sesión | Jose | **Integrado** (PR #16, `3524021`, aprobado por Luis) | Todos los criterios oficiales; registro con correo real confirmado; 3 capturas | Subida a Drive (carpeta preparada en local) | `npm test` 13/13 · 27 comprobaciones en navegador · aislamiento en BD | `entregas/dia-04/` | `dia-04-supabase` · #16 | No entregado |
+| 4 | Supabase, RLS e inicio de sesión | Jose | **Completado** | Todos los criterios oficiales; registro con correo real confirmado; 3 capturas | — | `npm test` 13/13 · 27 comprobaciones en navegador · aislamiento en BD | `entregas/dia-04/` | `dia-04-supabase` · #16 (`3524021`) | **Entregado** (confirmado por Jose el 27/11): [carpeta Día 4](https://drive.google.com/drive/folders/1-2oOgVLFxT0y6G4c3lKfQkGciYth_8_V) |
 | 5 | Pruebas con Playwright | Luis | **Integrado** (PR #17, `2a4c370`); bitácora pendiente | 4 pruebas con limpieza; `webServer` sin `.env`; reporte HTML; móvil corregido | Issue #18: falla roja **a mano**, prompts reales, evidencia de Drive y sección de pendientes | `npm test` 13/13 + `npx playwright test` 4/4 en `main` con `CI=1` (27/11) | `entregas/dia-05/` | `dia-05-pruebas` · #17 | No entregado (bloqueado por #18) |
 | 6 | CI con GitHub Actions | Luis (secretos: Jose) | Pendiente (desbloqueado) | 4 secretos creados por Jose el 27/11 (`gh secret list`); Playwright listo para CI en `main` | `ci.yml`, verde → rojo → verde, artefacto, bitácora | — | — | `dia-06-ci` · — | No entregado |
 | 7 | Skill y subagente | Luis | Pendiente | — | Todo; depende del Día 6 | — | — | `dia-07-skill` · — | No entregado |
@@ -84,10 +84,12 @@ Si un bloqueo dura más de 2 horas, se marca "Bloqueado" con su causa y el respo
 
 | Día | Responsable de subirlo | Archivo índice | Estado de la subida |
 |---|---|---|---|
-| 4 | Jose | `entregas/dia-04/Pchifus_Evidencia_Dia_04.md` (completo en el PR #16) | No subido |
+| 4 | Jose | `entregas/dia-04/Pchifus_Evidencia_Dia_04.md` | **Subido** (confirmado por Jose, 27/11): [Dia 4 - Mini Inventario](https://drive.google.com/drive/folders/1-2oOgVLFxT0y6G4c3lKfQkGciYth_8_V) |
 | 5 | Luis | [`entregas/dia-05/Pchifus_Evidencia_Dia_05.md`](../../entregas/dia-05/Pchifus_Evidencia_Dia_05.md) | No subido |
 | 6 | Luis | [`entregas/dia-06/Pchifus_Evidencia_Dia_06.md`](../../entregas/dia-06/Pchifus_Evidencia_Dia_06.md) | No subido |
 | 7 | Luis | [`entregas/dia-07/Pchifus_Evidencia_Dia_07.md`](../../entregas/dia-07/Pchifus_Evidencia_Dia_07.md) | No subido |
 | 8 | Jose | [`entregas/dia-08/Pchifus_Evidencia_Dia_08.md`](../../entregas/dia-08/Pchifus_Evidencia_Dia_08.md) | No subido |
 
 "Subido" solo se marca cuando el responsable confirma que subió la carpeta.
+
+**Carpeta oficial del equipo en Drive** (para todas las entregas): [Equipo-PChifus](https://drive.google.com/drive/folders/1J9en4MIlL_VQNVOLTgt5q7tbEHxnMAC7). Cada día va en su propia subcarpeta, como la del Día 4.
