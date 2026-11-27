@@ -1,0 +1,79 @@
+name: CI - Mini Inventario
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    name: Pruebas Node.js y Playwright
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Crear entorno temporal
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: |
+          node <<'NODE'
+          const { writeFileSync } = require('node:fs');
+          const names = [
+            'SUPABASE_URL',
+            'SUPABASE_KEY',
+            'TEST_EMAIL',
+            'TEST_PASSWORD'
+          ];
+
+          for (const name of names) {
+            if (!process.env[name]) {
+              throw new Error(`Falta el secreto ${name}`);
+            }
+          }
+
+          const content = names
+            .map(name => `${name}=${JSON.stringify(process.env[name])}`)
+            .join('\n');
+
+          writeFileSync('.env', content + '\n', { mode: 0o600 });
+          NODE
+
+      - name: Ejecutar pruebas Node.js
+        run: npm test
+
+      - name: Ejecutar pruebas Playwright
+        env:
+          CI: 'true'
+          PLAYWRIGHT_JUNIT_OUTPUT_FILE: playwright-report/resultados.xml
+        run: |
+          mkdir -p playwright-report
+          npx playwright test --reporter=list,junit
+
+      - name: Guardar reporte Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: playwright-report/resultados.xml
+          if-no-files-found: error
+          retention-days: 7
