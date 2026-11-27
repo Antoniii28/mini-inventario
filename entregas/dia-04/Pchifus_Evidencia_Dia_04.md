@@ -1,39 +1,41 @@
 # Pchifus · Evidencia Día 4
 
-> **Estado: NO LISTA.** Es una plantilla. Se completa con datos reales cuando el PR del día esté fusionado. No marques nada como hecho sin evidencia.
+> **Estado: LISTA PARA SUBIR, salvo la fusión del PR.** Basada en la plantilla del PR #15. Todo lo marcado ocurrió y está verificado en `README.md`.
 
 | Campo | Valor |
 |---|---|
 | Actividad | Día 4 · Conecta datos reales e inicio de sesión con Supabase |
 | Responsable real (hace y sube la entrega) | Jose Antonio Flores Cuamatzi (`Antoniii28`) |
 | Issue | [#10](https://github.com/Antoniii28/mini-inventario/issues/10) |
-| Pull Request | _pendiente_ |
-| Bitácora | [`entregas/dia-04/README.md`](README.md) _(se crea durante la actividad)_ |
+| Pull Request | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |
+| Bitácora | [`entregas/dia-04/README.md`](README.md) |
+| Proyecto Supabase | `mini-inventario` (ref `snefrzzosulngvootger`), organización `Pchifus-Jose` |
 | Subido a Google Drive | ☐ No. Lo marca el responsable **solo después** de subirlo |
 
 ## Qué pide el profesor (texto oficial)
 Enlace al pull request, con capturas y `entregas/dia-04/README.md`.
 
 La bitácora debe incluir:
-- [ ] Los prompts clave que usaste.
-- [ ] Un error o una mala decisión de la IA, y cómo lo detectaste.
-- [ ] Un comando o herramienta que aprobaste o rechazaste, y por qué.
-- [ ] Cómo comprobaste que funciona.
+- [x] Los prompts clave que usaste. (sección "Prompts clave")
+- [x] Un error o una mala decisión de la IA, y cómo lo detectaste. (3 casos: `GRANT` faltante, prueba RLS con escrituras y mensaje de registro; más 2 malas decisiones asociadas: cupo de correos y caducidad del enlace)
+- [x] Un comando o herramienta que aprobaste o rechazaste, y por qué. (prueba RLS **rechazada**; 2 migraciones aprobadas)
+- [x] Cómo comprobaste que funciona. (13 pruebas unitarias, 27 comprobaciones en navegador real, registro con correo real confirmado y verificación de solo lectura en la base de datos)
 
 ## Archivos para la carpeta de Drive `Pchifus_Dia_04`
-- [ ] Este archivo (`Pchifus_Evidencia_Dia_04.md`) con el enlace al PR.
-- [ ] `README.md` (bitácora)
-- [ ] Captura de la sesión del usuario 1 (solo ve sus productos)
-- [ ] Captura de la sesión del usuario 2 (solo ve sus productos)
+- [x] Este archivo (`Pchifus_Evidencia_Dia_04.md`) con el enlace al PR.
+- [x] `README.md` (bitácora)
+- [x] `capturas/01-usuario-1.png`: sesión del usuario 1 (solo ve sus 3 productos)
+- [x] `capturas/02-usuario-2.png`: sesión del usuario 2 (solo ve sus 2 productos)
+- [x] `capturas/03-registro-cuenta-nueva.png`: cuenta registrada desde la web y confirmada por correo (solo ve su producto; correo difuminado)
 
 ## Revisión contra la rúbrica oficial (antes de subir)
-- [ ] **Tabla y políticas** (25 pts): La tabla existe, tiene RLS activo y políticas para las 4 operaciones.
-- [ ] **Aislamiento** (25 pts): Las capturas muestran que un usuario no ve los datos del otro.
-- [ ] **Secretos** (15 pts): `.env` no está en el repositorio y no se usa la llave `service_role`.
-- [ ] **Uso del MCP** (15 pts): Está limitado a tu proyecto y explicas un SQL que aprobaste.
-- [ ] **Bitácora** (20 pts): Incluye prompts clave, un error de la IA, un comando aprobado o rechazado y cómo comprobaste el resultado.
+- [x] **Tabla y políticas** (25 pts): la tabla existe, RLS = `true` y hay 4 políticas (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) verificadas en `pg_policies`.
+- [x] **Aislamiento** (25 pts): las 3 capturas, más la verificación en la BD: las 4 cuentas ven 0 productos ajenos.
+- [x] **Secretos** (15 pts): `git check-ignore -v .env` → `.gitignore:17`. `.env` tiene 0 commits en el historial y no se usa `service_role`; el servidor rechaza esas llaves.
+- [x] **Uso del MCP** (15 pts): `.mcp.json` con `project_ref=snefrzzosulngvootger` y explicación de la política `update` aprobada.
+- [x] **Bitácora** (20 pts): prompts, errores de la IA, comando rechazado y pruebas.
 
 ## Verificación final
-- [ ] El PR está fusionado en `main` y el enlace funciona.
-- [ ] Ningún archivo o captura muestra contraseñas, tokens, `.env` ni cadenas de conexión.
-- [ ] Todo lo descrito ocurrió realmente y lo hizo el responsable indicado.
+- [ ] El PR está fusionado en `main` y el enlace funciona. **Pendiente: revisión de Luis y autorización de Jose.**
+- [x] Ningún archivo o captura muestra contraseñas, tokens, `.env` ni cadenas de conexión.
+- [x] Todo lo descrito ocurrió realmente. La bitácora distingue lo que hizo Jose personalmente de lo que hizo el agente.

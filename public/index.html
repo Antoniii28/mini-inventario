@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#112b33">
   <title>Mini Inventario | Pchifus</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/styles.css">
   <script src="/config.js"></script>
   <script type="module" src="/app.js"></script>
@@ -13,20 +14,22 @@
   <main>
     <section id="auth-view" class="auth-layout" aria-labelledby="auth-title">
       <div class="auth-brand"><span class="brand-mark">P</span><p class="eyebrow">EQUIPO PCHIFUS</p><h1>Todo tu inventario,<br>en un solo lugar.</h1><p>Controla ingredientes, bebidas e insumos sin perder de vista las existencias.</p></div>
-      <div class="card auth-card"><p class="eyebrow">BIENVENIDO</p><h2 id="auth-title">Iniciar sesión</h2><p class="muted">Ingresa con una cuenta autorizada.</p>
+      <div class="card auth-card"><p class="eyebrow">BIENVENIDO</p><h2 id="auth-title">Iniciar sesión</h2><p class="muted">Ingresa con tu correo y contraseña, o crea una cuenta nueva.</p>
         <form id="login-form" novalidate>
           <label for="email">Correo electrónico</label><input id="email" name="email" type="email" autocomplete="username" required placeholder="correo@ejemplo.com">
           <label for="password">Contraseña</label><input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Tu contraseña">
           <p id="login-error" class="form-message error" role="alert" hidden></p>
+          <p id="login-info" class="form-message success" role="status" hidden></p>
           <button id="login-button" type="submit" class="button primary full">Ingresar</button>
-        </form><p class="hint">Las cuentas se crean desde Supabase por el administrador.</p>
+          <button id="signup-button" type="button" class="button ghost full">Crear cuenta</button>
+        </form><p class="hint">Para crear una cuenta usa al menos 6 caracteres en la contraseña.</p>
       </div>
     </section>
     <section id="inventory-view" class="app-layout" hidden aria-labelledby="page-title">
       <aside class="sidebar"><div class="logo"><span class="brand-mark">P</span><div><strong>Mini Inventario</strong><small>by Pchifus</small></div></div><p class="sidebar-caption">PANEL DE CONTROL</p><div class="nav-active">▦ &nbsp; Inventario</div><div class="sidebar-bottom">Equipo Pchifus<br><span>Gestión de existencias</span></div></aside>
       <div class="workspace">
         <header class="topbar"><span class="muted">Panel / Inventario</span><div class="profile"><span id="user-email"></span><button id="logout-button" class="button ghost" type="button">Cerrar sesión</button></div></header>
-        <div class="page-body"><div class="page-heading"><div><p class="eyebrow">CONTROL DE EXISTENCIAS</p><h1 id="page-title">Mi inventario</h1><p class="muted">Administra los productos de tu establecimiento.</p></div><span class="today-label">Mini Inventario · Día 3</span></div>
+        <div class="page-body"><div class="page-heading"><div><p class="eyebrow">CONTROL DE EXISTENCIAS</p><h1 id="page-title">Mi inventario</h1><p class="muted">Administra los productos de tu establecimiento.</p></div><span class="today-label">Mini Inventario · Día 4</span></div>
           <div class="stats"><article class="stat card"><p>Total de productos</p><strong id="total-products">0</strong><span>Registrados en inventario</span></article><article class="stat card warn"><p>Existencias bajas</p><strong id="low-products">0</strong><span>Requieren atención</span></article></div>
           <div class="content-grid"><section class="card form-card" aria-labelledby="new-title"><p class="eyebrow">AGREGAR PRODUCTO</p><h2 id="new-title">Nuevo producto</h2><p class="muted">Completa todos los campos.</p><form id="product-form" novalidate>
             <label for="nombre">Nombre del producto</label><input id="nombre" name="nombre" type="text" required maxlength="160" placeholder="Ej. Arroz blanco"><small class="field-error" id="nombre-error"></small>

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateProduct, parseNonnegativeInteger, isLowStock, filterProducts, friendlyError } from '../public/logic.mjs';
+import { validateProduct, parseNonnegativeInteger, isLowStock, filterProducts, friendlyError, validateCredentials, friendlyAuthError } from '../public/logic.mjs';
 
 test('acepta producto correcto y quita espacios en extremos', () => {
   assert.deepEqual(validateProduct({ nombre: ' Arroz ', sku: ' A-1 ', cantidad: '5', minimo: '3' }), { valid: true, value: {nombre:'Arroz', sku:'A-1', cantidad:5, minimo:3}, errors:{} });
@@ -24,3 +24,20 @@ test('ordena productos y aplica filtro de bajo mínimo', () => {
   assert.deepEqual(filterProducts(items,true).map(p=>p.nombre),['Bebida','Zanahoria']);
 });
 test('traduce error de SKU duplicado',()=>assert.equal(friendlyError({code:'23505'}),'Ya tienes un producto con ese SKU'));
+
+// Día 4: registro e inicio de sesión
+test('valida correo y contraseña; el registro exige al menos 6 caracteres', () => {
+  assert.equal(validateCredentials('a@b.co', 'x'), null);
+  assert.ok(validateCredentials('sin-arroba', 'secreto1'));
+  assert.ok(validateCredentials('a@b.co', ''));
+  assert.match(validateCredentials('a@b.co', '12345', { forSignUp: true }), /al menos 6/);
+  assert.equal(validateCredentials(' a@b.co ', '123456', { forSignUp: true }), null);
+});
+test('traduce errores de Supabase Auth sin exponer detalles', () => {
+  assert.equal(friendlyAuthError({ code: 'invalid_credentials' }), 'Correo o contraseña incorrectos');
+  assert.equal(friendlyAuthError({ code: 'user_already_exists' }), 'Ya existe una cuenta con ese correo');
+  assert.match(friendlyAuthError({ code: 'weak_password' }), /débil/);
+  // Encontrado en la prueba real del Día 4: Supabase rechaza correos @example.com en el registro.
+  assert.match(friendlyAuthError({ code: 'email_address_invalid' }), /no acepta ese correo/);
+  assert.match(friendlyAuthError({ code: 'otro', message: 'detalle interno' }), /^No fue posible/);
+});

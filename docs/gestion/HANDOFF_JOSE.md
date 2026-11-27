@@ -11,6 +11,19 @@
 3. T-11: pasar a Luis, **por un canal privado**, la llave publishable y la contraseña de `pchifus.prueba2@example.com`.
 4. Subir a Drive la carpeta `entregas/dia-04/` y luego marcarla como subida.
 
+## Día 6: secretos de Actions (T-30, B4)
+Los ejecuta Jose, que es el propietario. Son 4 secretos con la cuenta de prueba 2:
+- `SUPABASE_URL`
+- `SUPABASE_KEY`, la llave publishable
+- `TEST_EMAIL=pchifus.prueba2@example.com`
+- `TEST_PASSWORD`
+
+Hay dos formas de crearlos:
+- Manual, como en la actividad oficial: `gh secret set NOMBRE --repo Antoniii28/mini-inventario` y escribir el valor cuando se pida.
+- Desde `.env`, sin mostrar los valores: pasar cada uno por stdin, `$valor | gh secret set NOMBRE --repo ...`.
+
+Comprobación: `gh secret list` muestra solo nombres. Nunca se pegan valores en el chat ni en GitHub.
+
 ## Proyecto Supabase oficial (DT-8)
 `mini-inventario` · ref `snefrzzosulngvootger` · organización `Pchifus-Jose`. Jose es el propietario: autoriza los MCP, aprueba el SQL y gestiona los usuarios. Implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficial" (PR #16).
 

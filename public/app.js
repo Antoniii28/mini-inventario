@@ -1,8 +1,8 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-import { validateProduct, parseNonnegativeInteger, isLowStock, filterProducts, friendlyError } from './logic.mjs';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/+esm';
+import { validateProduct, parseNonnegativeInteger, isLowStock, filterProducts, friendlyError, validateCredentials, friendlyAuthError } from './logic.mjs';
 
 const $ = (id) => document.getElementById(id);
-const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const supabase = createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
 let products = [];
 let activeUser = null;
 let requestVersion = 0;
@@ -45,17 +45,35 @@ async function loadProducts() {
   if (error) { display('list-error', friendlyError(error)); return; }
   products = data || []; renderProducts();
 }
+const setAuthBusy = (busy) => { $('login-button').disabled = busy; $('signup-button').disabled = busy; };
 $('login-form').addEventListener('submit', async (event) => {
-  event.preventDefault(); display('login-error');
+  event.preventDefault(); display('login-error'); display('login-info');
   const email = $('email').value.trim(); const password = $('password').value;
-  if (!email || !password || !$('email').validity.valid) { display('login-error', 'Ingresa un correo válido y una contraseña'); return; }
-  $('login-button').disabled = true;
+  const invalid = validateCredentials(email, password);
+  if (invalid) { display('login-error', invalid); return; }
+  setAuthBusy(true);
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error || !data.user) { display('login-error', 'Correo o contraseña incorrectos'); return; }
+    if (error || !data.user) { display('login-error', error?.code === 'email_not_confirmed' ? friendlyAuthError(error) : 'Correo o contraseña incorrectos'); return; }
     showLoggedIn(data.user); await loadProducts();
   } catch { display('login-error', 'No fue posible conectar con el servicio de autenticación'); }
-  finally { $('login-button').disabled = false; }
+  finally { setAuthBusy(false); }
+});
+$('signup-button').addEventListener('click', async () => {
+  display('login-error'); display('login-info');
+  const email = $('email').value.trim(); const password = $('password').value;
+  const invalid = validateCredentials(email, password, { forSignUp: true });
+  if (invalid) { display('login-error', invalid); return; }
+  setAuthBusy(true);
+  try {
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) { display('login-error', friendlyAuthError(error)); return; }
+    if (data.session?.user) { showLoggedIn(data.session.user); await loadProducts(); return; }
+    // Con "Confirm email" activo no hay sesión hasta confirmar. Supabase tampoco revela si el correo ya existía.
+    $('password').value = '';
+    display('login-info', 'Si el correo es válido, recibirás un enlace para confirmar la cuenta. Después inicia sesión.');
+  } catch { display('login-error', 'No fue posible conectar con el servicio de autenticación'); }
+  finally { setAuthBusy(false); }
 });
 $('logout-button').addEventListener('click', async () => {
   $('logout-button').disabled = true;
