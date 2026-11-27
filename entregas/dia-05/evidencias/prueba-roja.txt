@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas (9.6s)
+
+
+  1) tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas ────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#product-list tr').filter({ has: getByRole('cell', { name: 'D5-NORMAL-659c7660-4b87-489a-a45b-9cf2d21942d0', exact: true }) })
+    Expected substring: "En orden"
+    Received string:    "Prueba stock normalD5-NORMAL-659c7660-4b87-489a-a45b-9cf2d21942d055Bajo mínimoEditar"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('#product-list tr').filter({ has: getByRole('cell', { name: 'D5-NORMAL-659c7660-4b87-489a-a45b-9cf2d21942d0', exact: true }) }) with timeout 5000ms
+      - waiting for locator('#product-list tr').filter({ has: getByRole('cell', { name: 'D5-NORMAL-659c7660-4b87-489a-a45b-9cf2d21942d0', exact: true }) })
+        14 × locator resolved to <tr>…</tr>
+           - unexpected value "Prueba stock normalD5-NORMAL-659c7660-4b87-489a-a45b-9cf2d21942d055Bajo mínimoEditar"
+
+
+      53 |       .filter({ has: page.getByRole('cell', { name: skuNormal, exact: true }) });
+      54 |
+    > 55 |     await expect(filaNormal).toContainText('En orden');
+         |                              ^
+      56 |     await expect(page.locator('#low-products')).toHaveText(alertasAntes);
+      57 |
+      58 |     // Comprobar el filtro de existencias bajas.
+        at /Users/luisgal/Documents/mini-inventario/tests/existencias-bajas.spec.mjs:55:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/existencias-bajas-Día-5---Alerta-de-existencias-bajas/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/existencias-bajas-Día-5---Alerta-de-existencias-bajas/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/existencias-bajas-Día-5---Alerta-de-existencias-bajas/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/existencias-bajas-Día-5---Alerta-de-existencias-bajas/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas ─────────────────────
