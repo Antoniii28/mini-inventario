@@ -1,0 +1,98 @@
+<title>Mini Inventario Día 5</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a printed warehouse work order in one column, with a ten-bay day strip at the top. */
+:root{
+  --bg:#eaf0f4;--surface:#ffffff;--ink:#12283f;--muted:#51657a;--line:#c7d3de;
+  --accent:#0a5fa8;--label:#ffc72c;--label-ink:#12283f;--code:#dfe7ee;
+  --warn-bg:#fff2cc;--warn-ink:#6b4a00;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+main{max-width:860px;margin:0 auto;display:grid;gap:34px;min-width:0}
+main>*{min-width:0}
+h1,h2{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,7vw,3.5rem);font-weight:700}
+h2{font-size:1.75rem;font-weight:600;margin-bottom:12px}
+p{margin:0;text-wrap:pretty}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.84em;background:var(--code);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+pre{margin:0;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.55;padding:12px 14px}
+pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}
+.head{display:grid;gap:14px}
+.tag{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;text-transform:uppercase}
+.tag b{background:var(--label);color:var(--label-ink);padding:2px 10px}
+.bays{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;list-style:none;padding:0;margin:0}
+.bays li{text-align:center;font-family:var(--display);font-weight:600;font-size:.95rem;padding:3px 0;border:1px solid var(--line);color:var(--muted)}
+.bays li.past{background:var(--code)}
+.bays li.now{background:var(--label);color:var(--label-ink);border-color:var(--label)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.95rem}
+.facts span{color:var(--muted)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 10px 9px 0;border-bottom:1px solid var(--line)}
+th{font-family:var(--display);font-size:1rem;font-weight:600;letter-spacing:.03em;color:var(--muted)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;padding-right:0;white-space:nowrap}
+tfoot td{font-weight:600;border-bottom:0}
+.cost{white-space:nowrap;font-size:.86rem;color:var(--muted)}
+.req{margin:0;padding-left:20px;display:grid;gap:4px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.steps>li::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:2.1rem;line-height:1;color:var(--accent)}
+.st{display:grid;gap:9px;min-width:0}
+.st h3{margin:0;font-size:1.1rem;font-weight:600;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px}
+.st h3 small{font-weight:500;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.block{background:var(--surface);border:1px solid var(--line);min-width:0}
+.block header{display:flex;justify-content:space-between;align-items:center;padding:3px 6px 3px 14px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.prompt pre{white-space:pre-wrap;overflow-wrap:anywhere}
+button{font:inherit;font-size:.86rem;background:none;color:var(--accent);border:0;padding:4px 8px;cursor:pointer}
+.report{background:var(--warn-bg);color:var(--warn-ink);padding:14px 16px;font-size:1.05rem}
+.notes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.notes h2{font-size:1.3rem;margin-bottom:4px}
+.log{margin:10px 0 0;padding-left:20px;display:grid;gap:3px}
+</style>
+<main>
+<header class="head">
+  <div class="tag"><b>Día 5 de 10</b><span>Mini Inventario</span><span>Pruebas</span></div>
+  <ol class="bays" aria-label="Avance del curso"><li class="past">1</li><li class="past">2</li><li class="past">3</li><li class="past">4</li><li class="now" aria-current="step">5</li><li class="">6</li><li class="">7</li><li class="">8</li><li class="">9</li><li class="">10</li></ol>
+  <h1>Prueba tu app con los ojos del agente</h1>
+  <p class="lede">Primero el agente usa tu aplicación en un navegador real, toma capturas y reporta problemas. Después conviertes ese recorrido en pruebas que se pueden repetir.</p>
+  <p class="facts"><span>Duración: 60 minutos</span><span>Modalidad: individual</span></p>
+</header>
+<section><h2>Antes de empezar</h2><ul class="req"><li>La web conectada a Supabase.</li><li>Un usuario confirmado para pruebas.</li></ul></section>
+<section><h2>Herramientas que necesitas</h2><div class="tw"><table><thead><tr><th>Herramienta</th><th>Para qué sirve</th><th>Costo</th></tr></thead><tbody><tr><td><strong>Claude Code o Codex</strong></td><td>El agente con el que haces toda la actividad. Usa el que ya tengas.</td><td class="cost">Codex viene en ChatGPT Free</td></tr><tr><td><strong><a href="https://docs.github.com/es/get-started" target="_blank" rel="noopener">Git y GitHub</a></strong></td><td>Guardar versiones y publicar tu repositorio.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">GitHub CLI (gh)</a></strong></td><td>Que el agente trabaje con GitHub desde la terminal.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://nodejs.org/es" target="_blank" rel="noopener">Node.js 22</a></strong></td><td>Ejecutar la web. Lo instalaste el día 1.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://supabase.com/docs" target="_blank" rel="noopener">Supabase (plan Free)</a></strong></td><td>Base de datos PostgreSQL e inicio de sesión.</td><td class="cost">Gratis, 2 proyectos activos</td></tr><tr><td><strong><a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener">playwright-cli</a></strong></td><td>Que el agente abra tu app, la use y tome capturas.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://www.skills.sh/microsoft/playwright-cli/playwright-cli" target="_blank" rel="noopener">Skill playwright-cli</a></strong></td><td>Le enseña al agente a usar playwright-cli. Se instala desde skills.sh.</td><td class="cost">Gratis, requiere Node.js 22.20 o superior</td></tr><tr><td><strong><a href="https://playwright.dev/docs/intro" target="_blank" rel="noopener">Playwright Test</a></strong></td><td>Pruebas automáticas que se guardan en el proyecto.</td><td class="cost">Gratis</td></tr></tbody></table></div></section>
+
+<section><h2>Qué tienes que hacer</h2><ol class="steps"><li><div class="st"><h3>Instala las herramientas<small>10 min</small></h3><p>Crea la rama <code>dia-05-pruebas</code>. Agrega <code>TEST_EMAIL</code> y <code>TEST_PASSWORD</code> a tu <code>.env</code>, y luego instala playwright-cli. Después instala su skill con el comando de tu agente indicado abajo y reinicia la sesión del agente.</p><div class="block cmd"><header><span>Terminal</span><button type="button" data-copy>Copiar</button></header><pre><code>npm install -g @playwright/cli@latest
+playwright-cli --help</code></pre></div></div></li><li><div class="st"><h3>Deja que el agente explore<small>15 min</small></h3><p>Si no sabe cómo hacerlo, comandos útiles son <code>open</code>, <code>resize</code>, <code>screenshot</code> y <code>console</code>.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Arranca la app. Usa playwright-cli para abrir http://localhost:3000, iniciar sesión con TEST_EMAIL y TEST_PASSWORD de .env sin mostrarlos, y agregar un producto con cantidad menor al mínimo. Toma capturas en 1280x800 y en 390x844, y revisa los errores de consola. Guarda las capturas en entregas/dia-05/ y reporta lo que encontraste. No corrijas nada todavía.</code></pre></div></div></li><li><div class="st"><h3>Elige un problema<small>5 min</small></h3><p>Revisa las capturas tú mismo. Elige un problema real, sea funcional o visual, y pide corregirlo.</p></div></li><li><div class="st"><h3>Crea pruebas permanentes<small>20 min</small></h3><p>Instala Playwright Test con <code>npm init playwright@latest</code> y después pide las pruebas.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Escribe pruebas de Playwright en tests/ para: iniciar sesión, rechazar una contraseña incorrecta, agregar un producto y marcar un producto bajo el mínimo. Lee TEST_EMAIL y TEST_PASSWORD del entorno. Cada prueba usa un SKU único y borra lo que creó. Configura webServer para arrancar la app. Corre las pruebas y muéstrame el resultado.</code></pre></div></div></li><li><div class="st"><h3>Demuestra que detectan errores<small>10 min</small></h3><p>Cambia a mano la comparación del producto bajo el mínimo, corre las pruebas y confirma que fallan. Revierte el cambio, confirma que pasan y abre el pull request.</p><div class="block cmd"><header><span>Terminal</span><button type="button" data-copy>Copiar</button></header><pre><code>npx playwright test</code></pre></div></div></li></ol></section>
+<section><h2>Si usas Claude Code o Codex</h2><div class="tw"><table><thead><tr><th>Tema</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody><tr><td><strong>Instalar la skill</strong></td><td><code>npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli -a claude-code -y</code></td><td><code>npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli -a codex -y</code></td></tr><tr><td><strong>Dónde queda la skill</strong></td><td><code>.claude/skills/playwright-cli/</code>. Comprueba con <code>/skills</code> que aparece.</td><td><code>.agents/skills/playwright-cli/</code>. Pregúntale qué skills tiene disponibles.</td></tr></tbody></table></div></section>
+<section><h2>Qué se va a revisar</h2><div class="tw"><table><thead><tr><th>Criterio</th><th>Qué debe verse</th><th class="n">Puntos</th></tr></thead><tbody><tr><td><strong>Exploración</strong></td><td>Hay capturas en escritorio y móvil, y un reporte de consola.</td><td class="n">20</td></tr><tr><td><strong>Problema real</strong></td><td>Describes un problema encontrado y su corrección.</td><td class="n">15</td></tr><tr><td><strong>Pruebas</strong></td><td>Las 4 pruebas pasan y no dejan datos de prueba.</td><td class="n">20</td></tr><tr><td><strong>Detección de errores</strong></td><td>Muestras la falla provocada y el resultado después de revertirla.</td><td class="n">25</td></tr><tr><td><strong>Bitácora</strong></td><td>Incluye prompts clave, un error de la IA, un comando aprobado o rechazado y cómo comprobaste el resultado.</td><td class="n">20</td></tr></tbody><tfoot><tr><td colspan="2">Total</td><td class="n">100</td></tr></tfoot></table></div></section>
+<section><h2>Qué entregas</h2><p>Enlace al pull request, con capturas y <code>entregas/dia-05/README.md</code>.</p>
+<ul class="log"><li>Los prompts clave que usaste.</li><li>Un error o una mala decisión de la IA, y cómo lo detectaste.</li><li>Un comando o herramienta que aprobaste o rechazaste, y por qué.</li><li>Cómo comprobaste que funciona.</li></ul></section>
+<div class="notes">
+<section><h2>Si te atoras</h2><p>Si faltan navegadores o dependencias, ejecuta <code>npx playwright install --with-deps chromium</code>.</p></section>
+<section><h2>Si terminas antes</h2><p>Agrega una prueba de edición y otra para campos vacíos.</p></section>
+</div>
+</main>
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button[data-copy]');if(!b)return;
+  var pre=b.closest('.block').querySelector('pre');var t=pre.innerText;
+  function done(x){b.textContent=x;setTimeout(function(){b.textContent='Copiar'},1600)}
+  function sel(){var r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done('Seleccionado')}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done('Copiado')},sel)}else{sel()}
+});
+</script>
