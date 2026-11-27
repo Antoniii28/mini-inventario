@@ -1,0 +1,98 @@
+<title>Mini Inventario Día 9</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a printed warehouse work order in one column, with a ten-bay day strip at the top. */
+:root{
+  --bg:#eaf0f4;--surface:#ffffff;--ink:#12283f;--muted:#51657a;--line:#c7d3de;
+  --accent:#0a5fa8;--label:#ffc72c;--label-ink:#12283f;--code:#dfe7ee;
+  --warn-bg:#fff2cc;--warn-ink:#6b4a00;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1c2a;--surface:#172838;--ink:#e7eef5;--muted:#9db0c3;--line:#2c4258;
+  --accent:#79b8f2;--code:#1f3347;--warn-bg:#3a2f10;--warn-ink:#ffdc85;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+main{max-width:860px;margin:0 auto;display:grid;gap:34px;min-width:0}
+main>*{min-width:0}
+h1,h2{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,7vw,3.5rem);font-weight:700}
+h2{font-size:1.75rem;font-weight:600;margin-bottom:12px}
+p{margin:0;text-wrap:pretty}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:var(--mono);font-size:.84em;background:var(--code);padding:1px 5px;border-radius:3px;overflow-wrap:anywhere}
+pre{margin:0;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.55;padding:12px 14px}
+pre code{background:none;padding:0;font-size:inherit;overflow-wrap:normal}
+.head{display:grid;gap:14px}
+.tag{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;text-transform:uppercase}
+.tag b{background:var(--label);color:var(--label-ink);padding:2px 10px}
+.bays{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;list-style:none;padding:0;margin:0}
+.bays li{text-align:center;font-family:var(--display);font-weight:600;font-size:.95rem;padding:3px 0;border:1px solid var(--line);color:var(--muted)}
+.bays li.past{background:var(--code)}
+.bays li.now{background:var(--label);color:var(--label-ink);border-color:var(--label)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.95rem}
+.facts span{color:var(--muted)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:9px 10px 9px 0;border-bottom:1px solid var(--line)}
+th{font-family:var(--display);font-size:1rem;font-weight:600;letter-spacing:.03em;color:var(--muted)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;padding-right:0;white-space:nowrap}
+tfoot td{font-weight:600;border-bottom:0}
+.cost{white-space:nowrap;font-size:.86rem;color:var(--muted)}
+.req{margin:0;padding-left:20px;display:grid;gap:4px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.steps>li::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:2.1rem;line-height:1;color:var(--accent)}
+.st{display:grid;gap:9px;min-width:0}
+.st h3{margin:0;font-size:1.1rem;font-weight:600;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px}
+.st h3 small{font-weight:500;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.block{background:var(--surface);border:1px solid var(--line);min-width:0}
+.block header{display:flex;justify-content:space-between;align-items:center;padding:3px 6px 3px 14px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.prompt pre{white-space:pre-wrap;overflow-wrap:anywhere}
+button{font:inherit;font-size:.86rem;background:none;color:var(--accent);border:0;padding:4px 8px;cursor:pointer}
+.report{background:var(--warn-bg);color:var(--warn-ink);padding:14px 16px;font-size:1.05rem}
+.notes{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.notes h2{font-size:1.3rem;margin-bottom:4px}
+.log{margin:10px 0 0;padding-left:20px;display:grid;gap:3px}
+</style>
+<main>
+<header class="head">
+  <div class="tag"><b>Día 9 de 10</b><span>Mini Inventario</span><span>Despliegue</span></div>
+  <ol class="bays" aria-label="Avance del curso"><li class="past">1</li><li class="past">2</li><li class="past">3</li><li class="past">4</li><li class="past">5</li><li class="past">6</li><li class="past">7</li><li class="past">8</li><li class="now" aria-current="step">9</li><li class="">10</li></ol>
+  <h1>Publica tu app y diagnostica un despliegue fallido</h1>
+  <p class="lede">Hoy empaquetas tu aplicación, la publicas en Render con una URL real y usas el MCP de Render para leer una falla como lo harías en producción.</p>
+  <p class="facts"><span>Duración: 60 minutos</span><span>Modalidad: individual</span></p>
+</header>
+<section><h2>Antes de empezar</h2><ul class="req"><li>La rama principal con pruebas en verde.</li><li>Una cuenta gratuita de Render.</li><li>Docker instalado y en ejecución.</li></ul></section>
+<section><h2>Herramientas que necesitas</h2><div class="tw"><table><thead><tr><th>Herramienta</th><th>Para qué sirve</th><th>Costo</th></tr></thead><tbody><tr><td><strong>Claude Code o Codex</strong></td><td>El agente con el que haces toda la actividad. Usa el que ya tengas.</td><td class="cost">Codex viene en ChatGPT Free</td></tr><tr><td><strong><a href="https://docs.github.com/es/get-started" target="_blank" rel="noopener">Git y GitHub</a></strong></td><td>Guardar versiones y publicar tu repositorio.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">GitHub CLI (gh)</a></strong></td><td>Que el agente trabaje con GitHub desde la terminal.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener">Docker</a></strong></td><td>Empaquetar la app en un contenedor. Docker Desktop es gratis para uso personal y educativo.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://render.com/docs/free" target="_blank" rel="noopener">Render (instancia Free)</a></strong></td><td>Publicar la web en internet.</td><td class="cost">Gratis, 750 h al mes</td></tr><tr><td><strong><a href="https://render.com/docs/mcp-server" target="_blank" rel="noopener">MCP de Render</a></strong></td><td>Que el agente consulte despliegues y logs.</td><td class="cost">Gratis</td></tr><tr><td><strong><a href="https://supabase.com/docs" target="_blank" rel="noopener">Supabase (plan Free)</a></strong></td><td>Base de datos PostgreSQL e inicio de sesión.</td><td class="cost">Gratis, 2 proyectos activos</td></tr><tr><td><strong><a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener">playwright-cli</a></strong></td><td>Que el agente abra tu app, la use y tome capturas.</td><td class="cost">Gratis</td></tr></tbody></table></div></section>
+
+<section><h2>Qué tienes que hacer</h2><ol class="steps"><li><div class="st"><h3>Prueba el contenedor en local<small>15 min</small></h3><p>Crea el Dockerfile en una rama, pruébalo, abre el PR y haz merge cuando el CI pase.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Crea un Dockerfile para Mini Inventario y un .dockerignore que excluya .env, node_modules, tests y entregas. La app debe escuchar en 0.0.0.0 y en process.env.PORT. No copies secretos a la imagen. Explícame cada instrucción.</code></pre></div><div class="block cmd"><header><span>Terminal</span><button type="button" data-copy>Copiar</button></header><pre><code>docker build -t mini-inventario .
+docker run --env-file .env -e PORT=3000 -p 3000:3000 mini-inventario</code></pre></div></div></li><li><div class="st"><h3>Crea el servicio en Render<small>15 min</small></h3><p>Ve a New y Web Service. Conecta tu repositorio, elige Language: Docker y el plan Free. Agrega <code>SUPABASE_URL</code> y <code>SUPABASE_KEY</code> y deja Auto-Deploy en On Commit. Inicia sesión en la URL pública y toma una captura.</p></div></li><li><div class="st"><h3>Conecta el MCP de Render<small>5 min</small></h3><p>Sigue la sección de tu agente en la documentación del MCP de Render. No cambies variables de entorno desde el MCP: hazlo en el panel y aprueba cada despliegue manualmente.</p></div></li><li><div class="st"><h3>Provoca y diagnostica una falla<small>20 min</small></h3><p>Agrega a <code>main</code> una línea <code>RUN npm run no-existe</code> en el Dockerfile y espera el despliegue fallido. Pide el diagnóstico. Si el MCP no conecta, lee los logs en el panel y documenta el error de conexión.</p><div class="block prompt"><header><span>Prompt para tu agente</span><button type="button" data-copy>Copiar</button></header><pre><code>Usa el MCP de Render para listar el último despliegue de mi servicio y leer sus logs. Explícame la causa exacta de la falla y qué línea la provocó. No cambies variables ni lances despliegues sin preguntarme.</code></pre></div></div></li><li><div class="st"><h3>Repara y verifica<small>5 min</small></h3><p>Quita la línea, espera el despliegue correcto y comprueba la URL con el agente. Guarda la evidencia en <code>entregas/dia-09/</code>.</p></div></li></ol></section>
+<section><h2>Si usas Claude Code o Codex</h2><div class="tw"><table><thead><tr><th>Tema</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody><tr><td><strong>Configurar Render</strong></td><td>Instala el plugin oficial de Render o agrega el servidor con <code>claude mcp add</code>, siguiendo la documentación.</td><td>Usa la opción de Codex de la documentación oficial y comprueba con <code>codex mcp list</code>.</td></tr></tbody></table></div></section>
+<section><h2>Qué se va a revisar</h2><div class="tw"><table><thead><tr><th>Criterio</th><th>Qué debe verse</th><th class="n">Puntos</th></tr></thead><tbody><tr><td><strong>Contenedor</strong></td><td>La imagen funciona localmente con <code>docker run</code>.</td><td class="n">20</td></tr><tr><td><strong>Publicación</strong></td><td>La URL pública abre e inicia sesión correctamente.</td><td class="n">25</td></tr><tr><td><strong>Secretos</strong></td><td><code>.dockerignore</code> excluye <code>.env</code> y las llaves están en el panel.</td><td class="n">10</td></tr><tr><td><strong>Diagnóstico</strong></td><td>Muestras la causa encontrada con el MCP, o los logs y el error de conexión.</td><td class="n">25</td></tr><tr><td><strong>Bitácora</strong></td><td>Incluye prompts clave, un error de la IA, un comando aprobado o rechazado y cómo comprobaste el resultado.</td><td class="n">20</td></tr></tbody><tfoot><tr><td colspan="2">Total</td><td class="n">100</td></tr></tfoot></table></div></section>
+<section><h2>Qué entregas</h2><p>URL pública y <code>entregas/dia-09/README.md</code> con capturas.</p>
+<ul class="log"><li>Los prompts clave que usaste.</li><li>Un error o una mala decisión de la IA, y cómo lo detectaste.</li><li>Un comando o herramienta que aprobaste o rechazaste, y por qué.</li><li>Cómo comprobaste que funciona.</li></ul></section>
+<div class="notes">
+<section><h2>Si te atoras</h2><p>El servicio se duerme tras 15 minutos sin tráfico y tarda cerca de un minuto en despertar. Render asigna el puerto 10000 de forma predeterminada.</p></section>
+<section><h2>Si terminas antes</h2><p>Agrega una verificación de salud con la ruta <code>/health</code> en la configuración del servicio.</p></section>
+</div>
+</main>
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('button[data-copy]');if(!b)return;
+  var pre=b.closest('.block').querySelector('pre');var t=pre.innerText;
+  function done(x){b.textContent=x;setTimeout(function(){b.textContent='Copiar'},1600)}
+  function sel(){var r=document.createRange();r.selectNodeContents(pre);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done('Seleccionado')}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done('Copiado')},sel)}else{sel()}
+});
+</script>

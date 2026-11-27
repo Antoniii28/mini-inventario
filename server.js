@@ -43,7 +43,9 @@ if (require.main === module) {
   try {
     const app = createApp();
     const port = Number(process.env.PORT) || 3000;
-    app.listen(port, () => console.log(`Mini Inventario disponible en http://localhost:${port}`));
+    // 0.0.0.0: necesario dentro de un contenedor para aceptar conexiones desde fuera (Docker y Render).
+    const host = process.env.HOST || '0.0.0.0';
+    app.listen(port, host, () => console.log(`Mini Inventario escuchando en http://${host}:${port}`));
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;
