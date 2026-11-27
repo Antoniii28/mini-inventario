@@ -45,8 +45,8 @@ Node.js 22 · Express · HTML, CSS y JavaScript sin framework · Supabase (Auth 
 | 1 | Jose | `docs/dia-01-*` | — | #1, #2 | Completado |
 | 2 | Jose | `dia-02-planeacion` | HU #3 a #7 | #8 | Completado |
 | 3 | Luis | `feature/dia-03-desarrollo` | HU #3 a #7 | #9 | Completado (merge `c0abc7d`) |
-| 4 | Jose | `dia-04-supabase` | #10 | #16 | **En revisión.** Verificado contra Supabase real; falta la revisión de Luis y la fusión |
-| 5 | Luis | `dia-05-pruebas` | #11 | #17 | **En revisión** (cambios pedidos; ver el plan) |
+| 4 | Jose | `dia-04-supabase` | #10 | #16 | **Integrado** (falta Drive) |
+| 5 | Luis | `dia-05-pruebas` | #11 | #17 | **Integrado**; bitácora pendiente (#18) |
 | 6 | Luis | `dia-06-ci` | #12 | — | Pendiente |
 | 7 | Luis | `dia-07-skill` | #13 | — | Pendiente |
 | 8 | Jose | `dia-08-mcp` | #14 | — | En progreso (worktree `mini-inventario-dia08`) |
@@ -72,8 +72,8 @@ Día 4 → Día 5 → Día 6 → Día 7 (el Día 5 puede empezar desde la rama d
 B3 Node ≥ 22.20 en la computadora de Luis · B4 secretos de Actions solo del propietario · B5 modalidad individual frente al trabajo repartido y el proyecto compartido · B6 política del lector `using (true)` en el proyecto compartido. Detalle en la sección 2 del plan.
 
 ## 9. Próximo paso de cada integrante
-- **Jose:** reenviar y confirmar el correo de registro (Día 4); fusionar el #16 tras la aprobación de Luis; crear los 4 secretos de Actions (T-30); SQL del lector y pruebas reales del Día 8 ([`HANDOFF_JOSE.md`](HANDOFF_JOSE.md)).
-- **Luis:** atender los cambios pedidos en el PR #17 (README del Día 5, `webServer` sin `.env`, reporte HTML y conflicto en `.gitignore`); aprobar el #16; preparar el Día 6 ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
+- **Jose:** subir el Día 4 a Drive; autorizar el SQL del lector (Día 8); liberar memoria para Docker (Día 9); consultar al profesor el incidente del Día 10 ([`HANDOFF_JOSE.md`](HANDOFF_JOSE.md)).
+- **Luis:** issue #18 (bitácora del Día 5) en un PR aparte; Día 6 en `dia-06-ci` desde `main`; luego el Día 7 ([`HANDOFF_LUIS.md`](HANDOFF_LUIS.md)).
 
 ## 10. Cómo trabaja un agente aquí
 1. `git fetch` y `git switch main` y `git pull --ff-only`. Crear o usar la rama del día.
