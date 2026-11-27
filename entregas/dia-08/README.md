@@ -2,7 +2,7 @@
 
 **Equipo:** Pchifus  
 **Responsable:** Jose Antonio Flores Cuamatzi (`Antoniii28`)  
-**Rama:** `dia-08-mcp` (worktree `mini-inventario-dia08`, creada desde `dia-04-supabase`) · **Issue:** #14 · **Pull Request:** _pendiente_  
+**Rama:** `dia-08-mcp` (worktree `mini-inventario-dia08`, creada desde `dia-04-supabase`) · **Issue:** #14 · **Pull Request:** [#21](https://github.com/Antoniii28/mini-inventario/pull/21)  
 **Proyecto Supabase:** oficial y compartido, `snefrzzosulngvootger` (DT-8)
 
 > Evidencias en texto: salidas reales de las herramientas, copiadas de la sesión del 27/11/2026. No se muestra ninguna credencial.
