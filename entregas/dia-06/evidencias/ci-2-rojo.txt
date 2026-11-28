@@ -1,0 +1,58 @@
+# Día 6 · Ejecución 2 (rojo) del PR #23
+# Obtenido el 2026-11-27 19:19 CST
+# Commit: 86eeb82 (cambio temporal introducido por el agente a pedido de Luis)
+
+$ gh pr checks 23
+Pruebas Node.js y Playwright	fail	58s	https://github.com/Antoniii28/mini-inventario/actions/runs/46092373479/job/140815998841	
+
+$ gh run list --branch dia-06-ci --limit 2
+completed	failure	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092373479	1m2s	2026-11-28T01:17:44Z
+completed	success	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092041998	41s	2026-11-28T01:13:50Z
+
+$ gh run view 46092373479 --log-failed
+2026-11-28T01:18:26.1056951Z ##[group]Run npx playwright test
+npx playwright test
+shell: /usr/bin/bash -e {0}
+env:
+  CI: true
+  SUPABASE_URL: ***
+  SUPABASE_KEY: ***
+  TEST_EMAIL: ***
+  TEST_PASSWORD: ***
+##[endgroup]
+[WebServer] .env not found. Continuing without it.
+Running 4 tests using 1 worker
+  ✓  1 tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas (3.3s)
+  ✘  2 tests/login.spec.mjs:3:1 › Día 5 - Inicio de sesión correcto (5.3s)
+  ✓  3 tests/password-incorrecta.spec.mjs:3:1 › Día 5 - Contraseña incorrecta (1.3s)
+  ✓  4 tests/registrar-producto.spec.mjs:4:1 › Día 5 - Registrar producto (1.2s)
+  1) tests/login.spec.mjs:3:1 › Día 5 - Inicio de sesión correcto ──────────────────────────────────
+    Error: expect(locator).toBeVisible() failed
+    Locator: getByRole('heading', { name: 'Mi almacén' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Mi almacén' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Mi almacén' })
+      17 |   await expect(
+      18 |     page.getByRole('heading', { name: 'Mi almacén' })
+    > 19 |   ).toBeVisible();
+         |     ^
+      20 |
+      21 |   await expect(page.locator('#user-email')).toHaveText(email);
+      22 | });
+        at /home/runner/work/mini-inventario/mini-inventario/tests/login.spec.mjs:19:5
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/login-Día-5---Inicio-de-sesión-correcto/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+    Error Context: test-results/login-Día-5---Inicio-de-sesión-correcto/error-context.md
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/login-Día-5---Inicio-de-sesión-correcto/trace.zip
+    Usage:
+        npx playwright show-trace test-results/login-Día-5---Inicio-de-sesión-correcto/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  1 failed
+    tests/login.spec.mjs:3:1 › Día 5 - Inicio de sesión correcto ───────────────────────────────────
+  3 passed (15.0s)
+##[error]Process completed with exit code 1.

@@ -35,6 +35,9 @@ jobs:
 
       # playwright.config.mjs carga .env solo si existe; en CI las variables
       # llegan desde los secretos del repositorio y no se escribe ningún archivo.
+      # --trace=off: las trazas graban las peticiones de red (incluida la
+      # contraseña de prueba) y el reporte se publica como artefacto en un
+      # repositorio público. Localmente se siguen guardando las trazas.
       - name: Ejecutar pruebas Playwright
         env:
           CI: 'true'
@@ -42,7 +45,7 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
-        run: npx playwright test
+        run: npx playwright test --trace=off
 
       - name: Subir reporte de Playwright
         if: ${{ !cancelled() }}

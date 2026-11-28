@@ -15,7 +15,7 @@ test('Día 5 - Inicio de sesión correcto', async ({ page }) => {
   await page.getByRole('button', { name: 'Ingresar' }).click();
 
   await expect(
-    page.getByRole('heading', { name: 'Mi almacén' })
+    page.getByRole('heading', { name: 'Mi inventario' })
   ).toBeVisible();
 
   await expect(page.locator('#user-email')).toHaveText(email);
