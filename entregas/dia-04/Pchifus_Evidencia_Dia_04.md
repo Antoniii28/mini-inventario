@@ -17,19 +17,20 @@ Enlace al pull request, con capturas y `entregas/dia-04/README.md`.
 
 La bitácora debe incluir:
 - [x] Los prompts clave que usaste. (sección "Prompts clave")
-- [x] Un error o una mala decisión de la IA, y cómo lo detectaste. (3 casos: `GRANT` faltante, prueba RLS con escrituras y mensaje de registro)
+- [x] Un error o una mala decisión de la IA, y cómo lo detectaste. (3 casos: `GRANT` faltante, prueba RLS con escrituras y mensaje de registro; más 2 malas decisiones asociadas: cupo de correos y caducidad del enlace)
 - [x] Un comando o herramienta que aprobaste o rechazaste, y por qué. (prueba RLS **rechazada**; 2 migraciones aprobadas)
-- [x] Cómo comprobaste que funciona. (13 pruebas unitarias, 27 comprobaciones en navegador real y verificación de solo lectura en la base de datos)
+- [x] Cómo comprobaste que funciona. (13 pruebas unitarias, 27 comprobaciones en navegador real, registro con correo real confirmado y verificación de solo lectura en la base de datos)
 
 ## Archivos para la carpeta de Drive `Pchifus_Dia_04`
 - [x] Este archivo (`Pchifus_Evidencia_Dia_04.md`) con el enlace al PR.
 - [x] `README.md` (bitácora)
 - [x] `capturas/01-usuario-1.png`: sesión del usuario 1 (solo ve sus 3 productos)
 - [x] `capturas/02-usuario-2.png`: sesión del usuario 2 (solo ve sus 2 productos)
+- [x] `capturas/03-registro-cuenta-nueva.png`: cuenta registrada desde la web y confirmada por correo (solo ve su producto; correo difuminado)
 
 ## Revisión contra la rúbrica oficial (antes de subir)
 - [x] **Tabla y políticas** (25 pts): la tabla existe, RLS = `true` y hay 4 políticas (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) verificadas en `pg_policies`.
-- [x] **Aislamiento** (25 pts): las 2 capturas, más la verificación "u1 ve 0 ajenos, u2 ve 0 ajenos".
+- [x] **Aislamiento** (25 pts): las 3 capturas, más la verificación en la BD: las 4 cuentas ven 0 productos ajenos.
 - [x] **Secretos** (15 pts): `git check-ignore -v .env` → `.gitignore:17`. `.env` tiene 0 commits en el historial y no se usa `service_role`; el servidor rechaza esas llaves.
 - [x] **Uso del MCP** (15 pts): `.mcp.json` con `project_ref=snefrzzosulngvootger` y explicación de la política `update` aprobada.
 - [x] **Bitácora** (20 pts): prompts, errores de la IA, comando rechazado y pruebas.

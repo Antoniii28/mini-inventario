@@ -10,7 +10,7 @@ export default defineConfig({
   testMatch: '**/*.spec.mjs',
   fullyParallel: false,
   workers: 1,
-  reporter: 'list',
+  reporter: [['list'], ['html', { open: 'never' }]],
 
   use: {
     baseURL: 'http://127.0.0.1:3000',
@@ -21,7 +21,7 @@ export default defineConfig({
   },
 
   webServer: {
-    command: 'npm start',
+    command: 'node --env-file-if-exists=.env server.js',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 30000,

@@ -15,8 +15,8 @@
 | Creó la organización `Pchifus-Jose` y el proyecto `mini-inventario` (ref `snefrzzosulngvootger`) | Revisó el PR #9 e instaló dependencias y skills |
 | Aprobó el servidor MCP y lo autenticó en el navegador (`/mcp`) | Escribió la migración y los cambios de la web y las pruebas |
 | Leyó y **aprobó** el SQL de la tabla; **rechazó** la prueba RLS con escrituras; aprobó la revocación | Aplicó las migraciones aprobadas mediante el MCP |
-| Creó los 2 usuarios confirmados y escribió la llave publishable y las contraseñas en `.env` | Ejecutó las pruebas reales en Microsoft Edge (Playwright) y tomó las 2 capturas |
-| Revisa y aprueba el PR y sube la entrega a Drive | Verificó la base de datos en solo lectura y redactó esta bitácora |
+| Creó los 2 usuarios confirmados y escribió la llave publishable y las contraseñas en `.env` | Ejecutó las pruebas reales en Microsoft Edge (Playwright) y tomó las 3 capturas |
+| Dio su correo de Supabase en `.env` (`TEST_SIGNUP_EMAIL`, sin mostrarlo) y **pulsó el enlace de confirmación** del registro. Revisa y aprueba el PR y sube la entrega a Drive | Registró la cuenta desde la web, verificó la confirmación, el inicio de sesión y el aislamiento, y redactó esta bitácora |
 
 ## Punto de partida
 - El Día 3 (PR #9, merge `c0abc7d`) ya tenía en `public/app.js` el código de Supabase (sesión, alta, consulta y edición). Su conexión real **no se había probado**, según la bitácora del Día 3; se probó por primera vez en este día.
@@ -90,7 +90,8 @@ Verificación posterior (consulta de catálogo con `execute_sql`): RLS `true`; p
 3. **El mensaje de error del registro era inútil.** En la prueba real, `Crear cuenta` con `pchifus.prueba3@example.com` mostró "No fue posible completar la operación".
    - **Cómo se detectó:** los logs de Auth (`query_logs`) mostraron `400 email_address_invalid`: Supabase no acepta correos `@example.com`.
    - **Corrección:** se agregó ese código, y `email_address_not_authorized`, a `friendlyAuthError`, con su prueba unitaria. La reverificación muestra "Supabase no acepta ese correo; usa una dirección real".
-   - **Mala decisión asociada:** el agente intentó dos registros con un correo ficticio sin revisar antes la documentación del correo por defecto. Ese servicio solo entrega a miembros de la organización y permite 2 correos por hora. Los dos intentos (06:24 y 06:25 UTC) agotaron el cupo, y el registro con un correo real recibió `429 Demasiados intentos` a las 07:02 UTC. Se esperó a que se liberara el límite **sin cambiar la configuración de Auth**.
+   - **Mala decisión asociada (caducidad del enlace):** el agente le dijo a Jose que el enlace de confirmación "caduca a las 24 horas" sin comprobar la configuración del proyecto. Jose lo pulsó unas 9,5 horas después del reenvío y Supabase respondió `email link has expired` (`otp_expired`). **Cómo se detectó:** los logs de Auth no mostraban ningún uso previo del enlace, así que la expiración es más corta que 9,5 h (el valor por defecto, *Email OTP Expiration*, es de 1 hora). En el siguiente reenvío se le pidió pulsarlo de inmediato, y la confirmación llegó a los 6 minutos.
+   - **Mala decisión asociada (cupo de correos):** el agente intentó dos registros con un correo ficticio sin revisar antes la documentación del correo por defecto. Ese servicio solo entrega a miembros de la organización y permite 2 correos por hora. Los dos intentos (06:24 y 06:25 UTC) agotaron el cupo, y el registro con un correo real recibió `429 Demasiados intentos` a las 07:02 UTC. Se esperó a que se liberara el límite **sin cambiar la configuración de Auth**.
 
 ## Comandos y herramientas aprobados o rechazados
 - **Rechazado por Jose:** `execute_sql` con la prueba RLS que hacía `INSERT`, `UPDATE` y `DELETE` dentro de una transacción. Motivo: Supabase advirtió operaciones destructivas y no se veía un `ROLLBACK` explícito. Se sustituyó por una consulta de solo lectura.
@@ -127,7 +128,7 @@ Microsoft Edge sin ventana, controlado con Playwright desde un script **temporal
 | 15 | Usuario 2 registra Tortillas (3/10) y Arroz con el **mismo SKU `ARR-001`** | ✅ |
 | 16 | **Usuario 1, al volver, sigue viendo solo sus 3 productos** | ✅ |
 | 17 | Registro con contraseña de 3 caracteres → "al menos 6 caracteres" | ✅ |
-| 18 | Registro de `pchifus.prueba3@example.com` | ⚠️ Supabase responde `email_address_invalid`; el mensaje se corrigió (error 3) |
+| 18 | Registro de `pchifus.prueba3@example.com` | ⚠️ Supabase responde `email_address_invalid`; el mensaje se corrigió (error 3). El registro completo con un correo real está en la sección siguiente |
 | 19 | Errores de consola | ⚠️ 400 (contraseña incorrecta y registro) y 409 (SKU duplicado) son las respuestas esperadas de las pruebas negativas; el 404 era `favicon.ico` y se corrigió. La reverificación da "ninguno" al cargar la página. |
 
 ### Verificación en la base de datos (agente, solo lectura, mediante el MCP)
@@ -140,13 +141,28 @@ Sin sesión (anon): 42501 permiso denegado
 También desde la Data API sin sesión: `GET /rest/v1/productos` → `401`, `42501 permission denied for table productos`.
 
 ### Límites conocidos
-- **El registro no se completó con éxito.** El código llama a `auth.signUp` y Supabase recibió la petición, pero no hay un correo de prueba válido que pueda recibir la confirmación con el SMTP por defecto. Las 2 cuentas de la actividad se crearon confirmadas desde el panel, como indica la instrucción oficial.
+- **Registro con correo real:** completado el 27/11 (ver la sección "Registro con correo real"). Las 2 cuentas de la actividad se crearon confirmadas desde el panel, como indica la instrucción oficial.
 - **Avisos del asesor de seguridad que no vienen de esta migración:**
   - `public.rls_auto_enable()`, `SECURITY DEFINER`, creada por la plataforma con el proyecto.
   - "Leaked Password Protection Disabled", un ajuste de Auth.
   
   No se tocaron. El asesor de rendimiento no reporta nada.
 - **A 1280 px, la columna "Acciones" queda cortada** por el scroll horizontal de la tabla. Viene del Día 3; se deja para la revisión visual del Día 5.
+
+### Registro con correo real (27/11/2026)
+El correo es el de la cuenta de Supabase de Jose, porque el correo por defecto solo entrega a miembros de la organización. Se leyó de `.env` (`TEST_SIGNUP_EMAIL`) y **no aparece** en el repositorio: en la captura 3 se difuminó solo ese campo. La contraseña de la cuenta es aleatoria y está solo en `.env`.
+
+| # | Paso | Quién | Resultado real |
+|---|---|---|---|
+| 1 | "Crear cuenta" en la web (25/11, 07:29 UTC) | Agente | "Si el correo es válido, recibirás un enlace…"; cuenta creada **sin confirmar**; sin confirmar no entra al inventario |
+| 2 | Reenvío (26/11, 21:08 UTC) y enlace pulsado tarde | Agente / Jose | Logs de Auth (`/verify`): **"email link has expired"** (27/11, 06:39 y 07:05 UTC), que se ve como `otp_expired`. No hubo ningún `/verify` antes: el enlace no lo consumió un escáner. A la vez, `ERR_CONNECTION_REFUSED`: el servidor local estaba detenido |
+| 3 | Reenvío desde la web (27/11, 07:34:45 UTC), con la app en marcha | Agente | Mismo mensaje; `confirmation_sent_at` actualizado |
+| 4 | Enlace pulsado a los 6 minutos | Jose | Redirigió a `http://localhost:3000/#` y entró al panel con 0 productos |
+| 5 | Comprobación en `auth.users` (solo lectura) | Agente | `email_confirmed_at` = 27/11 07:40:57 UTC ✅ |
+| 6 | Inicio de sesión con correo y contraseña, en Edge | Agente | ✅ entra; **0 productos ajenos**; registra "Sal de mesa" con el SKU `ARR-001`, que otras cuentas ya usan; cierra sesión |
+| 7 | Aislamiento de las 4 cuentas en la BD (solo lectura) | Agente | cuenta registrada: propios 1, ajenos 0 · prueba1: 3 y 0 · prueba2: 2 y 0 |
+
+No se desactivó la confirmación por correo ni se confirmó la cuenta de forma administrativa.
 
 ## Secretos
 ```
@@ -163,6 +179,7 @@ $ git check-ignore -v .env
 | Archivo | Qué demuestra |
 |---|---|
 | [`capturas/01-usuario-1.png`](capturas/01-usuario-1.png) | Sesión `pchifus.prueba1@example.com`: Aceite, Arroz blanco y Refresco (2 bajo mínimo). |
+| [`capturas/03-registro-cuenta-nueva.png`](capturas/03-registro-cuenta-nueva.png) | Cuenta creada desde "Crear cuenta" y confirmada por correo: solo ve su producto "Sal de mesa" (`ARR-001`). El correo está difuminado. |
 | [`capturas/02-usuario-2.png`](capturas/02-usuario-2.png) | Sesión `pchifus.prueba2@example.com`: solo Arroz y Tortillas. No aparece ninguno de los productos del usuario 1, aunque ambos usan el SKU `ARR-001`. |
 
 ## Para el Día 5 (Luis)
