@@ -1,6 +1,6 @@
 # Pchifus · Evidencia Día 4
 
-> **Estado: LISTA PARA SUBIR, salvo la fusión del PR.** Basada en la plantilla del PR #15. Todo lo marcado ocurrió y está verificado en `README.md`.
+> **Estado: ENTREGADO.** PR #16 fusionado en `main` el 27/11/2026 (`3524021`, aprobado por Luis). Carpeta subida a Drive por Jose el 27/11/2026.
 
 | Campo | Valor |
 |---|---|
@@ -10,7 +10,7 @@
 | Pull Request | [#16](https://github.com/Antoniii28/mini-inventario/pull/16) |
 | Bitácora | [`entregas/dia-04/README.md`](README.md) |
 | Proyecto Supabase | `mini-inventario` (ref `snefrzzosulngvootger`), organización `Pchifus-Jose` |
-| Subido a Google Drive | ☐ No. Lo marca el responsable **solo después** de subirlo |
+| Subido a Google Drive | ☑ Sí, confirmado por Jose el 27/11/2026: [Dia 4 - Mini Inventario](https://drive.google.com/drive/folders/1-2oOgVLFxT0y6G4c3lKfQkGciYth_8_V), dentro de [Equipo-PChifus](https://drive.google.com/drive/folders/1J9en4MIlL_VQNVOLTgt5q7tbEHxnMAC7) |
 
 ## Qué pide el profesor (texto oficial)
 Enlace al pull request, con capturas y `entregas/dia-04/README.md`.
@@ -36,6 +36,6 @@ La bitácora debe incluir:
 - [x] **Bitácora** (20 pts): prompts, errores de la IA, comando rechazado y pruebas.
 
 ## Verificación final
-- [ ] El PR está fusionado en `main` y el enlace funciona. **Pendiente: revisión de Luis y autorización de Jose.**
+- [x] El PR está fusionado en `main` y el enlace funciona: https://github.com/Antoniii28/mini-inventario/pull/16
 - [x] Ningún archivo o captura muestra contraseñas, tokens, `.env` ni cadenas de conexión.
 - [x] Todo lo descrito ocurrió realmente. La bitácora distingue lo que hizo Jose personalmente de lo que hizo el agente.

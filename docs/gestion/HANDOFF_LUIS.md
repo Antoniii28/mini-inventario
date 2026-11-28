@@ -20,69 +20,29 @@ No necesitas acceso al panel de Supabase para los Días 5 a 7: solo la URL, la l
 
 Detalles e implicaciones por día: `docs/diseno.md` § "Proyecto Supabase oficial" (PR #16).
 
+## Estado (27/11)
+- Día 5 **integrado** en `main` (PR #17, `2a4c370`). Verificado sobre `main`: `npm test` 13/13 y `npx playwright test` 4/4 con `CI=1` y sin `.env`; 0 residuos.
+- Pendiente del Día 5: **issue [#18](https://github.com/Antoniii28/mini-inventario/issues/18)**: falla roja hecha **a mano**, prompts reales, `Pchifus_Evidencia_Dia_05.md` y sección de pendientes. Se corrige en un PR aparte (`docs/dia-05-bitacora`, con `Refs #11`) **antes** de subir el Día 5 a Drive.
+- Día 6 **desbloqueado**: los 4 secretos de Actions existen desde el 27/11 (`gh secret list` muestra `SUPABASE_KEY`, `SUPABASE_URL`, `TEST_EMAIL` y `TEST_PASSWORD`; proyecto oficial y `prueba2`).
+
 ## Ahora mismo
-1. Revisar y aprobar en GitHub el PR #15 (documentación) y el PR #16 (Día 4).
-2. Comprobar que `node --version` sea **22.20 o superior** (T-03).
-3. Recibir de Jose, por un canal privado, la llave publishable y la contraseña de `pchifus.prueba2@example.com`.
+1. Día 6, desde `main`: `git switch main && git pull --ff-only && git switch -c dia-06-ci`.
+2. En paralelo, el issue #18 en su propia rama, sin mezclarlo con `dia-06-ci`.
 
-## Empezar el Día 5 sin esperar la fusión del PR #16
-El código del Día 4 ya funciona contra el proyecto oficial, así que puedes partir de su rama:
-```bash
-git fetch origin
-git switch -c dia-05-pruebas origin/dia-04-supabase   # tu rama, con el Día 4 incluido
-npm ci
-cp .env.example .env        # en PowerShell: Copy-Item .env.example .env
-npm test                    # deben pasar 13 pruebas
-npm start                   # http://localhost:3000; entra con pchifus.prueba2@example.com
-```
-- **Guías y prompts** (están en el PR #15, que aún no está en `main`). Léelos sin cambiar de rama:
-  - `git show origin/docs/actividades-oficiales-04-08:docs/actividades-oficiales/dia-05/GUIA.md`
-  - `git show origin/docs/actividades-oficiales-04-08:docs/prompts/PROMPT_LUIS.md`
-  
-  También puedes verlos en GitHub, en la pestaña *Files changed* del PR #15. No los copies a tu rama: llegan solos con `main`.
-- **No modifiques** archivos del Día 4: `supabase/**`, `server.js`, `public/app.js`, `docs/diseno.md`, `entregas/dia-04/**`. Si encuentras un problema ahí, avísale a Jose.
-- **Sincronizar después, sin perder avances:** cuando Jose fusione los PR #15 y #16, ejecuta `git fetch origin && git merge origin/main` en tu rama. Nunca uses `rebase` ni `push --force`. Vuelve a correr `npm test` y `npx playwright test`.
-- **Abre tu PR hacia `main` después de esa sincronización.** Si lo abres antes, mostrará también los commits del Día 4.
-
-## Día 5
+## Día 5 (referencia)
 | Tema | Detalle |
 |---|---|
-| Empieza cuando | Ya (ver la sección anterior). Necesitas la llave publishable y la contraseña de prueba |
-| Preparación | La de la sección anterior. Cuando el #16 esté en `main`: `git merge origin/main` |
 | `.env` | `SUPABASE_URL=` · `SUPABASE_KEY=` · `PORT=` · `TEST_EMAIL=pchifus.prueba2@example.com` · `TEST_PASSWORD=`. Nunca se sube; `git check-ignore .env` lo confirma |
-| Leer | `docs/gestion/CONTEXTO_COMPARTIDO.md`, `docs/actividades-oficiales/dia-05/GUIA.md` |
-| Puede modificar | `tests/*.spec.*`, `playwright.config.*`, `package.json`, `package-lock.json`, `entregas/dia-05/**`, `.claude/skills/playwright-cli/**` y el archivo de `public/` que tenga el problema real que elijas |
-| No tocar en simultáneo | `mcp-inventario/**`, `entregas/dia-08/**` y `supabase/**` (de Jose) |
-| Acciones personales | Revisar tú mismo las capturas y elegir el problema; cambiar **a mano** `cantidad < minimo` para provocar la falla |
-| Comandos | `npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli -a claude-code -y` · `npm init playwright@latest` · `npx playwright test` · si faltan navegadores, `npx playwright install --with-deps chromium` |
-| Ojo | `npm test` ejecuta `node --test` sobre `tests/*.test.mjs`. Usa `*.spec.*` para Playwright y comprueba que `npm test` siga pasando. Cada prueba usa un SKU único y borra solo lo que creó (la política `delete` ya existe). El SKU no distingue mayúsculas |
-| Observación previa | A 1280 px, la columna "Acciones" de la tabla queda cortada por el scroll horizontal. Viene del Día 3 y es un candidato a "problema real" si tú lo confirmas en tus capturas |
-| Evidencias | Capturas 1280x800 y 390x844 en `entregas/dia-05/`; reporte de consola; el problema y su corrección; 4 pruebas en verde; la salida roja provocada y la verde al revertir |
-| PR | Revisor `Antoniii28`; `Refs #11` |
-
-## PR #17: cambios pedidos en la revisión (26/11)
-Verificado por el agente: `npm test` 13/13; `npx playwright test` 4/4 con `prueba2`; 0 residuos `D5-`; `prueba1` intacto.
-1. **Falta `entregas/dia-05/README.md`.** Es el archivo que pide la actividad. Debe incluir los 4 elementos de la bitácora, que hoy no están en `bitacora.md`:
-   - Prompts clave.
-   - Un error o mala decisión de la IA y cómo lo detectaste.
-   - Un comando o herramienta que aprobaste o rechazaste, y por qué.
-   - Cómo comprobaste el resultado.
-   
-   Aclara también que **tú** cambiaste `<` por `<=` **a mano**, como pide la actividad. La bitácora dice que la restauración fue "automática".
-2. **El `webServer` no arranca sin `.env`** (bloquea el Día 6). `npm start` usa `node --env-file=.env` y, sin ese archivo, Node falla con `.env: not found` y código 9; está reproducido con `CI=1`. Cambia `webServer.command` a `node --env-file-if-exists=.env server.js`.
-3. **Reporte para el Día 6.** Usa `reporter: [['list'], ['html', { open: 'never' }]]`. Así se genera `playwright-report/`, que ya se ignora en Git y se sube como artefacto.
-
-   El agente verificó los cambios 2 y 3 con una configuración temporal (sin `.env`, `CI=1`): 4/4 y `playwright-report/index.html` generado.
-4. **Sincronización.** `git fetch origin && git merge origin/dia-04-supabase` (o `origin/main` cuando el #16 esté fusionado). El único conflicto es `.gitignore`: **conserva ambos bloques**, el de `material-profesor/` y el tuyo del Día 5. Luego corre `npm test` y `npx playwright test`.
-5. Cuando el #16 se fusione, cambia la base del PR #17 a `main` (`gh pr edit 17 --base main`).
+| Acciones personales pendientes | Cambiar **a mano** `<` por `<=` en `public/logic.mjs`, correr las pruebas (rojo), revertir y correrlas de nuevo (verde). No hacer commit del cambio roto |
+| PR de la bitácora | Revisor `Antoniii28`; `Refs #11` y `Closes #18` |
 
 ## Día 6
 | Tema | Detalle |
 |---|---|
-| Requisitos previos del Día 5 | Los cambios 2 y 3 de la sección anterior; sin ellos el CI falla desde el primer paso |
-| Empieza cuando | El Día 5 esté en `main` |
-| Rama | `dia-06-ci` |
-| Secretos | **B4:** los crea Jose con `gh secret set` (`SUPABASE_URL`, `SUPABASE_KEY`, `TEST_EMAIL` y `TEST_PASSWORD`, con los valores del proyecto oficial y de `pchifus.prueba2`). **Nunca** pegues valores en el chat |
+| Empieza cuando | **Ya**: el Día 5 está en `main` y los secretos existen |
+| Rama | `dia-06-ci`, desde `main` |
+| Secretos | Ya creados por Jose (B4). No los vuelvas a crear ni pegues valores en el chat |
+| Puntos clave del flujo | Node 22; `npm ci`; `npx playwright install --with-deps chromium`; `npx playwright test` con `env:` tomado de `${{ secrets.* }}`; subir `playwright-report/` con `actions/upload-artifact` (y `if: always()` para tenerlo también cuando falle). La configuración de `main` ya arranca sin `.env` y genera el reporte HTML |
 | Puede modificar | `.github/workflows/ci.yml`, `entregas/dia-06/**` y el cambio temporal que rompe una prueba (después se revierte) |
 | Acciones personales | Capturas en verde, rojo y verde del **mismo** PR; pedir el diagnóstico sin dar pistas; explicar la causa **con tus palabras**; merge después de la revisión de Jose |
 | Comandos | `gh secret list` · `gh pr checks` · `gh run list` · `gh run view --log-failed` |
@@ -92,7 +52,7 @@ Verificado por el agente: `npm test` 13/13; `npx playwright test` 4/4 con `prueb
 | Tema | Detalle |
 |---|---|
 | Empieza cuando | El Día 6 esté en `main` y el CI esté en verde |
-| Rama | `dia-07-skill` |
+| Rama | `dia-07-skill`, desde `main` |
 | Puede modificar | `.claude/skills/pruebas-inventario/SKILL.md`, `.claude/agents/revisor-pr.md`, `entregas/dia-07/**` |
 | Acciones personales | Abrir **2 conversaciones limpias**; guardar el código sin skill en la bitácora y **descartar** el archivo; escribir la comparación |
 | Pruebas | Ejecutar `revisor-pr` y comprobar con `git status` que no cambió nada |
