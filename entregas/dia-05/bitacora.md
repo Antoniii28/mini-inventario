@@ -76,8 +76,13 @@ existencias bajas, cambiando `<` por `<=`.
 Playwright detectó el error y reportó 1 fallo.
 
 **Restauración:**
-El archivo `public/logic.mjs` se restauró
-automáticamente a su contenido original.
+En este primer intento, un script restauró
+automáticamente `public/logic.mjs`.
+
+> Actualización 27/11: la actividad pide el cambio **a mano**.
+> Luis repitió la demostración editando el archivo él mismo
+> (`evidencias/prueba-roja-manual.txt` y
+> `evidencias/prueba-verde-manual.txt`). Ver `README.md`, sección 4.
 
 **Prueba verde:**
 Se ejecutó nuevamente la suite completa,
@@ -104,8 +109,7 @@ Resultados obtenidos:
 - Formulario móvil corregido y verificado.
 - Evidencias y reporte elaborados.
 
-Pendientes:
-- Revisar la presentación de la tabla en escritorio.
-- Preparar commit y Pull Request del Día 5.
-- Integrar los cambios con la rama principal
-  cuando los avances anteriores estén incorporados.
+Pendientes (actualizado el 27/11):
+- [ ] Revisar la presentación de la tabla en escritorio (observación abierta).
+- [x] Commit y Pull Request del Día 5 (PR #17, fusionado).
+- [x] Integración con la rama principal (Días 4 y 5 en `main`).
