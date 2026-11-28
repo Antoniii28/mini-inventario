@@ -1,0 +1,30 @@
+# Día 9 · Contenedor local (salida real, 27/11/2026). Sin valores secretos.
+> docker version
+Client 29.8.2 · Server 29.8.2
+
+> docker build -t mini-inventario .
+  (pasos [1/6] a [6/6] del Dockerfile sin errores; único aviso: 'npm cache clean --force', que exige esa opción)
+
+> docker image ls mini-inventario
+mini-inventario:latest  248MB
+
+> docker run -d --name mini-inventario-local --env-file .env -e PORT=3000 -p 3000:3000 mini-inventario
+
+> docker ps
+mini-inventario-local  mini-inventario  Up About a minute  0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+
+> docker logs mini-inventario-local
+Mini Inventario escuchando en http://0.0.0.0:3000
+
+> contenido de /app en la imagen
+node_modules
+package-lock.json
+package.json
+public
+server.js
+
+> usuario dentro del contenedor
+uid=1000(node) gid=1000(node) groups=1000(node),1000(node)
+
+> npx playwright test (contra el contenedor, usuario prueba2)
+  4 passed (18.4s)
