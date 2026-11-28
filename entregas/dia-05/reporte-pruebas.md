@@ -88,8 +88,12 @@ su mínimo fue clasificado incorrectamente como
 Playwright detectó el error y reportó 1 prueba fallida.
 
 **Restauración:**
-Se recuperó automáticamente el archivo original
-`public/logic.mjs`.
+En este primer intento, un script recuperó
+automáticamente `public/logic.mjs`.
+
+> Actualización 27/11: la demostración se repitió con el
+> cambio y la restauración hechos **a mano** por Luis
+> (1 failed → 4 passed). Ver `README.md`, sección 4.
 
 **Fase verde:**
 Se ejecutaron nuevamente las cuatro pruebas,
@@ -109,6 +113,8 @@ Resultados:
 - `evidencias/prueba-roja.txt`
 - `evidencias/fallo-rojo.png`
 - `evidencias/prueba-verde.txt`
+- `evidencias/prueba-roja-manual.txt` (27/11, cambio a mano)
+- `evidencias/prueba-verde-manual.txt` (27/11, restauración a mano)
 
 La traza de la prueba fallida se conserva localmente
 y no se incluye en GitHub por precaución.
