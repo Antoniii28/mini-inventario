@@ -1,0 +1,57 @@
+name: CI - Mini Inventario
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    name: Pruebas Node.js y Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar Chromium con sus dependencias
+        run: npx playwright install --with-deps chromium
+
+      - name: Ejecutar pruebas Node.js
+        run: npm test
+
+      # playwright.config.mjs carga .env solo si existe; en CI las variables
+      # llegan desde los secretos del repositorio y no se escribe ningún archivo.
+      # --trace=off: las trazas graban las peticiones de red (incluida la
+      # contraseña de prueba) y el reporte se publica como artefacto en un
+      # repositorio público. Localmente se siguen guardando las trazas.
+      - name: Ejecutar pruebas Playwright
+        env:
+          CI: 'true'
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: npx playwright test --trace=off
+
+      - name: Subir reporte de Playwright
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: playwright-report/
+          if-no-files-found: error
+          retention-days: 7

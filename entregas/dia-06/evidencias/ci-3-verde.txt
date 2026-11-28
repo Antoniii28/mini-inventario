@@ -1,0 +1,25 @@
+# Día 6 · Ejecución 3 (verde otra vez) del PR #23
+# Obtenido el 2026-11-27 19:23 CST
+# Commit: 8cc924c
+
+$ gh pr checks 23
+Pruebas Node.js y Playwright	pass	34s	https://github.com/Antoniii28/mini-inventario/actions/runs/46092826256/job/140817426903	
+
+$ gh run list --branch dia-06-ci --limit 3
+completed	success	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092826256	37s	2026-11-28T01:23:01Z
+completed	failure	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092373479	1m2s	2026-11-28T01:17:44Z
+completed	success	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092041998	41s	2026-11-28T01:13:50Z
+
+# Extracto de gh run view 46092826256 --log
+Ejecutar pruebas Node.js	2026-11-28T01:23:27.7918930Z # tests 13
+Ejecutar pruebas Node.js	2026-11-28T01:23:27.7920474Z # pass 13
+Ejecutar pruebas Node.js	2026-11-28T01:23:27.7921092Z # fail 0
+Ejecutar pruebas Playwright	﻿2026-11-28T01:23:27.8165082Z ##[group]Run npx playwright test --trace=off
+Ejecutar pruebas Playwright	2026-11-28T01:23:27.8165505Z npx playwright test --trace=off
+Ejecutar pruebas Playwright	2026-11-28T01:23:31.5723212Z   ✓  1 tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas (1.8s)
+Ejecutar pruebas Playwright	2026-11-28T01:23:32.0504492Z   ✓  2 tests/login.spec.mjs:3:1 › Día 5 - Inicio de sesión correcto (459ms)
+Ejecutar pruebas Playwright	2026-11-28T01:23:32.4990191Z   ✓  3 tests/password-incorrecta.spec.mjs:3:1 › Día 5 - Contraseña incorrecta (434ms)
+Ejecutar pruebas Playwright	2026-11-28T01:23:33.2704658Z   ✓  4 tests/registrar-producto.spec.mjs:4:1 › Día 5 - Registrar producto (751ms)
+Ejecutar pruebas Playwright	2026-11-28T01:23:33.3135797Z   4 passed (4.7s)
+Subir reporte de Playwright	2026-11-28T01:23:34.8549311Z Artifact reporte-playwright.zip successfully finalized. Artifact ID 15241572960
+Subir reporte de Playwright	2026-11-28T01:23:34.8551007Z Artifact reporte-playwright has been successfully uploaded! Final size is 203522 bytes. Artifact ID is 15241572960

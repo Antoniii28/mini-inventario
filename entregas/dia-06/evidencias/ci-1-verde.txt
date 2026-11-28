@@ -1,0 +1,21 @@
+# Día 6 · Ejecución 1 (verde) del PR #23
+# Obtenido el 2026-11-27 19:14 CST con: gh pr checks 23 · gh run list · gh run view 46092041998 --log
+# Commit: 9b6b559
+
+$ gh run list --branch dia-06-ci --limit 1
+completed	success	Día 6: CI con GitHub Actions y Playwright	CI - Mini Inventario	dia-06-ci	pull_request	46092041998	41s	2026-11-28T01:13:50Z
+
+$ gh pr checks 23
+Pruebas Node.js y Playwright	pass	37s	https://github.com/Antoniii28/mini-inventario/actions/runs/46092041998/job/140814942360	
+
+# Extracto del registro
+Ejecutar pruebas Node.js	2026-11-28T01:14:17.1613368Z # tests 13
+Ejecutar pruebas Node.js	2026-11-28T01:14:17.1614732Z # pass 13
+Ejecutar pruebas Node.js	2026-11-28T01:14:17.1615182Z # fail 0
+Ejecutar pruebas Playwright	2026-11-28T01:14:22.9857089Z   ✓  1 tests/existencias-bajas.spec.mjs:4:1 › Día 5 - Alerta de existencias bajas (2.8s)
+Ejecutar pruebas Playwright	2026-11-28T01:14:24.1331520Z   ✓  2 tests/login.spec.mjs:3:1 › Día 5 - Inicio de sesión correcto (1.1s)
+Ejecutar pruebas Playwright	2026-11-28T01:14:24.7984642Z   ✓  3 tests/password-incorrecta.spec.mjs:3:1 › Día 5 - Contraseña incorrecta (651ms)
+Ejecutar pruebas Playwright	2026-11-28T01:14:26.4031041Z   ✓  4 tests/registrar-producto.spec.mjs:4:1 › Día 5 - Registrar producto (1.6s)
+Ejecutar pruebas Playwright	2026-11-28T01:14:26.4390317Z   4 passed (8.5s)
+Subir reporte de Playwright	2026-11-28T01:14:27.6608223Z Artifact reporte-playwright.zip successfully finalized. Artifact ID 15242161035
+Subir reporte de Playwright	2026-11-28T01:14:27.6609712Z Artifact reporte-playwright has been successfully uploaded! Final size is 202010 bytes. Artifact ID is 15242161035
