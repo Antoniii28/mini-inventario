@@ -44,6 +44,6 @@
 
 ## Pendiente
 1. ⏳ PR listo; se fusiona cuando exista el CI del Día 6 y pase (decisión de Jose).
-3. ⏳ Servicio Render `mini-inventario` (Web Service, Docker, Free, Auto-Deploy *On Commit*) creado por Jose en el panel, con `SUPABASE_URL` y `SUPABASE_KEY` publishable.
-4. ⏳ URL pública en *Authentication → URL Configuration* de Supabase; inicio de sesión en la URL pública y captura.
-5. ⏳ Falla con `RUN npm run no-existe` (PR aparte, autorizado), diagnóstico con el MCP, reparación y nueva verificación.
+2. ⏳ Servicio Render `mini-inventario` (Web Service, Docker, Free, Auto-Deploy *On Commit*) creado por Jose en el panel, con `SUPABASE_URL` y `SUPABASE_KEY` publishable.
+3. ⏳ URL pública en *Authentication → URL Configuration* de Supabase; inicio de sesión en la URL pública y captura.
+4. ⏳ Falla con `RUN npm run no-existe` (PR aparte, autorizado), diagnóstico con el MCP, reparación y nueva verificación.
