@@ -12,6 +12,7 @@ jobs:
   pruebas:
     name: Pruebas Node.js y Playwright
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Descargar repositorio
@@ -26,54 +27,28 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Instalar Chromium
+      - name: Instalar Chromium con sus dependencias
         run: npx playwright install --with-deps chromium
-
-      - name: Crear entorno temporal
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
-          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
-        run: |
-          node <<'NODE'
-          const { writeFileSync } = require('node:fs');
-          const names = [
-            'SUPABASE_URL',
-            'SUPABASE_KEY',
-            'TEST_EMAIL',
-            'TEST_PASSWORD'
-          ];
-
-          for (const name of names) {
-            if (!process.env[name]) {
-              throw new Error(`Falta el secreto ${name}`);
-            }
-          }
-
-          const content = names
-            .map(name => `${name}=${JSON.stringify(process.env[name])}`)
-            .join('\n');
-
-          writeFileSync('.env', content + '\n', { mode: 0o600 });
-          NODE
 
       - name: Ejecutar pruebas Node.js
         run: npm test
 
+      # playwright.config.mjs carga .env solo si existe; en CI las variables
+      # llegan desde los secretos del repositorio y no se escribe ningún archivo.
       - name: Ejecutar pruebas Playwright
         env:
           CI: 'true'
-          PLAYWRIGHT_JUNIT_OUTPUT_FILE: playwright-report/resultados.xml
-        run: |
-          mkdir -p playwright-report
-          npx playwright test --reporter=list,junit
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: npx playwright test
 
-      - name: Guardar reporte Playwright
-        if: always()
+      - name: Subir reporte de Playwright
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: reporte-playwright
-          path: playwright-report/resultados.xml
+          path: playwright-report/
           if-no-files-found: error
           retention-days: 7
